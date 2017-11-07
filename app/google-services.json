@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "325802316006",
+    "firebase_url": "https://bringmefood-e557f.firebaseio.com",
+    "project_id": "bringmefood-e557f",
+    "storage_bucket": "bringmefood-e557f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325802316006:android:24d83c84e847771e",
+        "android_client_info": {
+          "package_name": "com.travmahrajvar.bringmefood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325802316006-m1bbkln2cgrrnv37iiqnlubjmiredkkk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travmahrajvar.bringmefood",
+            "certificate_hash": "773a0d148b2d0bf91ad1b7f026ef10f123ba2b9c"
+          }
+        },
+        {
+          "client_id": "325802316006-vb24af3rcc9ndmjia2lbu47j01k9rtae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK9YDKcocvmx11RZ9umZ0uz3VNx3MRGKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325802316006-vb24af3rcc9ndmjia2lbu47j01k9rtae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
