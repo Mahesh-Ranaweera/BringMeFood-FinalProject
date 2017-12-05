@@ -2,4 +2,16 @@
     <string name="app_name">Bring Me Food</string>
     <string name="facebook_app_id">1521579937929084</string>
     <string name="fb_login_protocol_scheme">fb1521579937929084</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up_cap">SIGN UP</string>
+    <string name="email">Email:</string>
+    <string name="username">Username:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="password">Password:</string>
+    <string name="re_enter_password">Re-enter Password:</string>
+    <string name="already_user">already user ?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="enter_email">Enter Email:</string>
+    <string name="enter_password">Enter Password:</string>
 </resources>

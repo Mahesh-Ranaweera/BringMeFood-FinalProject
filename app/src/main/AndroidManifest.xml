@@ -39,14 +39,19 @@
         </activity>
         <!-- End Facebook login -->
 
-        <activity android:name=".WelcomeActivity">
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GetWantDecision"></activity>
+        <activity
+            android:name=".GetWantDecision"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SignUpActivity"></activity>
     </application>
 
 </manifest>

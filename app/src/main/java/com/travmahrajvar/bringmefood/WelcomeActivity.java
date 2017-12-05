@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -31,13 +32,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+	EditText getEmail, getPassw;
 	
 	/** The sign in manager for Google accounts. */
 	GoogleSignInClient mGoogleSignInClient;
 	
 	/** The sign in manager for Facebook accounts. */
 	private CallbackManager fbCallbackManager;
-	
+
 	private static final String TAG = "SignInActivity";
 	private static final int REQUEST_SIGNIN_GOOGLE = 83;
 	
@@ -48,6 +51,9 @@ public class WelcomeActivity extends AppCompatActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_welcome);
+
+		getEmail = (EditText) findViewById(R.id.txtEmail_login);
+		getPassw = (EditText) findViewById(R.id.txtPassw_login);
 		
 		//Initialize the app's Firebase connection
 		FirebaseHandler.initialize();
@@ -233,6 +239,15 @@ public class WelcomeActivity extends AppCompatActivity {
 		} else {
 			Toast.makeText(this, "Log in failed.", Toast.LENGTH_LONG).show();
 		}
+	}
+
+	/*
+	Go to signup page
+	 */
+
+	public void signUPPage(View v){
+		Intent signupPage = new Intent(this, SignUpActivity.class);
+		startActivity(signupPage);
 	}
 	
 }
