@@ -258,4 +258,24 @@ public class WelcomeActivity extends AppCompatActivity {
 		Intent apptest = new Intent(this, SelectChoice.class);
 		startActivity(apptest);
 	}
+
+	/*
+	Signin user
+	 */
+	public void signINUser(View v) {
+		if (getEmail.getText().toString().trim().length() == 0) {
+			getEmail.setError("Enter Email");
+			getEmail.requestFocus();
+		}
+
+		if (getPassw.getText().toString().trim().length() == 0) {
+			getPassw.setError("Enter Password");
+			getPassw.requestFocus();
+		} else {
+			//signin
+			Log.i("state", "User signed in");
+
+			//finish()
+		}
+	}
 }

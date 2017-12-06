@@ -81,6 +81,7 @@
         android:background="@drawable/primary_button"
         android:shadowColor="#2196f3"
         android:text="@string/sign_in"
+		android:onClick="signINUser"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
