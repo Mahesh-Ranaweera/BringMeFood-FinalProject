@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.travmahrajvar.bringmefood.GetWantDecision">
+    android:background="@drawable/getting_food_bg_gradient"
+    tools:context="com.travmahrajvar.bringmefood.GettingFoodActivit">
 
 </android.support.constraint.ConstraintLayout>

@@ -249,5 +249,13 @@ public class WelcomeActivity extends AppCompatActivity {
 		Intent signupPage = new Intent(this, SignUpActivity.class);
 		startActivity(signupPage);
 	}
-	
+
+
+	/*
+	Test app : remove after dev
+	 */
+	public void apptest(View v){
+		Intent apptest = new Intent(this, SelectChoice.class);
+		startActivity(apptest);
+	}
 }
