@@ -15,6 +15,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:onClick="needFood"
+        android:background="@drawable/corners_radius"
+        android:alpha="0.45"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +31,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="60px"
         android:onClick="gettingFood"
+        android:background="@drawable/corners_radius"
+        android:alpha="0.45"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
