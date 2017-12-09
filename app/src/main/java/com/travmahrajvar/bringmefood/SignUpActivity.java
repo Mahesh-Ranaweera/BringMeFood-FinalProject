@@ -1,5 +1,6 @@
 package com.travmahrajvar.bringmefood;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,7 +40,6 @@ public class SignUpActivity extends AppCompatActivity {
         userInfo = new HashMap<>();
 
         txtEmail = (EditText) findViewById(R.id.txtEmail);
-        txtUsername = (EditText) findViewById(R.id.txtUsername);
         txtFName = (EditText) findViewById(R.id.txtFName);
         txtLName = (EditText) findViewById(R.id.txtLName);
         txtPassw1 = (EditText) findViewById(R.id.txtPassw1);
@@ -46,11 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
         if(txtEmail.getText().toString().trim().length() == 0){
             txtEmail.setError("Enter Email");
             txtEmail.requestFocus();
-        }
-
-        if(txtUsername.getText().toString().trim().length() == 0){
-            txtUsername.setError("Enter Username");
-            txtUsername.requestFocus();
         }
 
         if(txtFName.getText().toString().trim().length() == 0){
@@ -82,17 +81,34 @@ public class SignUpActivity extends AppCompatActivity {
 
         else{
             //signup
-
-            Log.i("state","Sign Up completed");
-            userInfo.put("email", txtEmail.getText().toString());
-            userInfo.put("username", txtUsername.getText().toString());
-            userInfo.put("fname", txtFName.getText().toString());
-            userInfo.put("lname", txtLName.getText().toString());
-            userInfo.put("password", txtPassw1.getText().toString());
-
-            userRef.push().setValue(userInfo);
-            popUP("User Registered");
-            //finish();
+            
+            FirebaseHandler.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassw1.getText().toString())
+		            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+			            @Override
+			            public void onComplete(@NonNull Task<AuthResult> task) {
+							if(task.isSuccessful()){
+								//We've created the user
+								//Now we need to set the user's names
+								UserProfileChangeRequest initialUserSetupInfo = new UserProfileChangeRequest.Builder()
+										.setDisplayName(txtFName + " " + txtLName)
+										.build();
+								
+								FirebaseHandler.getCurrentUser().updateProfile(initialUserSetupInfo)
+										.addOnCompleteListener(new OnCompleteListener<Void>() {
+											@Override
+											public void onComplete(@NonNull Task<Void> task) {
+												if(task.isSuccessful())
+													Toast.makeText(SignUpActivity.this, "User created successfully!", Toast.LENGTH_SHORT).show();
+											}
+										});
+								
+								finish();
+							} else {
+								Log.w("signInWithEmail:failure", task.getException());
+								Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+							}
+			            }
+		            });
         }
     }
 

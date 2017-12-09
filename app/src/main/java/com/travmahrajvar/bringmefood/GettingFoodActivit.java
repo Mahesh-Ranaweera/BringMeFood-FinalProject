@@ -22,7 +22,7 @@ public class GettingFoodActivit extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<>();
 
         list.add("Starbucks");
-        list.add("Tim Hortans");
+        list.add("Tim Hortons");
         list.add("McDonalds");
 
         adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);

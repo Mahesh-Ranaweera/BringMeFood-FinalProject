@@ -273,7 +273,21 @@ public class WelcomeActivity extends AppCompatActivity {
 			getPassw.requestFocus();
 		} else {
 			//signin
-			Log.i("state", "User signed in");
+			
+			FirebaseHandler.signInWithEmailAndPassword(getEmail.getText().toString(), getPassw.getText().toString())
+					.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+						@Override
+						public void onComplete(@NonNull Task<AuthResult> task) {
+							if(task.isSuccessful()){
+								updateUI(FirebaseHandler.getCurrentUser());
+							} else {
+								// If sign in fails, display a message to the user.
+								Toast.makeText(WelcomeActivity.this, "Authentication failed.",
+										Toast.LENGTH_SHORT).show();
+								updateUI(null);
+							}
+						}
+					});
 
 			//finish()
 		}
