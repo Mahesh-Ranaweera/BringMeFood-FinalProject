@@ -260,7 +260,6 @@ public class WelcomeActivity extends AppCompatActivity {
 		Intent apptest = new Intent(this, SelectChoice.class);
 		startActivity(apptest);
 	}
-
 	
 	/**
 	 * Signs in a user using an email and password.
@@ -289,6 +288,10 @@ public class WelcomeActivity extends AppCompatActivity {
 						public void onComplete(@NonNull Task<AuthResult> task) {
 							if(task.isSuccessful()){
 								updateUI(FirebaseHandler.getCurrentUser());
+
+								//once authenticated nav to selectChoice page
+								Intent userChoice = new Intent(WelcomeActivity.this, SelectChoice.class);
+								startActivity(userChoice);
 							} else {
 								// If sign in fails, display a message to the user.
 								Toast.makeText(WelcomeActivity.this, "Authentication failed.",
