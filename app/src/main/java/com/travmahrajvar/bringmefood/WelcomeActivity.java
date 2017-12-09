@@ -240,29 +240,39 @@ public class WelcomeActivity extends AppCompatActivity {
 			Toast.makeText(this, "Log in failed.", Toast.LENGTH_LONG).show();
 		}
 	}
-
-	/*
-	Go to signup page
+	
+	/**
+	 * Goes to the sign up activity.
+	 * @param v
 	 */
-
 	public void signUPPage(View v){
 		Intent signupPage = new Intent(this, SignUpActivity.class);
 		startActivity(signupPage);
 	}
-
-
-	/*
-	Test app : remove after dev
+	
+	
+	/**
+	 * Used for testing.
+	 * Remove after finishing.
+	 * @param v
 	 */
 	public void apptest(View v){
 		Intent apptest = new Intent(this, SelectChoice.class);
 		startActivity(apptest);
 	}
 
-	/*
-	Signin user
+	
+	/**
+	 * Signs in a user using an email and password.
+	 *
+	 * Referenced from:
+	 * https://firebase.google.com/docs/auth/android/password-auth
+	 * https://firebase.google.com/docs/auth/android/manage-users
+	 *
+	 * @param v The "Sign in" button view
 	 */
 	public void signINUser(View v) {
+		//First, make sure there's not nothing in the boxes
 		if (getEmail.getText().toString().trim().length() == 0) {
 			getEmail.setError("Enter Email");
 			getEmail.requestFocus();
@@ -272,8 +282,7 @@ public class WelcomeActivity extends AppCompatActivity {
 			getPassw.setError("Enter Password");
 			getPassw.requestFocus();
 		} else {
-			//signin
-			
+			//Now, authenticate the user, and sign in if the process was successful
 			FirebaseHandler.signInWithEmailAndPassword(getEmail.getText().toString(), getPassw.getText().toString())
 					.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 						@Override
@@ -288,8 +297,6 @@ public class WelcomeActivity extends AppCompatActivity {
 							}
 						}
 					});
-
-			//finish()
 		}
 	}
 }
