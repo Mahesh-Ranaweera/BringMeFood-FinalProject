@@ -49,39 +49,38 @@ public class SignUpActivity extends AppCompatActivity {
             txtEmail.requestFocus();
         }
 
-        if(txtFName.getText().toString().trim().length() == 0){
+        else if(txtFName.getText().toString().trim().length() == 0){
             txtFName.setError("Enter First Name");
             txtFName.requestFocus();
         }
 
-        if(txtLName.getText().toString().trim().length() == 0){
+        else if(txtLName.getText().toString().trim().length() == 0){
             txtLName.setError("Enter Last Name");
             txtLName.requestFocus();
         }
 
-        if(txtPassw1.getText().toString().trim().length() == 0){
+        else if(txtPassw1.getText().toString().trim().length() == 0){
             txtPassw1.setError("Enter Password");
             txtPassw1.requestFocus();
         }
 
-        if(txtPassw2.getText().toString().trim().length() == 0){
+        else if(txtPassw2.getText().toString().trim().length() == 0){
             txtPassw2.setError("Re-enter Password");
             txtPassw2.requestFocus();
         }
 
-        //maker sure that password length is larger than 6
-        if(txtPassw1.getText().toString().trim().length() < 6 || txtPassw2.getText().toString().trim().length() < 6){
-            txtPassw1.setError("Password should be at least 6 characters long");
-            txtPassw2.setError("Password should be at least 6 characters long");
-            txtPassw1.requestFocus();
-            txtPassw2.requestFocus();
-        }
-
-        if(!txtPassw1.getText().toString().equals(txtPassw2.getText().toString())){
+        else if(!txtPassw1.getText().toString().equals(txtPassw2.getText().toString())){
             txtPassw1.setError("Password should be matched");
             txtPassw2.setError("Password should be matched");
             txtPassw1.requestFocus();
             txtPassw2.requestFocus();
+        }
+        
+        else if(txtPassw1.getText().toString().trim().length() < 6){
+        	txtPassw1.setError("Password should be at least 6 characters.");
+        	txtPassw1.setError("Password should be at least 6 characters.");
+        	txtPassw1.requestFocus();
+        	txtPassw2.requestFocus();
         }
 
         //If everything is OK, then start creating the user credentials
