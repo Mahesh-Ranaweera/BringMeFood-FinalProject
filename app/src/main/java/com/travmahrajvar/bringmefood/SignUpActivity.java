@@ -69,6 +69,14 @@ public class SignUpActivity extends AppCompatActivity {
             txtPassw2.requestFocus();
         }
 
+        //maker sure that password length is larger than 6
+        if(txtPassw1.getText().toString().trim().length() < 6 || txtPassw2.getText().toString().trim().length() < 6){
+            txtPassw1.setError("Password should be at least 6 characters long");
+            txtPassw2.setError("Password should be at least 6 characters long");
+            txtPassw1.requestFocus();
+            txtPassw2.requestFocus();
+        }
+
         if(!txtPassw1.getText().toString().equals(txtPassw2.getText().toString())){
             txtPassw1.setError("Password should be matched");
             txtPassw2.setError("Password should be matched");
