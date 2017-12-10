@@ -49,7 +49,6 @@ public class FirebaseHandler {
 	 * @return A Task that will perform the sign in to Firebase
 	 */
 	public static Task<AuthResult> signInWithCredentials(@NonNull AuthCredential credential){
-		fbAuthenticator.createUserWithEmailAndPassword("", "");
 		return fbAuthenticator.signInWithCredential(credential);
 	}
 	
