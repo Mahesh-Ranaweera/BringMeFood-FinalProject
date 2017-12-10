@@ -70,7 +70,7 @@ public class WelcomeActivity extends AppCompatActivity {
 		
 		//If the user is still signed in from a previous session, load it
 		FirebaseUser currentUser = FirebaseHandler.getCurrentUser();
-		updateUI(currentUser);
+		verifyUser(currentUser);
 	}
 	
 	@Override
@@ -184,12 +184,13 @@ public class WelcomeActivity extends AppCompatActivity {
 						if (task.isSuccessful()) {
 							// Sign in success, update UI with the signed-in user's information
 							FirebaseUser user = FirebaseHandler.getCurrentUser();
-							updateUI(user);
+							FirebaseHandler.putPublicUserInfoInDatabase(user);
+							verifyUser(user);
 						} else {
 							// If sign in fails, display a message to the user.
 							Toast.makeText(WelcomeActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
-							updateUI(null);
+							verifyUser(null);
 						}
 						
 						// ...
@@ -215,12 +216,13 @@ public class WelcomeActivity extends AppCompatActivity {
 						if (task.isSuccessful()) {
 							// Sign in success, update UI with the signed-in user's information
 							FirebaseUser user = FirebaseHandler.getCurrentUser();
-							updateUI(user);
+							FirebaseHandler.putPublicUserInfoInDatabase(user);
+							verifyUser(user);
 						} else {
 							// If sign in fails, display a message to the user.
 							Toast.makeText(WelcomeActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
-							updateUI(null);
+							verifyUser(null);
 						}
 						
 						// ...
@@ -229,16 +231,18 @@ public class WelcomeActivity extends AppCompatActivity {
 	}
 	
 	/**
-	 * Updates the UI with the information about the authenticated user,
-	 * if signed in.
+	 * Verifies the user's current account and moves to the choice activity if so.
+	 * Otherwise, stay here, and ask the user to authenticate.
 	 *
 	 * @param account The authenticated user account, or null.
 	 */
-	public void updateUI(FirebaseUser account){
+	public void verifyUser(FirebaseUser account){
 		if(account != null){
 			Toast.makeText(this, "Logged in as " + account.getEmail(), Toast.LENGTH_LONG).show();
-		} else {
-			Toast.makeText(this, "Log in failed.", Toast.LENGTH_LONG).show();
+			
+			//Redirect to the choice page
+			Intent userChoice = new Intent(WelcomeActivity.this, ChoiceSelect.class);
+			startActivity(userChoice);
 		}
 	}
 	
@@ -288,16 +292,12 @@ public class WelcomeActivity extends AppCompatActivity {
 						@Override
 						public void onComplete(@NonNull Task<AuthResult> task) {
 							if(task.isSuccessful()){
-								updateUI(FirebaseHandler.getCurrentUser());
-
-								//once authenticated nav to selectChoice page
-								Intent userChoice = new Intent(WelcomeActivity.this, ChoiceSelect.class);
-								startActivity(userChoice);
+								verifyUser(FirebaseHandler.getCurrentUser());
 							} else {
 								// If sign in fails, display a message to the user.
 								Toast.makeText(WelcomeActivity.this, "Authentication failed.",
 										Toast.LENGTH_SHORT).show();
-								updateUI(null);
+								verifyUser(null);
 							}
 						}
 					});
