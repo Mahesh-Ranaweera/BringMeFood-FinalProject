@@ -46,10 +46,8 @@ public class ChoiceSelect extends AppCompatActivity {
 	 * @param v
 	 */
     public void gettingFood(View v){
-        /*Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
-        startActivity(getFoodPage);*/
-        
-        NotificationServices.notifyUser("Testing");
+        Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
+        startActivity(getFoodPage);
 
     }
 	
