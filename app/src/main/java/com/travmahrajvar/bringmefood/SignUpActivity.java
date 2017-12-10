@@ -12,6 +12,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
@@ -19,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 	
     EditText txtEmail, txtFName, txtLName, txtPassw1, txtPassw2;
+    private DatabaseReference databaseReference; //database reference for stroring user data
     
 
     @Override
@@ -96,6 +99,8 @@ public class SignUpActivity extends AppCompatActivity {
 								UserProfileChangeRequest initialUserSetupInfo = new UserProfileChangeRequest.Builder()
 										.setDisplayName(txtFName + " " + txtLName)
 										.build();
+
+
 								
 								FirebaseHandler.getCurrentUser().updateProfile(initialUserSetupInfo)
 										.addOnCompleteListener(new OnCompleteListener<Void>() {
