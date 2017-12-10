@@ -19,7 +19,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 	
     EditText txtEmail, txtFName, txtLName, txtPassw1, txtPassw2;
-    private DatabaseReference databaseReference; //database reference for stroring user data
     
 
     @Override
