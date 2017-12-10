@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
 								//We've created the user
 								//Now we need to set the user's names
 								UserProfileChangeRequest initialUserSetupInfo = new UserProfileChangeRequest.Builder()
-										.setDisplayName(txtFName + " " + txtLName)
+										.setDisplayName(txtFName.getText().toString() + " " + txtLName.getText().toString())
 										.build();
 
 
