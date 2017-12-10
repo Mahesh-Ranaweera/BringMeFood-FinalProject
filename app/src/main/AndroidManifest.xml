@@ -38,6 +38,26 @@
             </intent-filter>
         </activity>
         <!-- End Facebook login -->
+        
+        <!--
+            Used for the Firebase notification service
+            Referenced from: https://firebase.google.com/docs/cloud-messaging/android/client
+        -->
+	    <service android:name=".utils.NotificationServices">
+		    <intent-filter>
+			    <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+		    </intent-filter>
+	    </service>
+	    <service android:name=".utils.NotificationInstanceIDServices">
+		    <intent-filter>
+			    <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+		    </intent-filter>
+	    </service>
+	    <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+		    android:resource="@color/colorAccent" />
+	    <!-- End Firebase notifications -->
+	    
+	    
 
         <activity
             android:name=".WelcomeActivity"

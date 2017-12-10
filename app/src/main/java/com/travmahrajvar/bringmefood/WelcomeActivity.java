@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 public class WelcomeActivity extends AppCompatActivity {
 

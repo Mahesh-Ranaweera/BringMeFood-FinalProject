@@ -11,9 +11,9 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
-import java.util.HashMap;
+import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -105,7 +105,8 @@ public class SignUpActivity extends AppCompatActivity {
 													Log.w("onUpdateProfile", task.getException());
 													Toast.makeText(SignUpActivity.this, "User information could not be updated.", Toast.LENGTH_SHORT).show();
 												} else {
-													// Return to the main activity new that everything's all good.
+													// Update the public database info with user name and email and send back to welcome activity
+													FirebaseHandler.putPublicUserInfoInDatabase(FirebaseHandler.getCurrentUser());
 													finish();
 												}
 											}

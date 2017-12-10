@@ -10,9 +10,9 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
+import com.travmahrajvar.bringmefood.utils.NotificationServices;
 
 public class ChoiceSelect extends AppCompatActivity {
 
@@ -42,29 +42,34 @@ public class ChoiceSelect extends AppCompatActivity {
             Log.i("signed", "User not signed in");
         }
     }
-
-    /*
-        Getting food
-         */
+	
+	/**
+	 * Action for "Getting food"
+	 * @param v
+	 */
     public void gettingFood(View v){
-        Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
-        startActivity(getFoodPage);
+        /*Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
+        startActivity(getFoodPage);*/
+        
+        NotificationServices.notifyUser("Testing");
 
     }
-
-    /*
-    Need food
-     */
-    public void wantFood(View v){
+	
+	/**
+	 * Action for "Wanting food"
+	 * @param v
+	 */
+	public void wantFood(View v){
         Intent getNeedPage = new Intent(this, NeedFoodActivity.class);
         startActivity(getNeedPage);
     }
-
-
-    /*
-    * Display main menu
-     */
-    public void displayMenu(View v){
+	
+	
+	/**
+	 * Sets up and displays the sidebar menu
+	 * @param v
+	 */
+	public void displayMenu(View v){
         PopupMenu popupMenu = new PopupMenu(ChoiceSelect.this, mainMenu);
         popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -73,7 +78,7 @@ public class ChoiceSelect extends AppCompatActivity {
                 Log.i("selected", menuItem.getTitle().toString());
 
                 if(menuItem.getTitle().toString().equals("Sign Out")){
-                    FirebaseAuth.getInstance().signOut();
+                    FirebaseHandler.signOutCurrentUser();
                     finish();
                 }
                 return true;
