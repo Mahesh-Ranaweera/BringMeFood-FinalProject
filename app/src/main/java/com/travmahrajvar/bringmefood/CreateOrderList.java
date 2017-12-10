@@ -55,6 +55,9 @@ public class CreateOrderList extends AppCompatActivity {
             Log.i("item", txtFoodItem.getText().toString());
 
             arrayAdapter.notifyDataSetChanged();
+
+            //clear the input for new entry
+            txtFoodItem.setText(null);
         }
     }
 

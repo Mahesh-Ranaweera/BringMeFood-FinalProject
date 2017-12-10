@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,7 +71,12 @@ public class NeedFoodActivity extends AppCompatActivity {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-                    txtDeliveryLocation.setText(addresses.get(0).getAddressLine(0));
+                    if(addresses.get(0).getAddressLine(0) != null){
+                        txtDeliveryLocation.setText(addresses.get(0).getAddressLine(0));
+                    }else{
+                        Toast toast = Toast.makeText(NeedFoodActivity.this, "Could not find your location, Try Again", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
