@@ -15,6 +15,9 @@ public class NeedFoodActivity extends AppCompatActivity {
     TextView windowTxt;
     ImageButton mainMenu;
 
+    //start activity for data
+    static final int GET_DATA = 20;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +31,21 @@ public class NeedFoodActivity extends AppCompatActivity {
 
     public void orderListPage(View v){
         Intent displayListPage = new Intent(this, CreateOrderList.class);
-        start
+        startActivityForResult(displayListPage, GET_DATA);
+    }
+
+    /*
+    * Handle activity retrun result
+     */
+    protected void onActivtyResult(int reqCode, int resCode, Intent data){
+        //onActivtyResult(resCode, resCode, data);
+
+        if(reqCode == GET_DATA){
+            if(resCode == RESULT_OK){
+                //get data from list
+
+            }
+        }
     }
 
     /*
