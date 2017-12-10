@@ -82,10 +82,10 @@
         android:shadowColor="#2196f3"
         android:text="@string/sign_in"
 		android:onClick="signINUser"
-        android:textColor="#fff"
+        android:textColor="@color/colorSecondaryLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/textView"
@@ -108,7 +108,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="232dp"
         android:text="@string/enter_email"
-        android:textColor="#fff"
+        android:textColor="@color/colorSecondaryLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +121,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="300dp"
         android:text="@string/enter_password"
-        android:textColor="#fff"
+        android:textColor="@color/colorSecondaryLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -134,7 +134,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="432dp"
         android:onClick="signUPPage"
-        android:textColor="#fff"
+        android:textColor="@color/colorSecondaryLight"
         android:textStyle="bold"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
