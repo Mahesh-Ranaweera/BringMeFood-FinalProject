@@ -26,26 +26,15 @@ public class ChoiceSelect extends AppCompatActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choice_select);
 
-        FirebaseUser user = FirebaseHandler.getCurrentUser();
-
         windowTxt = (TextView) findViewById(R.id.windowTitle);
         windowTxt.setText("Bring Me Food");
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
 
-
-        if(user != null){
-            //user signed in
-            //windowTxt.setText(user.getDisplayName());
-            Log.i("signed", user.getDisplayName());
-        }else{
-            //user not signed
-            Log.i("signed", "User not signed in");
-        }
     }
 
     /*
-        Getting food
-         */
+    * Getting food
+    */
     public void gettingFood(View v){
         Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
         startActivity(getFoodPage);
@@ -53,7 +42,7 @@ public class ChoiceSelect extends AppCompatActivity {
     }
 
     /*
-    Need food
+    * Need food
      */
     public void wantFood(View v){
         Intent getNeedPage = new Intent(this, NeedFoodActivity.class);
@@ -73,7 +62,7 @@ public class ChoiceSelect extends AppCompatActivity {
                 Log.i("selected", menuItem.getTitle().toString());
 
                 if(menuItem.getTitle().toString().equals("Sign Out")){
-                    FirebaseAuth.getInstance().signOut();
+                    FirebaseHandler.signOutCurrentUser();
                     finish();
                 }
                 return true;

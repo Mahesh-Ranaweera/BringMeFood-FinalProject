@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BringMeFood.iml" filepath="$PROJECT_DIR$/BringMeFood.iml" />
       <module fileurl="file://$PROJECT_DIR$/BringMeFood-FinalProject.iml" filepath="$PROJECT_DIR$/BringMeFood-FinalProject.iml" />
-      <module fileurl="file://C:\Users\Travis\AndroidStudioProjects\BringMeFood\BringMeFood-FinalProject.iml" filepath="C:\Users\Travis\AndroidStudioProjects\BringMeFood\BringMeFood-FinalProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
