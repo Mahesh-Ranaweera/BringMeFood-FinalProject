@@ -39,7 +39,9 @@ public class NeedFoodActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private double latitude, longitude;
-    private static final int REQUEST_GEOLOCATION_PERMS = 100;
+    Geocoder geocoder;
+    List<Address> addresses;
+
 
     //start activity for data
     static final int GET_DATA = 20;
@@ -55,6 +57,8 @@ public class NeedFoodActivity extends AppCompatActivity {
         txtDeliveryLocation = (EditText) findViewById(R.id.txtDelivery);
         btnGetCurrLoc = (ImageButton) findViewById(R.id.btnGetCurrLoc);
 
+        geocoder = new Geocoder(this, Locale.getDefault());
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -63,10 +67,13 @@ public class NeedFoodActivity extends AppCompatActivity {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                Log.i("data", "Lat: "+latitude);
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-
-                txtDeliveryLocation.setText(Double.toString(latitude));
+                    txtDeliveryLocation.setText(addresses.get(0).getAddressLine(0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -86,14 +93,13 @@ public class NeedFoodActivity extends AppCompatActivity {
             }
         };
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 100);
                 return;
             }
-        }else{
+        else{
             getCurrLocation();
         }
     }
@@ -136,12 +142,10 @@ public class NeedFoodActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] perms, int[] results) {
-
         switch (requestCode){
             case 100:
-                if(results.length >0 && results[0] == PackageManager.PERMISSION_GRANTED){
+                if(results.length >0 && results[0] == PackageManager.PERMISSION_GRANTED)
                     getCurrLocation();
-                }
                 return;
         }
     }
@@ -155,7 +159,7 @@ public class NeedFoodActivity extends AppCompatActivity {
 
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(recommendedProvider,
-                            5000, 0, locationListener);
+                            0, 0, locationListener);
                     Log.i("map", "requestLocationUpdates()");
                 }
             }
