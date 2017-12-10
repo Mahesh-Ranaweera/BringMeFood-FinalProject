@@ -48,27 +48,11 @@ public class ChoiceSelect extends AppCompatActivity {
             updateUserData(userID);
         }
     }
-<<<<<<< HEAD
 	
 	/**
 	 * Action for "Getting food"
 	 * @param v
 	 */
-=======
-
-
-    /*
-    * add user data to db if not exists
-     */
-    public void updateUserData(String userID){
-        myRef.child("users").child(userID).child("email").setValue(FirebaseHandler.getCurrentUser().getEmail());
-    }
-
-
-    /*
-    * Getting food
-    */
->>>>>>> 267c531531aeb4c769a315ae73540efc291ae9da
     public void gettingFood(View v){
         /*Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
         startActivity(getFoodPage);*/
@@ -76,20 +60,12 @@ public class ChoiceSelect extends AppCompatActivity {
         NotificationServices.notifyUser("Testing");
 
     }
-<<<<<<< HEAD
 	
 	/**
 	 * Action for "Wanting food"
 	 * @param v
 	 */
 	public void wantFood(View v){
-=======
-
-    /*
-    * Need food
-     */
-    public void wantFood(View v){
->>>>>>> 267c531531aeb4c769a315ae73540efc291ae9da
         Intent getNeedPage = new Intent(this, NeedFoodActivity.class);
         startActivity(getNeedPage);
     }
