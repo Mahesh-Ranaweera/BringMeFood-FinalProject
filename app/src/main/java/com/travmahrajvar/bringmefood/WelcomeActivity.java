@@ -257,7 +257,7 @@ public class WelcomeActivity extends AppCompatActivity {
 	 * @param v
 	 */
 	public void apptest(View v){
-		Intent apptest = new Intent(this, SelectChoice.class);
+		Intent apptest = new Intent(this, ChoiceSelect.class);
 		startActivity(apptest);
 	}
 	
@@ -290,7 +290,7 @@ public class WelcomeActivity extends AppCompatActivity {
 								updateUI(FirebaseHandler.getCurrentUser());
 
 								//once authenticated nav to selectChoice page
-								Intent userChoice = new Intent(WelcomeActivity.this, SelectChoice.class);
+								Intent userChoice = new Intent(WelcomeActivity.this, ChoiceSelect.class);
 								startActivity(userChoice);
 							} else {
 								// If sign in fails, display a message to the user.

@@ -7,7 +7,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class GettingFoodActivit extends AppCompatActivity {
+public class GettingFoodActivity extends AppCompatActivity {
 
     Spinner restList;
     ArrayAdapter<String> adapter;
