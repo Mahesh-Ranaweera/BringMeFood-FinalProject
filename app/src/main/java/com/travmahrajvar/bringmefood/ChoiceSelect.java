@@ -16,8 +16,13 @@ import com.travmahrajvar.bringmefood.utils.NotificationServices;
 
 public class ChoiceSelect extends AppCompatActivity {
 
-    TextView windowTxt;
+    TextView windowTxt, txtUserName;
     ImageButton mainMenu;
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +31,44 @@ public class ChoiceSelect extends AppCompatActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choice_select);
 
-        FirebaseUser user = FirebaseHandler.getCurrentUser();
-
         windowTxt = (TextView) findViewById(R.id.windowTitle);
         windowTxt.setText("Bring Me Food");
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
+        txtUserName = (TextView) findViewById(R.id.txtUserName);
 
+        //get usersID to addto database on initial login
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null){
-            //user signed in
-            //windowTxt.setText(user.getDisplayName());
-            Log.i("signed", user.getDisplayName());
-        }else{
-            //user not signed
-            Log.i("signed", "User not signed in");
+            userID = user.getUid();
+            //update the users data based on id
+            updateUserData(userID);
         }
     }
+<<<<<<< HEAD
 	
 	/**
 	 * Action for "Getting food"
 	 * @param v
 	 */
+=======
+
+
+    /*
+    * add user data to db if not exists
+     */
+    public void updateUserData(String userID){
+        myRef.child("users").child(userID).child("email").setValue(FirebaseHandler.getCurrentUser().getEmail());
+    }
+
+
+    /*
+    * Getting food
+    */
+>>>>>>> 267c531531aeb4c769a315ae73540efc291ae9da
     public void gettingFood(View v){
         /*Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
         startActivity(getFoodPage);*/
@@ -54,12 +76,20 @@ public class ChoiceSelect extends AppCompatActivity {
         NotificationServices.notifyUser("Testing");
 
     }
+<<<<<<< HEAD
 	
 	/**
 	 * Action for "Wanting food"
 	 * @param v
 	 */
 	public void wantFood(View v){
+=======
+
+    /*
+    * Need food
+     */
+    public void wantFood(View v){
+>>>>>>> 267c531531aeb4c769a315ae73540efc291ae9da
         Intent getNeedPage = new Intent(this, NeedFoodActivity.class);
         startActivity(getNeedPage);
     }

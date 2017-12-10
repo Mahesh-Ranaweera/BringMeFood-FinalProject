@@ -19,6 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 	
     EditText txtEmail, txtFName, txtLName, txtPassw1, txtPassw2;
+    private DatabaseReference databaseReference; //database reference for stroring user data
     
 
     @Override
@@ -96,6 +97,8 @@ public class SignUpActivity extends AppCompatActivity {
 								UserProfileChangeRequest initialUserSetupInfo = new UserProfileChangeRequest.Builder()
 										.setDisplayName(txtFName + " " + txtLName)
 										.build();
+
+
 								
 								FirebaseHandler.getCurrentUser().updateProfile(initialUserSetupInfo)
 										.addOnCompleteListener(new OnCompleteListener<Void>() {
