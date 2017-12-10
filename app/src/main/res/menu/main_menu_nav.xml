@@ -8,5 +8,5 @@
         android:title="User Info"/>
     <item
         android:id="@+id/three"
-        android:title="SignOut"/>
+        android:title="Sign Out"/>
 </menu>

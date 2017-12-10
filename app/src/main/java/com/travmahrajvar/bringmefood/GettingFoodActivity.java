@@ -17,7 +17,7 @@ public class GettingFoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_food);
 
-        restList = (Spinner) findViewById(R.id.spinner);
+        //restList = (Spinner) findViewById(R.id.spinner);
 
         ArrayList<String> list = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class GettingFoodActivity extends AppCompatActivity {
         list.add("Tim Hortons");
         list.add("McDonalds");
 
-        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
-        restList.setAdapter(adapter);
+//        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
+//        restList.setAdapter(adapter);
     }
 }

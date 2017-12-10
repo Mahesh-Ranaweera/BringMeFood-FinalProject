@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class ChoiceSelect extends AppCompatActivity {
 
@@ -69,6 +71,11 @@ public class ChoiceSelect extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Log.i("selected", menuItem.getTitle().toString());
+
+                if(menuItem.getTitle().toString().equals("Sign Out")){
+                    FirebaseAuth.getInstance().signOut();
+                    finish();
+                }
                 return true;
             }
         });
