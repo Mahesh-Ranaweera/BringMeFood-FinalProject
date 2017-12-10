@@ -18,10 +18,7 @@ public class ChoiceSelect extends AppCompatActivity {
 
     TextView windowTxt, txtUserName;
     ImageButton mainMenu;
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
+    
     private String userID;
 
     @Override
@@ -36,16 +33,11 @@ public class ChoiceSelect extends AppCompatActivity {
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
 
-        //get usersID to addto database on initial login
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseHandler.getCurrentUser();
 
         if(user != null){
             userID = user.getUid();
-            //update the users data based on id
-            updateUserData(userID);
+            txtUserName.setText(getString(R.string.welcome_with_username, user.getDisplayName()));
         }
     }
 	
