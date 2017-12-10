@@ -73,7 +73,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="360dp"
+            android:layout_width="320dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
@@ -99,12 +99,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textSize="18dp"
-                    android:text="Want Food"/>
+                    android:text="@string/want_food"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="360dp"
+            android:layout_width="320dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="320dp"
@@ -129,12 +129,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textSize="18dp"
-                    android:text="Getting Food"/>
+                    android:text="@string/getting_food"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="360dp"
+            android:layout_width="320dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="440dp"
