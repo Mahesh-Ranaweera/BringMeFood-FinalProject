@@ -99,4 +99,5 @@
     <string name="create_order">Create Order</string>
     <string name="order_info">I\'m going to...</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="placeholder">placeholder</string>
 </resources>
