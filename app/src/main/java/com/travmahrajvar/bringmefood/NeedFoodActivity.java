@@ -25,6 +25,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 import com.travmahrajvar.bringmefood.utils.NeedData;
 
 import java.io.IOException;
@@ -147,17 +148,21 @@ public class NeedFoodActivity extends AppCompatActivity {
     /*
     * Display main menu
      */
-    public void displayMenu(View v){
-        PopupMenu popupMenu = new PopupMenu(NeedFoodActivity.this, mainMenu);
+    public void displayMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Log.i("selected", menuItem.getTitle().toString());
+                if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+                    //Sign out user
+                    FirebaseHandler.signOutCurrentUser();
+                    finish();
+                }
                 return true;
             }
         });
-
+    
         popupMenu.show();
     }
 

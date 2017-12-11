@@ -28,7 +28,7 @@ public class ChoiceSelect extends AppCompatActivity {
         setContentView(R.layout.activity_choice_select);
 
         windowTxt = (TextView) findViewById(R.id.windowTitle);
-        windowTxt.setText("Bring Me Food");
+        windowTxt.setText(R.string.app_name);
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
 
@@ -62,24 +62,23 @@ public class ChoiceSelect extends AppCompatActivity {
 	
 	/**
 	 * Sets up and displays the sidebar menu
-	 * @param v
+	 * @param view
 	 */
-	public void displayMenu(View v){
-        PopupMenu popupMenu = new PopupMenu(ChoiceSelect.this, mainMenu);
-        popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Log.i("selected", menuItem.getTitle().toString());
-
-                if(menuItem.getTitle().toString().equals("Sign Out")){
-                    FirebaseHandler.signOutCurrentUser();
-                    finish();
-                }
-                return true;
-            }
-        });
-
-        popupMenu.show();
-    }
+	public void displayMenu(View view) {
+		PopupMenu popupMenu = new PopupMenu(this, view);
+		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+					//Sign out user
+					FirebaseHandler.signOutCurrentUser();
+					finish();
+				}
+				return true;
+			}
+		});
+		
+		popupMenu.show();
+	}
 }

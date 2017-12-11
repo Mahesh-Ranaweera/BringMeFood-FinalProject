@@ -1,5 +1,8 @@
 package com.travmahrajvar.bringmefood;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
-public class GettingFoodActivity extends AppCompatActivity implements GettingFoodFragment_SessionInfo.OnFragmentInteractionListener, GettingFoodFragment_PendingUsers.OnFragmentInteractionListener, GettingFoodFragment_ApprovedUsers.OnFragmentInteractionListener {
+public class GettingFoodActivity extends AppCompatActivity
+		implements GettingFoodFragment_SessionInfo.OnFragmentInteractionListener,
+		GettingFoodFragment_PendingUsers.OnFragmentInteractionListener,
+		GettingFoodFragment_ApprovedUsers.OnFragmentInteractionListener {
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -26,6 +33,10 @@ public class GettingFoodActivity extends AppCompatActivity implements GettingFoo
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private SectionsPagerAdapter mSectionsPagerAdapter;
+	
+	private String curSessionKey;
+	private String curSessionRestaurant;
+	private String curSessionLocation;
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -45,14 +56,10 @@ public class GettingFoodActivity extends AppCompatActivity implements GettingFoo
 		mViewPager = (ViewPager) findViewById(R.id.container);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
-	}
-	
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_getting_food, menu);
-		return true;
+		curSessionKey = getIntent().getStringExtra(getString(R.string.curSessionKey_identifier));
+		curSessionRestaurant = getIntent().getStringExtra(getString(R.string.curSessionRestaurant_identifier));
+		curSessionLocation = getIntent().getStringExtra(getString(R.string.curSessionLocation_identifier));
+		
 	}
 	
 	public void displayMenu(View view) {
@@ -61,7 +68,8 @@ public class GettingFoodActivity extends AppCompatActivity implements GettingFoo
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem menuItem) {
-				if(menuItem.getTitle().toString().equals("Sign Out")){
+				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+					//Sign out user
 					FirebaseHandler.signOutCurrentUser();
 					finish();
 				}
@@ -78,6 +86,29 @@ public class GettingFoodActivity extends AppCompatActivity implements GettingFoo
 		Log.i("GettingFoodActivity", "OnFragmentInteraction fired: " + uri.toString());
 	}
 	
+	/**
+	 * Copies the current session code to the clipboard.
+	 * @param view Should be the copy button from the SessionInfo fragment.
+	 */
+	public void copyKeyToClipboard(View view) {
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+		ClipData clip = ClipData.newPlainText("Session code", curSessionKey);
+		clipboard.setPrimaryClip(clip);
+		Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
+	}
+	/**
+	 *
+	 *
+	 * Sends the current session key as a plain text message to all available sharing providers.
+	 * @param view Should be the share button from the SessionInfo fragment.
+	 */
+	public void shareKey(View view) {
+		Intent shareIntent = new Intent();
+		shareIntent.setAction(Intent.ACTION_SEND);
+		shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sendTo_message, curSessionRestaurant, curSessionKey));
+		shareIntent.setType("text/plain");
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.sendTo_title)));
+	}
 	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -101,7 +132,7 @@ public class GettingFoodActivity extends AppCompatActivity implements GettingFoo
 					return GettingFoodFragment_PendingUsers.newInstance("", "");
 				case 0: // Session info
 				default:
-					return GettingFoodFragment_SessionInfo.newInstance("", "");
+					return GettingFoodFragment_SessionInfo.newInstance(curSessionKey, curSessionRestaurant, curSessionLocation);
 			}
 		}
 		

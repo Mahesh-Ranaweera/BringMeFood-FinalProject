@@ -45,7 +45,8 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem menuItem) {
-				if(menuItem.getTitle().toString().equals("Sign Out")){
+				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+					//Sign out user
 					FirebaseHandler.signOutCurrentUser();
 					finish();
 				}
@@ -71,13 +72,31 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 		    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 		    ClipData clip = ClipData.newPlainText("Session code", key);
 		    clipboard.setPrimaryClip(clip);
-		    Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+		    Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
 	    }
 	}
 	
 	public void startFoodRun(View view) {
-    	//TODO check if boxes are empty and make sure a session code's been generated
-    	Intent intent = new Intent(this, GettingFoodActivity.class);
-    	startActivity(intent);
+		String restaurant = ((EditText)findViewById(R.id.txtGettingRestaurant)).getText().toString();
+		String location = ((EditText)findViewById(R.id.txtGettingLocation)).getText().toString();
+		String key = ((EditText)findViewById(R.id.txtKeyBox)).getText().toString();
+		
+		//Make sure that the required information isn't missing
+		if(restaurant.trim().length() > 0 && location.trim().length() > 0){
+			Intent intent = new Intent(this, GettingFoodActivity.class);
+			
+			//If we don't have a session key yet, create a new one, otherwise use the current one.
+			if(key.trim().isEmpty())
+				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location));
+			else intent.putExtra(getString(R.string.curSessionKey_identifier), key);
+			
+			intent.putExtra(getString(R.string.curSessionRestaurant_identifier), restaurant);
+			intent.putExtra(getString(R.string.curSessionLocation_identifier), location);
+			startActivity(intent);
+		} else if(restaurant.trim().length() > 0){
+			((EditText)findViewById(R.id.txtGettingRestaurant)).setError(getString(R.string.error_gettingFood_restaurantEmpty));
+		} else if(location.trim().length() > 0){
+			((EditText)findViewById(R.id.txtGettingLocation)).setError(getString(R.string.error_gettingFood_locationEmpty));
+		}
 	}
 }
