@@ -10,13 +10,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 public class GettingFoodActivity extends AppCompatActivity {
 	
@@ -56,6 +60,23 @@ public class GettingFoodActivity extends AppCompatActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_getting_food, menu);
 		return true;
+	}
+	
+	public void displayMenu(View view) {
+		PopupMenu popupMenu = new PopupMenu(this, view);
+		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+				if(menuItem.getTitle().toString().equals("Sign Out")){
+					FirebaseHandler.signOutCurrentUser();
+					finish();
+				}
+				return true;
+			}
+		});
+		
+		popupMenu.show();
 	}
 	
 	

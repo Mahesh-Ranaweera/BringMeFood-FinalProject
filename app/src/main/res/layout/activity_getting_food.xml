@@ -22,10 +22,28 @@
 			android:layout_height="?attr/actionBarSize"
 			android:layout_weight="1"
 			android:background="@drawable/getting_food_bg_gradient"
-			app:layout_scrollFlags="scroll|enterAlways"
-			app:popupTheme="@style/PopupOverlay"
-			app:title="@string/getting_food">
-		
+			app:layout_scrollFlags="scroll|enterAlways">
+			<ImageButton
+				android:id="@+id/mainMenuButton"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="@android:color/transparent"
+				android:onClick="displayMenu"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:srcCompat="@drawable/ic_menu_black_24dp" />
+			
+			<TextView
+				android:id="@+id/windowTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="8dp"
+				android:text="@string/getting_food"
+				android:textColor="@android:color/white"
+				android:textSize="24sp"
+				app:layout_constraintStart_toEndOf="@+id/mainMenuButton"
+				app:layout_constraintTop_toTopOf="parent" />
 			
 		</android.support.v7.widget.Toolbar>
 	

@@ -5,9 +5,11 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +38,23 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 //        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
 //        restList.setAdapter(adapter);
     }
+	
+	public void displayMenu(View view) {
+		PopupMenu popupMenu = new PopupMenu(this, view);
+		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+				if(menuItem.getTitle().toString().equals("Sign Out")){
+					FirebaseHandler.signOutCurrentUser();
+					finish();
+				}
+				return true;
+			}
+		});
+		
+		popupMenu.show();
+	}
     
     public void generateSessionKey(View view) {
 	    EditText keybox = findViewById(R.id.txtKeyBox);
@@ -57,6 +76,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 	}
 	
 	public void startFoodRun(View view) {
+    	//TODO check if boxes are empty and make sure a session code's been generated
     	Intent intent = new Intent(this, GettingFoodActivity.class);
     	startActivity(intent);
 	}
