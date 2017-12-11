@@ -155,7 +155,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:background="@drawable/btn_primary_app"
-                android:text="Find Delivery Agent" />
+                android:text="Find Delivery Agent"
+                android:onClick="deliveryAgentPage"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -36,7 +36,6 @@ import java.util.Locale;
 
 public class NeedFoodActivity extends AppCompatActivity {
 
-    TextView windowTxt;
     ImageButton mainMenu;
     EditText txtDeliveryLocation;
     ImageButton btnGetCurrLoc;
@@ -54,16 +53,11 @@ public class NeedFoodActivity extends AppCompatActivity {
     //NeedData object
     NeedData needData;
 
-    //start activity for data
-    static final int GET_DATA = 20;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_need_food);
 
-        windowTxt = (TextView) findViewById(R.id.windowTitle);
-        windowTxt.setText("Want Food");
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
         txtDeliveryLocation = (EditText) findViewById(R.id.txtDelivery);
         btnGetCurrLoc = (ImageButton) findViewById(R.id.btnGetCurrLoc);
@@ -123,6 +117,10 @@ public class NeedFoodActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+    * Order page intent
+     */
     public void orderListPage(View v){
         Intent displayListPage = new Intent(this, CreateOrderList.class);
         displayListPage.putExtra("CURARR", USERFOODARR);
@@ -130,7 +128,7 @@ public class NeedFoodActivity extends AppCompatActivity {
     }
 
     /*
-    * Handle activity retrun result
+    * Handle activity return result
      */
 
     @Override
@@ -189,5 +187,11 @@ public class NeedFoodActivity extends AppCompatActivity {
         });
     }
 
-
+    /*
+    * Order page intent
+     */
+    public void deliveryAgentPage(View v){
+        Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
+        startActivity(deliveryAgent);
+    }
 }
