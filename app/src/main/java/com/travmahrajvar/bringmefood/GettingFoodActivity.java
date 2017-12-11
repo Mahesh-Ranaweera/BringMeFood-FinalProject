@@ -1,11 +1,13 @@
 package com.travmahrajvar.bringmefood;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +15,7 @@ import android.widget.PopupMenu;
 
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
-public class GettingFoodActivity extends AppCompatActivity {
+public class GettingFoodActivity extends AppCompatActivity implements GettingFoodFragment_SessionInfo.OnFragmentInteractionListener, GettingFoodFragment_PendingUsers.OnFragmentInteractionListener, GettingFoodFragment_ApprovedUsers.OnFragmentInteractionListener {
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -68,6 +70,12 @@ public class GettingFoodActivity extends AppCompatActivity {
 		});
 		
 		popupMenu.show();
+	}
+	
+	@Override
+	public void onFragmentInteraction(Uri uri) {
+		//Don't really know why this is needed, but the activity crashes without it, so... Here it is.
+		Log.i("GettingFoodActivity", "OnFragmentInteraction fired: " + uri.toString());
 	}
 	
 	
