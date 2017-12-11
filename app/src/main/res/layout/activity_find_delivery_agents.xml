@@ -93,12 +93,14 @@
                         android:gravity="center_horizontal">
 
                         <CheckBox
+                            android:id="@+id/checkLocation"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Location"
                             android:layout_weight="1"/>
 
                         <CheckBox
+                            android:id="@+id/checkRestaurant"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Restaurant"
@@ -115,7 +117,7 @@
                             android:layout_height="48dp">
 
                             <ImageButton
-                                android:id="@+id/btnGetCurrLoc"
+                                android:id="@+id/btnSearchAgents"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:src="@drawable/ic_search_black_24dp"
@@ -129,7 +131,7 @@
                             android:paddingLeft="6dp">
 
                             <EditText
-                                android:id="@+id/txtDelivery"
+                                android:id="@+id/txtAgentSearch"
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:padding="10dp"
