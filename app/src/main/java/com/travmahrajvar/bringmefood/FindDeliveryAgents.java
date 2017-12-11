@@ -31,15 +31,22 @@ public class FindDeliveryAgents extends AppCompatActivity {
     ImageButton btnSearchAgents;
     EditText txtAgentSearch;
 
-    //ArrayList
-    private ArrayList<String> agentsArr;
+    //ArrayAdapter
+    ArrayAdapter<String> arrayAdapter;
+
+    //ArrayLists
+    ArrayList<String> location;
+    ArrayList<String> getterID;
+    ArrayList<String> restaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_delivery_agents);
 
-        agentsArr = new ArrayList<>();
+        location = new ArrayList<>();
+        getterID = new ArrayList<>();
+        restaurant = new ArrayList<>();
 
         mRef = FirebaseDatabase.getInstance().getReference().child("getting");
 
@@ -50,7 +57,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
         txtAgentSearch = (EditText) findViewById(R.id.txtAgentSearch);
 
         //listview
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, agentsArr);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, location);
         listAgents.setAdapter(arrayAdapter);
 
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,10 +75,6 @@ public class FindDeliveryAgents extends AppCompatActivity {
     }
 
     private void collectGetters(Map<String, Object> getters){
-        ArrayList<String> location = new ArrayList<>();
-        ArrayList<String> getterID = new ArrayList<>();
-        ArrayList<String> restaurant = new ArrayList<>();
-
         //iterate through the recieved objects
         for(Map.Entry<String, Object> entry : getters.entrySet()){
             Map row = (Map) entry.getValue();
@@ -80,6 +83,8 @@ public class FindDeliveryAgents extends AppCompatActivity {
             restaurant.add((String) row.get("restaurant"));
         }
 
+        //update the arrayadapter
+        arrayAdapter.notifyDataSetChanged();
 
         System.out.println(location.toString());
     }
