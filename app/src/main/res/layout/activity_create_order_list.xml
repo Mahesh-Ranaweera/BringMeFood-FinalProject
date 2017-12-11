@@ -89,6 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="8dp"
+                            android:background="@drawable/btn_secondary_app"
                             tools:layout_editor_absoluteX="8dp"/>
                     </LinearLayout>
 

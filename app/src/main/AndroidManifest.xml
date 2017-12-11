@@ -1,104 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.travmahrajvar.bringmefood">
-	
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	
-	<application
-		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
-		android:roundIcon="@mipmap/ic_launcher_round"
-		android:supportsRtl="true"
-		android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-		
-		<!--
+    package="com.travmahrajvar.bringmefood">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <!--
         Used for Facebook login.
 		Used in accordance with https://developers.facebook.com/docs/facebook-login/android
         -->
-		<meta-data
-			android:name="com.facebook.sdk.ApplicationId"
-			android:value="@string/facebook_app_id" />
-		
-		<!--         Used for google location -->
-		<meta-data
-			android:name="com.google.android.geo.API_KEY"
-			android:value="@string/google_maps_key" />
-		
-		<activity
-			android:name="com.facebook.FacebookActivity"
-			android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-			android:label="@string/app_name" />
-		<activity
-			android:name="com.facebook.CustomTabActivity"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				
-				<data android:scheme="@string/fb_login_protocol_scheme" />
-			</intent-filter>
-		</activity>
-		<!-- End Facebook login -->
-		
-		
-		<!--
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- Used for google location -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <!-- End Facebook login -->
+
+
+        <!--
             Used for the Firebase notification service
             Referenced from: https://firebase.google.com/docs/cloud-messaging/android/client
         -->
-		<service android:name=".utils.NotificationServices">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT" />
-			</intent-filter>
-		</service>
-		<service android:name=".utils.NotificationInstanceIDServices">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-			</intent-filter>
-		</service>
-		
-		<meta-data
-			android:name="com.google.firebase.messaging.default_notification_color"
-			android:resource="@color/colorAccent" />
-		<!-- End Firebase notifications -->
-		
-		<activity
-			android:name=".WelcomeActivity"
-			android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".SignUpActivity"
-			android:configChanges="orientation"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".GettingFoodPreparationActivity"
-			android:configChanges="orientation"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".NeedFoodActivity"
-			android:configChanges="orientation"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".ChoiceSelect"
-			android:configChanges="orientation"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".CreateOrderList"
-			android:configChanges="orientation"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".GettingFoodActivity"
-			android:label="@string/title_activity_getting_food"
-			android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-	</application>
+        <service android:name=".utils.NotificationServices">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".utils.NotificationInstanceIDServices">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <!-- End Firebase notifications -->
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GettingFoodPreparationActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NeedFoodActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChoiceSelect"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateOrderList"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GettingFoodActivity"
+            android:label="@string/title_activity_getting_food"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".FindDeliveryAgents"></activity>
+    </application>
 
 </manifest>
