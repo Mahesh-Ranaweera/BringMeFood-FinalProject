@@ -1,14 +1,24 @@
 package com.travmahrajvar.bringmefood.utils;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
+import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Travis on 07/11/17.
@@ -85,9 +95,64 @@ public class FirebaseHandler {
 	
 	//region Database
 	
+	/**
+	 * Puts the newly created user's name and email into the public listing of users.
+	 *
+	 * @param fbUser The Firebase user object (should only be called when a user profile is created)
+	 */
 	public static void putPublicUserInfoInDatabase(FirebaseUser fbUser){
 		UserInfo user = UserInfo.createFromFirebaseUser(fbUser);
 		fbDatabaseReference.child("users").child(fbUser.getUid()).setValue(user);
+	}
+	
+	/**
+	 * Creates a new food-getting session for the currently authenticated user.
+	 *
+	 * @param restaurant The restaurant the user is going to
+	 * @param location The location of the restaurant the user is going to
+	 * @return The UID of the new food-getting session
+	 */
+	public static String createGettingFoodSession(String restaurant, String location){
+		DatabaseReference dbr = fbDatabaseReference.child("getting");
+		String key = dbr.push().getKey();
+		removePreviousGettingFoodSessions(dbr, key);
+		
+		
+		Map<String, Object> newGetFoodSession = new HashMap<>();
+		Map<String, Object> newGetFoodSession_children = new HashMap<>();
+		
+		newGetFoodSession_children.put("getter", getCurrentUser().getUid());
+		newGetFoodSession_children.put("restaurant", restaurant);
+		newGetFoodSession_children.put("location", location);
+		
+		
+		newGetFoodSession.put("/" + key + "/", newGetFoodSession_children);
+		
+		dbr.updateChildren(newGetFoodSession);
+		
+		return key;
+	}
+	
+	/**
+	 * Removes any possible previous session codes the current user may have,
+	 *  so that when friends query if this user is getting food,
+	 *  no leftover sessions come up instead of the current one.
+	 *
+	 * @param dbr The current reference to the "getting" section of the database
+	 */
+	private static void removePreviousGettingFoodSessions(DatabaseReference dbr, final String generatedKey){
+		fbDatabaseReference.child("getting").orderByChild("getter").equalTo(getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+					if(!snapshot.getKey().equals(generatedKey))
+						snapshot.getRef().removeValue();
+				}
+			}
+			
+			@Override
+			public void onCancelled(DatabaseError databaseError) { }
+		});
 	}
 	
 	//endregion

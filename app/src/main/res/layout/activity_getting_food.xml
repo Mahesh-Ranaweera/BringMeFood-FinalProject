@@ -81,6 +81,7 @@
                     android:text="Restaurant Name:"/>
 
                 <EditText
+	                android:id="@+id/txtGettingRestaurant"
                     android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -95,6 +96,7 @@
                     android:text="Restaurant Location:"/>
 
                 <EditText
+	                android:id="@+id/txtGettingLocation"
                     android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -126,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
                     android:gravity="center_vertical"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:text="Update list"/>
 
                 <Button
@@ -134,7 +136,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_secondary_app"
-                    android:text="Generate Key"/>
+                    android:onClick="generateSessionKey"
+                    android:text="Get Key"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -149,6 +152,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             app:srcCompat="@drawable/ic_content_copy_black_24dp"
+	                        android:onClick="copyKeyToClipboard"
                             android:background="@drawable/btn_secondary_app"/>
                     </LinearLayout>
 
@@ -160,6 +164,7 @@
                         android:paddingEnd="6dp">
 
                         <EditText
+	                        android:id="@+id/txtKeyBox"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:padding="10dp"
@@ -185,7 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_primary_app"
-                    android:text="Find Delivery Agent" />
+                    android:text="Start the food run" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
