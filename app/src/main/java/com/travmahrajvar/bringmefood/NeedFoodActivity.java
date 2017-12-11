@@ -25,7 +25,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.travmahrajvar.bringmefood.utils.NeedData;
+
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +48,11 @@ public class NeedFoodActivity extends AppCompatActivity {
     Geocoder geocoder;
     List<Address> addresses;
 
+    //order list
+    ArrayList<String> USERFOODARR;
+
+    //NeedData object
+    NeedData needData;
 
     //start activity for data
     static final int GET_DATA = 20;
@@ -57,6 +67,9 @@ public class NeedFoodActivity extends AppCompatActivity {
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
         txtDeliveryLocation = (EditText) findViewById(R.id.txtDelivery);
         btnGetCurrLoc = (ImageButton) findViewById(R.id.btnGetCurrLoc);
+
+        //declare food array
+        USERFOODARR = new ArrayList<>();
 
         geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -112,19 +125,23 @@ public class NeedFoodActivity extends AppCompatActivity {
 
     public void orderListPage(View v){
         Intent displayListPage = new Intent(this, CreateOrderList.class);
-        startActivityForResult(displayListPage, GET_DATA);
+        displayListPage.putExtra("CURARR", USERFOODARR);
+        startActivityForResult(displayListPage, 1);
     }
 
     /*
     * Handle activity retrun result
      */
-    protected void onActivtyResult(int reqCode, int resCode, Intent data){
-        //onActivtyResult(resCode, resCode, data);
 
-        if(reqCode == GET_DATA){
-            if(resCode == RESULT_OK){
-                //get data from list
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                Bundle bundle = data.getExtras();
+                USERFOODARR = (ArrayList<String>) bundle.getSerializable("USERFOODLIST");
+                Log.i("arr", "size"+USERFOODARR.size());
             }
         }
     }

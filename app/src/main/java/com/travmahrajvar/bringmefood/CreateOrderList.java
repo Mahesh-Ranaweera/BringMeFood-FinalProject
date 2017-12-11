@@ -1,5 +1,6 @@
 package com.travmahrajvar.bringmefood;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +31,9 @@ public class CreateOrderList extends AppCompatActivity {
         listOrder = (ListView) findViewById(R.id.listOrder);
 
         //set the array for storing food list
-        foodListArray = new ArrayList<>();
+        foodListArray = new ArrayList<String>();
 
+        foodListArray = (ArrayList<String>) getIntent().getSerializableExtra("CURARR");
 
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, foodListArray);
         listOrder.setAdapter(arrayAdapter);
@@ -71,6 +73,12 @@ public class CreateOrderList extends AppCompatActivity {
     * Close activity
      */
     public void finishActivityList(View v){
+        Intent result = new Intent();
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("USERFOODLIST", foodListArray);
+        result.putExtras(bundle);
+        setResult(RESULT_OK, result);
         finish();
     }
 
