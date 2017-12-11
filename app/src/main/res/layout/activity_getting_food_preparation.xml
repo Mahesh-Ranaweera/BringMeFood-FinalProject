@@ -109,27 +109,33 @@
                     android:layout_height="48dp"
                     android:orientation="horizontal">
                 </LinearLayout>
+	
+	            <!--
+				Should this be on this page or the next one,
+				 the one with the tabs?
+				 
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="28dp"
+					android:gravity="center_vertical"
+					android:textSize="16sp"
+					android:text="Notify People:"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Notify People:"/>
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:background="@drawable/btn_secondary_app"
+					android:text="Notify friends..."/>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/btn_secondary_app"
-                    android:text="Notify friends..."/>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Update list"/>
+				 -->
+	    
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="28dp"
+					android:gravity="center_vertical"
+					android:textSize="16sp"
+					android:text="Update list"/>
+					
 
                 <Button
                     android:layout_marginBottom="10dp"
@@ -137,7 +143,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/btn_secondary_app"
                     android:onClick="generateSessionKey"
-                    android:text="Get Key"/>
+                    android:text="Get shareable code"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
