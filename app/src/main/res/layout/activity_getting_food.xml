@@ -1,197 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.travmahrajvar.bringmefood.GettingFoodActivity">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/main_content"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
+	tools:context="com.travmahrajvar.bringmefood.GettingFoodActivity">
+	
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="0dp"
+		android:theme="@style/AppBarOverlay">
+		
+		
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:layout_weight="1"
+			android:background="@drawable/getting_food_bg_gradient"
+			app:layout_scrollFlags="scroll|enterAlways"
+			app:popupTheme="@style/PopupOverlay"
+			app:title="@string/getting_food">
+		
+			
+		</android.support.v7.widget.Toolbar>
+	
+	</android.support.design.widget.AppBarLayout>
+	
+	<android.support.v4.view.ViewPager
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		
+		<android.support.v4.view.PagerTitleStrip
+			android:id="@+id/pager_title_strip"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top"
+			android:background="@drawable/getting_food_bg_gradient"
+			android:textColor="#fff"
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp" />
+		
+	</android.support.v4.view.ViewPager>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:background="@drawable/getting_food_bg_gradient">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/mainMenuButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@android:color/transparent"
-                    android:onClick="displayMenu"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_menu_black_24dp" />
-
-                <TextView
-                    android:id="@+id/windowTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/getting_food"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/mainMenuButton"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="68dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center"
-                android:text="@string/order_info"/>
-        </android.support.v7.widget.CardView>
-
-        <RelativeLayout
-            android:layout_marginTop="136dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Restaurant Name:"/>
-
-                <EditText
-	                android:id="@+id/txtGettingRestaurant"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    android:background="@drawable/btn_secondary_app"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Restaurant Location:"/>
-
-                <EditText
-	                android:id="@+id/txtGettingLocation"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    android:background="@drawable/btn_secondary_app"/>
-
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:orientation="horizontal">
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Notify People:"/>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/btn_secondary_app"
-                    android:text="Notify friends..."/>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="Update list"/>
-
-                <Button
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/btn_secondary_app"
-                    android:onClick="generateSessionKey"
-                    android:text="Get Key"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:gravity="end"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp">
-
-                        <ImageButton
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            app:srcCompat="@drawable/ic_content_copy_black_24dp"
-	                        android:onClick="copyKeyToClipboard"
-                            android:background="@drawable/btn_secondary_app"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:gravity="start"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp">
-
-                        <EditText
-	                        android:id="@+id/txtKeyBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:padding="10dp"
-                            android:background="@drawable/btn_secondary_app"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:orientation="horizontal">
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="View all orders:"/>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/btn_primary_app"
-                    android:text="Start the food run" />
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
-</ScrollView>
+</android.support.design.widget.CoordinatorLayout>

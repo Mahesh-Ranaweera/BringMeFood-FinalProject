@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
-import com.travmahrajvar.bringmefood.utils.NotificationServices;
 
 public class ChoiceSelect extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class ChoiceSelect extends AppCompatActivity {
 	 * @param v
 	 */
     public void gettingFood(View v){
-        Intent getFoodPage = new Intent(this, GettingFoodActivity.class);
+        Intent getFoodPage = new Intent(this, GettingFoodPreparationActivity.class);
         startActivity(getFoodPage);
 
     }
