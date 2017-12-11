@@ -3,11 +3,14 @@ package com.travmahrajvar.bringmefood;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +32,8 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
     //ui import
     ListView listAgents;
-    CheckBox checkLocation, checkRestaurant;
+    RadioGroup selectionRadio;
+    RadioButton choice;
     ImageButton btnSearchAgents;
     EditText txtAgentSearch;
 
@@ -52,8 +56,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference().child("getting");
 
         listAgents = (ListView) findViewById(R.id.listAgents);
-        checkLocation = (CheckBox) findViewById(R.id.checkLocation);
-        checkRestaurant = (CheckBox) findViewById(R.id.checkRestaurant);
+        selectionRadio = (RadioGroup) findViewById(R.id.selectionGroup);
         btnSearchAgents = (ImageButton) findViewById(R.id.btnSearchAgents);
         txtAgentSearch = (EditText) findViewById(R.id.txtAgentSearch);
 
@@ -88,5 +91,20 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
         //update the agentadapter
         agentAdapter.notifyDataSetChanged();
+    }
+
+    public void searchAgents(View v){
+        int selected = selectionRadio.getCheckedRadioButtonId();
+        choice = (RadioButton) findViewById(selected);
+
+        Log.i("radio", "radioID: "+selected);
+
+        if(selected == 2131296312){
+
+        }else if(selected == 2131296313){
+
+        }else{
+
+        }
     }
 }
