@@ -29,7 +29,12 @@ public class NotificationServices extends FirebaseMessagingService {
 	@Override
 	public void onMessageReceived(RemoteMessage message){
 		Log.d("Messaging", message.getFrom());
-		
+
+		//remove please
+		String value = message.getData().get("payload");
+		Log.d("payload", "NotiPayload" + value);
+
+
 		if(message.getNotification() != null){
 			notifyUser(message.getNotification().getBody());
 		}

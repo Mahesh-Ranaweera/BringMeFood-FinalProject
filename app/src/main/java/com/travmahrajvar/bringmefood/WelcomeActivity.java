@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -62,6 +63,9 @@ public class WelcomeActivity extends AppCompatActivity {
 		//Initialize the sign in buttons
 		initializeGoogleSignInButton();
 		initializeFacebookSignInButton();
+
+		//log the notifcation id
+		Log.d("tokenlog", "Curr token:"+ FirebaseInstanceId.getInstance().getToken());
 	}
 	
 	@Override
