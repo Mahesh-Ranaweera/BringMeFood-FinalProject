@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 
     Spinner restList;
     ArrayAdapter<String> adapter;
+    private String deviceTocken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 
 //        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
 //        restList.setAdapter(adapter);
+
+		deviceTocken = FirebaseInstanceId.getInstance().getToken();
     }
     
     public void generateSessionKey(View view) {
@@ -44,7 +48,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 	    String restaurant = ((EditText)findViewById(R.id.txtGettingRestaurant)).getText().toString();
 	    String location = ((EditText)findViewById(R.id.txtGettingLocation)).getText().toString();
 	    
-	    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location));
+	    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken));
     }
 	
 	public void copyKeyToClipboard(View view) {
@@ -69,7 +73,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 			
 			//If we don't have a session key yet, create a new one, otherwise use the current one.
 			if(key.trim().isEmpty())
-				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location));
+				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken));
 			else intent.putExtra(getString(R.string.curSessionKey_identifier), key);
 			
 			intent.putExtra(getString(R.string.curSessionRestaurant_identifier), restaurant);

@@ -65,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
 		initializeFacebookSignInButton();
 
 		//log the notifcation id
-		Log.d("tokenlog", "Curr token:"+ FirebaseInstanceId.getInstance().getToken());
+		//Log.d("tokenlog", "Curr token:"+ FirebaseInstanceId.getInstance().getToken());
 	}
 	
 	@Override

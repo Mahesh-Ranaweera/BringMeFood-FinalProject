@@ -31,11 +31,15 @@ public class NotificationServices extends FirebaseMessagingService {
 		Log.d("Messaging", message.getFrom());
 
 		//remove please
-		String value = message.getData().get("payload");
-		Log.d("payload", "NotiPayload" + value);
+		//String value = message.getData().get("payload");
+		//Log.d("payload", "NotiPayload" + value);
 
 
-		if(message.getNotification() != null){
+//		if(message.getNotification() != null){
+//			notifyUser(message.getNotification().getBody());
+//		}
+
+		if(message.getData().get("payload") != null){
 			notifyUser(message.getNotification().getBody());
 		}
 	}
