@@ -35,9 +35,7 @@ public class Agents {
         this.userID = userID;
     }
 
-    public String getResturant() {
-        return resturant;
-    }
+    public String getResturant() {return resturant;}
 
     public void setResturant(String resturant) {
         this.resturant = resturant;

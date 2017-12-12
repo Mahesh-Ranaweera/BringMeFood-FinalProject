@@ -1,24 +1,15 @@
 package com.travmahrajvar.bringmefood;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,65 +18,51 @@ import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.utils.AgentAdapter;
 import com.travmahrajvar.bringmefood.utils.Agents;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
+import com.travmahrajvar.bringmefood.utils.UserAdapter;
+import com.travmahrajvar.bringmefood.utils.Users;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-public class FindDeliveryAgents extends AppCompatActivity {
+public class FriendManageList extends AppCompatActivity {
 
     //firebase stuff
     private DatabaseReference mRef;
 
     //ui import
-    ListView listAgents;
-    RadioGroup selectionRadio;
-    RadioButton choice;
-    ImageButton btnSearchAgents;
-    EditText txtAgentSearch;
+    ListView listUsers;
 
-    //ArrayAdapter
-    AgentAdapter agentAdapter;
+    //Array adapter
+    ArrayAdapter userAdapter;
 
     //Agent arraylist
-    ArrayList<Agents> agents;
-    Agents agent;
+    ArrayList<Users> userslist;
+    Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_delivery_agents);
+        setContentView(R.layout.activity_friend_manage_list);
 
         //set the agents array
-        agents = new ArrayList<Agents>();
+        userslist = new ArrayList<Users>();
 
         //access getting table
-        mRef = FirebaseDatabase.getInstance().getReference().child("getting");
+        mRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-        listAgents = (ListView) findViewById(R.id.listAgents);
-        selectionRadio = (RadioGroup) findViewById(R.id.selectionGroup);
-        btnSearchAgents = (ImageButton) findViewById(R.id.btnSearchAgents);
-        txtAgentSearch = (EditText) findViewById(R.id.txtAgentSearch);
+        listUsers = (ListView) findViewById(R.id.userListView);
 
         //add adapter to listview
-        agentAdapter = new AgentAdapter(this, agents);
-        listAgents.setAdapter(agentAdapter);
+        userAdapter = new UserAdapter(this, userslist);
+        listUsers.setAdapter(userAdapter);
 
         //listen to db and update list
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.i("dbvalues", "data: "+dataSnapshot.getValue());
+                //Log.i("dbvalues", "users: "+dataSnapshot.getValue());
                 if(dataSnapshot.getValue() != null)
-                    collectGetters((Map<String, Object>) dataSnapshot.getValue());
+                    collectUsers((Map<String, Object>) dataSnapshot.getValue());
             }
 
             @Override
@@ -95,34 +72,26 @@ public class FindDeliveryAgents extends AppCompatActivity {
         });
     }
 
-    private void collectGetters(Map<String, Object> getters){
+    /**
+     * Get users information from the database
+     * @param usersInfo
+     */
+    private void collectUsers(Map<String, Object> usersInfo){
 
         //iterate through the recieved objects
-        for(Map.Entry<String, Object> entry : getters.entrySet()){
-            Map row = (Map) entry.getValue();
+        for(Map.Entry<String, Object> entry : usersInfo.entrySet()){
 
-            //create the agent object
-            agent = new Agents(row.get("getter").toString(), row.get("location").toString(), row.get("restaurant").toString(), row.get("deviceTok").toString(), row.get("gettername").toString());
-            agentAdapter.add(agent);
+            //makesure current user is excluded from the list
+            if(!FirebaseHandler.getCurrentUser().getUid().equals(entry.getKey())){
+                Map row = (Map) entry.getValue();
+                //create the agent object
+                user = new Users(entry.getKey(), row.get("name").toString(), "");
+                userAdapter.add(user);
+            }
         }
 
         //update the agentadapter
-        agentAdapter.notifyDataSetChanged();
-    }
-
-    public void searchAgents(View v){
-        int selected = selectionRadio.getCheckedRadioButtonId();
-        choice = (RadioButton) findViewById(selected);
-
-        Log.i("radio", "radioID: "+selected);
-
-        if(selected == 2131296312){
-
-        }else if(selected == 2131296313){
-
-        }else{
-
-        }
+        userAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -146,7 +115,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
                 //goback to choice page
                 if(menuItem.getTitle().toString().equals(getString(R.string.home))){
                     //close all intents and goto main
-                    Intent mainPage = new Intent(FindDeliveryAgents.this, ChoiceSelect.class);
+                    Intent mainPage = new Intent(FriendManageList.this, ChoiceSelect.class);
                     mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainPage);
                 }
@@ -157,7 +126,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
                     FirebaseHandler.signOutCurrentUser();
 
                     //close all intents and goto main
-                    Intent mainPage = new Intent(FindDeliveryAgents.this, WelcomeActivity.class);
+                    Intent mainPage = new Intent(FriendManageList.this, WelcomeActivity.class);
                     mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainPage);
                     //finish();

@@ -16,20 +16,20 @@
     <string name="enter_password">Enter Password:</string>
     <string name="title_activity_settings">Settings</string>
     <string name="welcome_with_username">Welcome, %s.</string>
-	<string name="sendTo_title">Send to…</string>
-	<string name="sendTo_message">
+    <string name="sendTo_title">Send to…</string>
+    <string name="sendTo_message">
 		I\'m going on a food run to %1$s!\nIf you want to join in, use this code on the Bring Me Food app:\n%2$s
 	</string>
-	<string name="copy">Copy</string>
-	<string name="share">Share</string>
-	<string name="remove">Remove</string>
-	<string name="approve">Approve</string>
-	<string name="deny">Deny</string>
-	
-	<plurals name="wanterAdapter_orderSize">
-		<item quantity="one">Wants %d item.</item>
-		<item quantity="other">Wants %d items.</item>
-	</plurals>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="remove">Remove</string>
+    <string name="approve">Approve</string>
+    <string name="deny">Deny</string>
+
+    <plurals name="wanterAdapter_orderSize">
+        <item quantity="one">Wants %d item.</item>
+        <item quantity="other">Wants %d items.</item>
+    </plurals>
 
     <!-- Strings related to Settings -->
 
@@ -116,28 +116,29 @@
     <string name="placeholder">placeholder</string>
     <string name="restaurant_radio">Restaurant</string>
     <string name="location_radio">Location</string>
-	
-	<string name="clipboard_copied">Copied to clipboard.</string>
-	
-	
-	<string name="error_gettingFood_restaurantEmpty">Please enter a restaurant name.</string>
-	<string name="error_gettingFood_locationEmpty">Please enter a location.</string>
-	
-	<string name="curSessionKey_identifier">SESSION_KEY</string>
-	<string name="curSessionRestaurant_identifier">RESTAURANT_NAME</string>
-	<string name="curSessionLocation_identifier">LOCATION_NAME</string>
-	<string name="menu_home">Home</string>
-	<string name="menu_userInfo">User Info</string>
-	<string name="menu_signOut">Sign Out</string>
-	<string name="gettingFood_sessionInfo_label1">You are going to:</string>
-	<string name="gettingFood_sessionInfo_label2_placeholder">{restaurant} at {location}</string>
-	<string name="gettingFood_sessionInfo_label2">%1$s at %2$s</string>
-	<string name="gettingFood_sessionInfo_label3">Shareable code:</string>
-	<string name="gettingFood_sessionInfo_label_code_placeholder">{code}</string>
-	<string name="gettingFood_tab1">Information</string>
-	<string name="gettingFood_tab2">Approved users</string>
-	<string name="gettingFood_tab3">Pending users</string>
+
+    <string name="clipboard_copied">Copied to clipboard.</string>
+
+
+    <string name="error_gettingFood_restaurantEmpty">Please enter a restaurant name.</string>
+    <string name="error_gettingFood_locationEmpty">Please enter a location.</string>
+
+    <string name="curSessionKey_identifier">SESSION_KEY</string>
+    <string name="curSessionRestaurant_identifier">RESTAURANT_NAME</string>
+    <string name="curSessionLocation_identifier">LOCATION_NAME</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_userInfo">User Info</string>
+    <string name="menu_signOut">Sign Out</string>
+    <string name="gettingFood_sessionInfo_label1">You are going to:</string>
+    <string name="gettingFood_sessionInfo_label2_placeholder">{restaurant} at {location}</string>
+    <string name="gettingFood_sessionInfo_label2">%1$s at %2$s</string>
+    <string name="gettingFood_sessionInfo_label3">Shareable code:</string>
+    <string name="gettingFood_sessionInfo_label_code_placeholder">{code}</string>
+    <string name="gettingFood_tab1">Information</string>
+    <string name="gettingFood_tab2">Approved users</string>
+    <string name="gettingFood_tab3">Pending users</string>
     <string name="go_back">Go Back</string>
     <string name="home">Home</string>
     <string name="fcm_api_key">key=AAAAS9tU0OY:APA91bGXXPPIeVWF54HeQEO8b1hh7jN1BJWcJ-IKN5F4LJoDuOopGp70ZHtCkj8FfR2JjbFEBbgZaushua0Kt-6iO11a51ebvZ_kz0NAg60PyM8WHnrhGV-pPxAoALh--SpdGf4Dkhw9</string>
+    <string name="order_list_info">You have %1$d items in your order</string>
 </resources>

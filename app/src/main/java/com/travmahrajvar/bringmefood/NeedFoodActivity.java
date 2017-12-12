@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
@@ -31,6 +32,7 @@ public class NeedFoodActivity extends AppCompatActivity {
 
     ImageButton mainMenu;
     EditText txtDeliveryLocation;
+    TextView txtOrderInfo;
     ImageButton btnGetCurrLoc;
 
     //handle the google maps
@@ -53,10 +55,14 @@ public class NeedFoodActivity extends AppCompatActivity {
 
         mainMenu = (ImageButton) findViewById(R.id.mainMenuButton);
         txtDeliveryLocation = (EditText) findViewById(R.id.txtDelivery);
+        txtOrderInfo = (TextView) findViewById(R.id.txtOrderInfo);
         btnGetCurrLoc = (ImageButton) findViewById(R.id.btnGetCurrLoc);
 
         //declare food array
         USERFOODARR = new ArrayList<>();
+
+        //update the food list info
+        updateFoodInfo();
 
         geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -133,6 +139,9 @@ public class NeedFoodActivity extends AppCompatActivity {
                 Bundle bundle = data.getExtras();
                 USERFOODARR = (ArrayList<String>) bundle.getSerializable("USERFOODLIST");
                 Log.i("arr", "size"+USERFOODARR.size());
+
+                //update the foodlist info
+                updateFoodInfo();
             }
         }
     }
@@ -179,6 +188,15 @@ public class NeedFoodActivity extends AppCompatActivity {
             Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
             startActivity(deliveryAgent);
         }
+    }
+
+    /**
+     * Update the amount of food in the list
+     */
+    public void updateFoodInfo(){
+        //set the food list info
+        String infotxt = getString(R.string.order_list_info, USERFOODARR.size());
+        txtOrderInfo.setText(infotxt);
     }
 
     /**

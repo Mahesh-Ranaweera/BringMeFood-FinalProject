@@ -99,7 +99,8 @@
             android:name=".GettingFoodActivity"
             android:label="@string/title_activity_getting_food"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".FindDeliveryAgents"></activity>
+        <activity android:name=".FindDeliveryAgents" />
+        <activity android:name=".FriendManageList"></activity>
     </application>
 
 </manifest>

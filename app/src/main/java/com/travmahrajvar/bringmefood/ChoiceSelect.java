@@ -58,8 +58,15 @@ public class ChoiceSelect extends AppCompatActivity {
         Intent getNeedPage = new Intent(this, NeedFoodActivity.class);
         startActivity(getNeedPage);
     }
-	
-	
+
+	/**
+	 * Action for Adding Managing friends
+	 */
+	public void manageFriends(View v){
+		Intent getFriendPage = new Intent(this, FriendManageList.class);
+		startActivity(getFriendPage);
+	}
+
 	/**
 	 * Sets up and displays the sidebar menu
 	 * @param view
