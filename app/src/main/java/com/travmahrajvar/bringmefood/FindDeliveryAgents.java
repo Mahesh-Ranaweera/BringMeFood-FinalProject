@@ -1,6 +1,8 @@
 package com.travmahrajvar.bringmefood;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,7 +83,8 @@ public class FindDeliveryAgents extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.i("dbvalues", "data: "+dataSnapshot.getValue());
-                collectGetters((Map<String, Object>) dataSnapshot.getValue());
+                if(dataSnapshot.getValue() != null)
+                    collectGetters((Map<String, Object>) dataSnapshot.getValue());
             }
 
             @Override
@@ -165,67 +168,67 @@ public class FindDeliveryAgents extends AppCompatActivity {
         popupMenu.show();
     }
 
-    //request the notification
-    public void postRequest(View view){
-        try{
-            String data = new pushNotification().execute().get();
-            Log.i("postreq", data);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //do the async task for notification
-    class pushNotification extends AsyncTask<String, Void, String>{
-
-        public String doInBackground(String... params){
-
-                String getResponse = "";
-
-                String postLink = "https://fcm.googleapis.com/fcm/send";
-
-                try {
-                    URL url = new URL(postLink);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Authorization", "key=<FCM API KEY>");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    JSONObject jsonOut = new JSONObject();
-                    jsonOut.put("to", "<deviceTock from firbase database entry>");
-
-                    //nested message section
-                    JSONObject notificationBody = new JSONObject();
-                    notificationBody.put("body", "Firebase");
-                    notificationBody.put("message", "TestMessage");
-                    notificationBody.put("priority", "10");
-                    jsonOut.put("notification", notificationBody);
-
-                    Log.i("json", jsonOut.toString());
-
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(jsonOut.toString());
-                    os.flush();
-                    os.close();
-
-                    Log.i("MSG", String.valueOf(conn.getResponseCode()));
-                    Log.i("MSG", conn.getResponseMessage());
-                    getResponse = conn.getResponseMessage();
-
-                    conn.disconnect();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                return getResponse;
-        }
-    }
+//    //request the notification
+//    public void postRequest(View view){
+//        try{
+//            String data = new pushNotification().execute().get();
+//            Log.i("postreq", data);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    //do the async task for notification
+//    class pushNotification extends AsyncTask<String, Void, String>{
+//
+//        public String doInBackground(String... params){
+//
+//                String getResponse = "";
+//
+//                String postLink = "https://fcm.googleapis.com/fcm/send";
+//
+//                try {
+//                    URL url = new URL(postLink);
+//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                    conn.setRequestMethod("POST");
+//                    conn.setRequestProperty("Content-Type", "application/json");
+//                    conn.setRequestProperty("Authorization", getString(R.string.fcm_api_key));
+//                    conn.setDoOutput(true);
+//                    conn.setDoInput(true);
+//
+//                    JSONObject jsonOut = new JSONObject();
+//                    jsonOut.put("to", "<deviceTock from firbase database entry>");
+//
+//                    //nested message section
+//                    JSONObject notificationBody = new JSONObject();
+//                    notificationBody.put("body", "Firebase");
+//                    notificationBody.put("message", "TestMessage");
+//                    notificationBody.put("priority", "10");
+//                    jsonOut.put("notification", notificationBody);
+//
+//                    Log.i("json", jsonOut.toString());
+//
+//                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+//                    os.writeBytes(jsonOut.toString());
+//                    os.flush();
+//                    os.close();
+//
+//                    Log.i("MSG", String.valueOf(conn.getResponseCode()));
+//                    Log.i("MSG", conn.getResponseMessage());
+//                    getResponse = conn.getResponseMessage();
+//
+//                    conn.disconnect();
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                return getResponse;
+//        }
+//    }
 }

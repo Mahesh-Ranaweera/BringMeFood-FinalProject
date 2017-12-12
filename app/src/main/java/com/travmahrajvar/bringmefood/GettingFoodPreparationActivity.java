@@ -43,6 +43,11 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 		FirebaseUser user = FirebaseHandler.getCurrentUser();
 		userName = user.getDisplayName();
 
+		//if name is null
+		if(userName == null){
+			userName = "Agent";
+		}
+
 //        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
 //        restList.setAdapter(adapter);
 

@@ -1,6 +1,7 @@
 package com.travmahrajvar.bringmefood.utils;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.travmahrajvar.bringmefood.FindDeliveryAgents;
 import com.travmahrajvar.bringmefood.R;
 import com.travmahrajvar.bringmefood.WelcomeActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by mi6 on 12/11/17.
  */
 
 public class AgentAdapter extends ArrayAdapter<Agents> {
+
+    private String agentDevice;
 
     public AgentAdapter(Context context, ArrayList<Agents> agents){
         super(context, 0, agents);
@@ -47,6 +60,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
         agentReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                postRequest(agent.getAgentTocken());
                 //Log.i("clicked", "adapter click"+agent.getUserID());
                 Toast.makeText(getContext(),"Messaged: "+agent.getAgentName() , Toast.LENGTH_SHORT).show();
             }
@@ -61,4 +75,74 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
         return convertView;
     }
 
+
+    //request the notification
+    public void postRequest(String agentTocken){
+
+        //set the device token
+        agentDevice = agentTocken;
+
+        try{
+            String data = new pushNotification().execute().get();
+            Log.i("postreq", data);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //do the async task for notification
+    class pushNotification extends AsyncTask<String, Void, String> {
+
+        public String doInBackground(String... params){
+
+            String getResponse = "";
+
+            String postLink = "https://fcm.googleapis.com/fcm/send";
+
+            String FCMKEY = getContext().getResources().getString(R.string.fcm_api_key);
+
+            try {
+                URL url = new URL(postLink);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Authorization", FCMKEY);
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                JSONObject jsonOut = new JSONObject();
+                jsonOut.put("to", agentDevice);
+
+                //nested message section
+                JSONObject notificationBody = new JSONObject();
+                notificationBody.put("body", "Firebase");
+                notificationBody.put("message", "TestMessage");
+                notificationBody.put("priority", "10");
+                jsonOut.put("notification", notificationBody);
+
+                Log.i("json", jsonOut.toString());
+
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                os.writeBytes(jsonOut.toString());
+                os.flush();
+                os.close();
+
+                Log.i("MSG", String.valueOf(conn.getResponseCode()));
+                Log.i("MSG", conn.getResponseMessage());
+                getResponse = conn.getResponseMessage();
+
+                conn.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return getResponse;
+        }
+    }
 }
