@@ -45,7 +45,7 @@
 		android:alpha="0.45"
 		android:background="@drawable/primary_text"
 		android:ems="10"
-		android:inputType="textPersonName"
+		android:inputType="textEmailAddress"
 		android:padding="10dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
