@@ -3,7 +3,7 @@ package com.travmahrajvar.bringmefood;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -66,14 +66,20 @@ public class ChoiceSelect extends AppCompatActivity {
 	 */
 	public void displayMenu(View view) {
 		PopupMenu popupMenu = new PopupMenu(this, view);
-		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
+		popupMenu.getMenuInflater().inflate(R.menu.choice_menu_nav, popupMenu.getMenu());
+
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem menuItem) {
 				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
 					//Sign out user
 					FirebaseHandler.signOutCurrentUser();
-					finish();
+
+					//close all intents and goto main
+					Intent mainPage = new Intent(ChoiceSelect.this, WelcomeActivity.class);
+					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mainPage);
+					//finish();
 				}
 				return true;
 			}

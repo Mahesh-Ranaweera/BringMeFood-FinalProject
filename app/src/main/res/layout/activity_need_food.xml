@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/mainMenuButton"
+                    android:id="@+id/mainMenuButton2"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@android:color/transparent"

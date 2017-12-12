@@ -38,24 +38,6 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 //        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
 //        restList.setAdapter(adapter);
     }
-	
-	public void displayMenu(View view) {
-		PopupMenu popupMenu = new PopupMenu(this, view);
-		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
-		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem menuItem) {
-				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
-					//Sign out user
-					FirebaseHandler.signOutCurrentUser();
-					finish();
-				}
-				return true;
-			}
-		});
-		
-		popupMenu.show();
-	}
     
     public void generateSessionKey(View view) {
 	    EditText keybox = findViewById(R.id.txtKeyBox);
@@ -98,5 +80,49 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 		} else if(location.trim().length() > 0){
 			((EditText)findViewById(R.id.txtGettingLocation)).setError(getString(R.string.error_gettingFood_locationEmpty));
 		}
+	}
+
+	/**
+	 * Sets up and displays the sidebar menu
+	 * @param view
+	 */
+	public void displayMenu(View view) {
+		PopupMenu popupMenu = new PopupMenu(this, view);
+		popupMenu.getMenuInflater().inflate(R.menu.global_menu_nav, popupMenu.getMenu());
+
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+
+				//goback to previous page
+				if(menuItem.getTitle().toString().equals(getString(R.string.go_back))){
+					//finish page
+					finish();
+				}
+
+				//goback to choice page
+				if(menuItem.getTitle().toString().equals(getString(R.string.home))){
+					//close all intents and goto main
+					Intent mainPage = new Intent(GettingFoodPreparationActivity.this, ChoiceSelect.class);
+					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mainPage);
+				}
+
+				//page signout
+				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+					//Sign out user
+					FirebaseHandler.signOutCurrentUser();
+
+					//close all intents and goto main
+					Intent mainPage = new Intent(GettingFoodPreparationActivity.this, WelcomeActivity.class);
+					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mainPage);
+					//finish();
+				}
+				return true;
+			}
+		});
+
+		popupMenu.show();
 	}
 }

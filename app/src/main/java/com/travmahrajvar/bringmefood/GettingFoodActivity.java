@@ -11,15 +11,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
-import com.travmahrajvar.bringmefood.utils.PendingAdapter;
-import com.travmahrajvar.bringmefood.utils.WanterAdapter;
 
 public class GettingFoodActivity extends AppCompatActivity
 		implements GettingFoodFragment_SessionInfo.OnFragmentInteractionListener,
@@ -62,24 +59,6 @@ public class GettingFoodActivity extends AppCompatActivity
 		curSessionRestaurant = getIntent().getStringExtra(getString(R.string.curSessionRestaurant_identifier));
 		curSessionLocation = getIntent().getStringExtra(getString(R.string.curSessionLocation_identifier));
 		
-	}
-	
-	public void displayMenu(View view) {
-		PopupMenu popupMenu = new PopupMenu(this, view);
-		popupMenu.getMenuInflater().inflate(R.menu.main_menu_nav, popupMenu.getMenu());
-		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem menuItem) {
-				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
-					//Sign out user
-					FirebaseHandler.signOutCurrentUser();
-					finish();
-				}
-				return true;
-			}
-		});
-		
-		popupMenu.show();
 	}
 	
 	@Override
@@ -143,5 +122,49 @@ public class GettingFoodActivity extends AppCompatActivity
 			// Show 3 total pages.
 			return 3;
 		}
+	}
+
+	/**
+	 * Sets up and displays the sidebar menu
+	 * @param view
+	 */
+	public void displayMenu(View view) {
+		PopupMenu popupMenu = new PopupMenu(this, view);
+		popupMenu.getMenuInflater().inflate(R.menu.global_menu_nav, popupMenu.getMenu());
+
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+
+				//goback to previous page
+				if(menuItem.getTitle().toString().equals(getString(R.string.go_back))){
+					//finish page
+					finish();
+				}
+
+				//goback to choice page
+				if(menuItem.getTitle().toString().equals(getString(R.string.home))){
+					//close all intents and goto main
+					Intent mainPage = new Intent(GettingFoodActivity.this, ChoiceSelect.class);
+					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mainPage);
+				}
+
+				//page signout
+				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+					//Sign out user
+					FirebaseHandler.signOutCurrentUser();
+
+					//close all intents and goto main
+					Intent mainPage = new Intent(GettingFoodActivity.this, WelcomeActivity.class);
+					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mainPage);
+					//finish();
+				}
+				return true;
+			}
+		});
+
+		popupMenu.show();
 	}
 }
