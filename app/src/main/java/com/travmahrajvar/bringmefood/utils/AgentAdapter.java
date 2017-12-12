@@ -1,13 +1,17 @@
 package com.travmahrajvar.bringmefood.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.travmahrajvar.bringmefood.R;
+import com.travmahrajvar.bringmefood.WelcomeActivity;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
     public View getView(int position, View convertView, ViewGroup parent){
 
         //get the item position
-        Agents agent = getItem(position);
+        final Agents agent = getItem(position);
 
         //check current view is used, else use inflator
         if(convertView == null){
@@ -35,9 +39,21 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
         TextView strRestaurant = (TextView) convertView.findViewById(R.id.strRestaurant);
         TextView strAgentName    = (TextView) convertView.findViewById(R.id.strAgentName);
         TextView strLocation   = (TextView) convertView.findViewById(R.id.strAgentLocation);
+        Button agentReqBtn = (Button) convertView.findViewById(R.id.agentReqBtn);
+
+        //set button text dynamically
+        agentReqBtn.setText("Message");
+
+        agentReqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Log.i("clicked", "adapter click"+agent.getUserID());
+                Toast.makeText(getContext(),"Messaged: "+agent.getAgentName() , Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //add values
-        strAgentName.setText(agent.getUserID());
+        strAgentName.setText(agent.getAgentName());
         strLocation.setText(agent.getLocation());
         strRestaurant.setText(agent.getResturant());
 

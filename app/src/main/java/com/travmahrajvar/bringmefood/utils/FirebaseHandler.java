@@ -112,7 +112,7 @@ public class FirebaseHandler {
 	 * @param location The location of the restaurant the user is going to
 	 * @return The UID of the new food-getting session
 	 */
-	public static String createGettingFoodSession(String restaurant, String location, String deviceTocken){
+	public static String createGettingFoodSession(String restaurant, String location, String deviceTocken, String getterName){
 		DatabaseReference dbr = fbDatabaseReference.child("getting");
 		String key = dbr.push().getKey();
 		removePreviousGettingFoodSessions(dbr, key);
@@ -125,6 +125,7 @@ public class FirebaseHandler {
 		newGetFoodSession_children.put("restaurant", restaurant);
 		newGetFoodSession_children.put("location", location);
 		newGetFoodSession_children.put("deviceTok", deviceTocken);
+		newGetFoodSession_children.put("gettername", getterName);
 		
 		
 		newGetFoodSession.put("/" + key + "/", newGetFoodSession_children);

@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
@@ -23,6 +24,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
     Spinner restList;
     ArrayAdapter<String> adapter;
     private String deviceTocken;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,10 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
         list.add("Tim Horton's");
         list.add("McDonald's");
 
+        //get the getter username
+		FirebaseUser user = FirebaseHandler.getCurrentUser();
+		userName = user.getDisplayName();
+
 //        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
 //        restList.setAdapter(adapter);
 
@@ -48,7 +54,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 	    String restaurant = ((EditText)findViewById(R.id.txtGettingRestaurant)).getText().toString();
 	    String location = ((EditText)findViewById(R.id.txtGettingLocation)).getText().toString();
 	    
-	    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken));
+	    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken, userName));
     }
 	
 	public void copyKeyToClipboard(View view) {
@@ -73,7 +79,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 			
 			//If we don't have a session key yet, create a new one, otherwise use the current one.
 			if(key.trim().isEmpty())
-				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken));
+				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location, deviceTocken, userName));
 			else intent.putExtra(getString(R.string.curSessionKey_identifier), key);
 			
 			intent.putExtra(getString(R.string.curSessionRestaurant_identifier), restaurant);

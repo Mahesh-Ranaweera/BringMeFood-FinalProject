@@ -98,7 +98,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
             Map row = (Map) entry.getValue();
 
             //create the agent object
-            agent = new Agents(row.get("getter").toString(), row.get("location").toString(), row.get("restaurant").toString(), row.get("deviceTok").toString());
+            agent = new Agents(row.get("getter").toString(), row.get("location").toString(), row.get("restaurant").toString(), row.get("deviceTok").toString(), row.get("gettername").toString());
             agentAdapter.add(agent);
         }
 

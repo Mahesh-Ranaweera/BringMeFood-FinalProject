@@ -63,9 +63,6 @@ public class WelcomeActivity extends AppCompatActivity {
 		//Initialize the sign in buttons
 		initializeGoogleSignInButton();
 		initializeFacebookSignInButton();
-
-		//log the notifcation id
-		//Log.d("tokenlog", "Curr token:"+ FirebaseInstanceId.getInstance().getToken());
 	}
 	
 	@Override
