@@ -167,8 +167,18 @@ public class NeedFoodActivity extends AppCompatActivity {
     * Order page intent
      */
     public void deliveryAgentPage(View v){
-        Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
-        startActivity(deliveryAgent);
+        //add the food list to firebase database:: check whether user have a food list
+        boolean foodEmpty = USERFOODARR.isEmpty();
+        if(foodEmpty == true){
+            Toast.makeText(NeedFoodActivity.this, "You don't have a order list",Toast.LENGTH_SHORT).show();
+        }else{
+            //TODO Need to remove the food list after order is recieved
+            //add foodlist to firebase and goto find agents page
+            FirebaseHandler.addRequiredFoodList(USERFOODARR);
+
+            Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
+            startActivity(deliveryAgent);
+        }
     }
 
     /**
