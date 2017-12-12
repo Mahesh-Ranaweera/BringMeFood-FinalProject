@@ -180,10 +180,12 @@ public class NeedFoodActivity extends AppCompatActivity {
         boolean foodEmpty = USERFOODARR.isEmpty();
         if(foodEmpty == true){
             Toast.makeText(NeedFoodActivity.this, "You don't have a order list",Toast.LENGTH_SHORT).show();
+        }else if (txtDeliveryLocation.getText().toString().trim().length() == 0){
+            Toast.makeText(NeedFoodActivity.this, "Set your delivery location",Toast.LENGTH_SHORT).show();
         }else{
             //TODO Need to remove the food list after order is recieved
             //add foodlist to firebase and goto find agents page
-            FirebaseHandler.addRequiredFoodList(USERFOODARR);
+            FirebaseHandler.addRequiredFoodList(USERFOODARR, txtDeliveryLocation.getText().toString());
 
             Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
             startActivity(deliveryAgent);
