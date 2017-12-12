@@ -8,11 +8,13 @@ public class Agents {
     String location;
     String userID;
     String resturant;
+    String agentTocken;
 
-    public Agents(String userID, String location, String resturant){
+    public Agents(String userID, String location, String resturant, String agentTocken){
         this.userID = userID;
         this.location = location;
         this.resturant = resturant;
+        this.agentTocken = agentTocken;
     }
 
     public String getLocation() {
@@ -38,4 +40,8 @@ public class Agents {
     public void setResturant(String resturant) {
         this.resturant = resturant;
     }
+
+    public String getAgentTocken() {return agentTocken;}
+
+    public void setAgentTocken(String agentTocken) {this.agentTocken = agentTocken;}
 }
