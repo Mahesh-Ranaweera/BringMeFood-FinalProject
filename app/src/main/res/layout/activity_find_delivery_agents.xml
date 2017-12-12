@@ -129,7 +129,7 @@
                                 android:id="@+id/btnSearchAgents"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/ic_search_black_24dp"
+                                app:srcCompat="@drawable/ic_search_black_24dp"
                                 android:background="@drawable/btn_secondary_app"/>
                         </LinearLayout>
 

@@ -18,6 +18,8 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
+import com.travmahrajvar.bringmefood.utils.PendingAdapter;
+import com.travmahrajvar.bringmefood.utils.WanterAdapter;
 
 public class GettingFoodActivity extends AppCompatActivity
 		implements GettingFoodFragment_SessionInfo.OnFragmentInteractionListener,

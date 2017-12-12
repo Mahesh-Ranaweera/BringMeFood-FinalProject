@@ -7,6 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.travmahrajvar.bringmefood.utils.Wanter;
+import com.travmahrajvar.bringmefood.utils.WanterAdapter;
+
+import java.util.ArrayList;
 
 
 /**
@@ -64,7 +70,25 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_getting_food_approvedusers, container, false);
+		View root = inflater.inflate(R.layout.fragment_getting_food_approvedusers, container, false);
+		ListView approvedList = root.findViewById(R.id.listApprovedUsers);
+		
+		//TODO get make an actual list of users from Firebase
+		ArrayList<Wanter> wanters = new ArrayList<Wanter>();
+		
+		ArrayList<String> w1List = new ArrayList<>();
+		w1List.add("Aaa");
+		w1List.add("Bbb");
+		
+		ArrayList<String> w2List = new ArrayList<>();
+		w2List.add("Ccc");
+		
+		wanters.add(new Wanter("Joe", w1List));
+		wanters.add(new Wanter("Jen", w2List));
+		
+		approvedList.setAdapter(new WanterAdapter(container.getContext(), wanters));
+		
+		return root;
 	}
 	
 	// TODO: Rename method, update argument and hook method into UI event

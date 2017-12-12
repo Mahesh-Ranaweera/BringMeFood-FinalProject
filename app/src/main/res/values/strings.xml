@@ -22,6 +22,14 @@
 	</string>
 	<string name="copy">Copy</string>
 	<string name="share">Share</string>
+	<string name="remove">Remove</string>
+	<string name="approve">Approve</string>
+	<string name="deny">Deny</string>
+	
+	<plurals name="wanterAdapter_orderSize">
+		<item quantity="one">Wants %d item.</item>
+		<item quantity="other">Wants %d items.</item>
+	</plurals>
 
     <!-- Strings related to Settings -->
 
