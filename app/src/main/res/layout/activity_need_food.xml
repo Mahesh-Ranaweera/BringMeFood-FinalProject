@@ -107,7 +107,8 @@
                 android:layout_marginTop="120dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/deliv_layout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -148,8 +149,13 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            
-            
+
+
+
+
+
+
+
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -182,6 +188,8 @@
                     android:text="Set Up Order"
                     android:onClick="getBringerData"/>
             </LinearLayout>
+
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
