@@ -121,6 +121,13 @@ public class FirebaseHandler {
 	}
 
 	/**
+	 * Update approved list array
+	 */
+	public static void updateApprovedList(ArrayList<String> approvedList, String currentSession){
+		fbDatabaseReference.child("getting").child(currentSession).child("approved").setValue(approvedList);
+	}
+
+	/**
 	 * Add food items to user
 	 */
 	public static void updateFriendList(ArrayList<String> friend){
