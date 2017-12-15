@@ -14,8 +14,8 @@ In response, we created the application that solves this issue, the BringMeFood 
 ## Installing
 Though the following can be developed more in the future and shown on the Google Play Store, at the moment, it is currently only available throuhg this repository. 
 
-    To get started, do the following steps:
-    1. Clone the repository on to your local machine.
-    2. Open Android Studio
-    3. Clean and build the project
-    4. Run it.
+To get started, do the following steps:
+1. Clone the repository on to your local machine.
+2. Open Android Studio
+3. Clean and build the project
+4. Run it.
