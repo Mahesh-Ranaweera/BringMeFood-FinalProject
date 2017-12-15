@@ -33,6 +33,14 @@
 	<string name="remove_friend">Remove friend</string>
 	<string name="friend_added">Friend added</string>
 	<string name="friend_removed">Friend removed</string>
+	
+	<string name="location_find_fail">Unable to find your location.</string>
+	<string name="error_no_food_list">You need to create a food list first.</string>
+	<string name="error_no_location_specified">Please enter a delivery location.</string>
+	
+	<string name="error_login_fail">Authentication failed.</string>
+	<string name="error_login_fail_user_info">Could not update user information.</string>
+	<string name="login_message">Logged in as %s.</string>
 
     <!-- Strings related to Settings -->
 
@@ -150,4 +158,11 @@
     <string name="firebase_fcm_link">https://fcm.googleapis.com/fcm/send</string>
     <string name="pay_user">Pay User</string>
     <string name="pay_amount">Amount:</string>
+	<string name="error_emailMissing">Enter email</string>
+	<string name="error_fnameMissing">Enter first name</string>
+	<string name="error_lnameMissing">Enter last name</string>
+	<string name="error_passwordMissing">Enter password</string>
+	<string name="error_repasswordMissing">Re-enter password</string>
+	<string name="error_passwordsDontMatch">Password should match</string>
+	<string name="error_passwordTooShort">Password should be at least 6 characters</string>
 </resources>

@@ -89,6 +89,12 @@ public class FindDeliveryAgents extends AppCompatActivity {
         });
     }
 
+
+
+    /**
+     * Get the getters
+     * @param getters
+     */
     private void collectGetters(Map<String, Object> getters){
 
         //iterate through the recieved objects

@@ -83,7 +83,7 @@ public class NeedFoodActivity extends AppCompatActivity {
                     if(addresses.get(0).getAddressLine(0) != null){
                         txtDeliveryLocation.setText(addresses.get(0).getAddressLine(0));
                     }else{
-                        Toast toast = Toast.makeText(NeedFoodActivity.this, "Could not find your location, Try Again", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(NeedFoodActivity.this, R.string.location_find_fail, Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 } catch (IOException e) {
@@ -141,7 +141,6 @@ public class NeedFoodActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 Bundle bundle = data.getExtras();
                 USERFOODARR = (ArrayList<String>) bundle.getSerializable("USERFOODLIST");
-                Log.i("arr", "size"+USERFOODARR.size());
 
                 // Update the foodlist info
                 updateFoodInfo();
@@ -164,13 +163,11 @@ public class NeedFoodActivity extends AppCompatActivity {
         btnGetCurrLoc.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Log.i("clicked", "clicked");
                 String recommendedProvider = "gps";
 
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(recommendedProvider,
                             0, 0, locationListener);
-                    Log.i("map", "requestLocationUpdates()");
                 }
             }
         });
@@ -183,9 +180,9 @@ public class NeedFoodActivity extends AppCompatActivity {
         //add the food list to firebase database:: check whether user have a food list
         boolean foodEmpty = USERFOODARR.isEmpty();
         if(foodEmpty == true){
-            Toast.makeText(NeedFoodActivity.this, "You don't have a order list",Toast.LENGTH_SHORT).show();
+            Toast.makeText(NeedFoodActivity.this, R.string.error_no_food_list,Toast.LENGTH_SHORT).show();
         }else if (txtDeliveryLocation.getText().toString().trim().length() == 0){
-            Toast.makeText(NeedFoodActivity.this, "Set your delivery location",Toast.LENGTH_SHORT).show();
+            Toast.makeText(NeedFoodActivity.this, R.string.error_no_location_specified,Toast.LENGTH_SHORT).show();
         }else{
             //TODO Need to remove the food list after order is recieved
             //add foodlist to firebase and goto find agents page
