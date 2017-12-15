@@ -105,15 +105,13 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
-                        Log.i("getdb", "data"+dataSnapshot.getValue());
-
                         if(dataSnapshot.getValue() instanceof ArrayList){
                             ArrayList<String> current = (ArrayList<String>) dataSnapshot.getValue();
 
                             if(checkID(current)){
-                                Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.message_already_sent, Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(getContext(),"Message Sent", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.sent_message, Toast.LENGTH_SHORT).show();
                                 current.addAll(sendWanterArr);
                                 updateDB(current, reqAgentID, agentTocken);
                             }
@@ -130,9 +128,9 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
                             }
 
                             if(checkID(curr)){
-                                Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.message_already_sent, Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(getContext(),"Message Sent", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.sent_message, Toast.LENGTH_SHORT).show();
                                 curr.addAll(sendWanterArr);
                                 updateDB(curr, reqAgentID, agentTocken);
                             }
@@ -158,8 +156,6 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
         List<String> list = listArr;
 
-        Log.i("list", "list"+list.toString()+" curr user "+ currentUserID);
-
         if(list.contains(currentUserID)){
             return true;
         }
@@ -168,7 +164,6 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
     //update the db
     public void updateDB(ArrayList<String> sendWanterArr, String reqAgentID, String agentTocken){
-        Log.i("agentdata", "wanters"+ sendWanterArr.toString() + " current user " + reqAgentID);
 
         //send the notification
         postRequest(agentTocken);
@@ -186,7 +181,6 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
         try{
             String data = new pushNotification().execute().get();
-            Log.i("postreq", data);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -202,7 +196,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
             String getResponse = "";
 
-            String postLink = "https://fcm.googleapis.com/fcm/send";
+            String postLink = getContext().getResources().getString(R.string.firebase_fcm_link);
 
             String FCMKEY = getContext().getResources().getString(R.string.fcm_api_key);
 
@@ -220,8 +214,8 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
                 //nested message section
                 JSONObject notificationBody = new JSONObject();
-                notificationBody.put("body", "Firebase");
-                notificationBody.put("message", "TestMessage");
+                notificationBody.put("body", "Could You Bring Me Food");
+                notificationBody.put("message", "");
                 notificationBody.put("priority", "10");
                 jsonOut.put("notification", notificationBody);
 

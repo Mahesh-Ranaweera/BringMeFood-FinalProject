@@ -62,7 +62,7 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
     	if(keybox.getText().toString().trim().length() != 0) {
 		    String key = keybox.getText().toString();
 		    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-		    ClipData clip = ClipData.newPlainText("Session code", key);
+		    ClipData clip = ClipData.newPlainText(getString(R.string.curSessionKey_identifier), key);
 		    clipboard.setPrimaryClip(clip);
 		    Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
 	    }

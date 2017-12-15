@@ -70,7 +70,6 @@ public class FriendManageList extends AppCompatActivity {
             mRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    //Log.i("dbvalues", "users: "+dataSnapshot.getValue());
                     if (dataSnapshot.getValue() != null)
                         collectUsers((Map<String, Object>) dataSnapshot.getValue());
                 }

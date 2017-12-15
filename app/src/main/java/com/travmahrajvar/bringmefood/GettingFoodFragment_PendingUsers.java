@@ -83,16 +83,15 @@ public class GettingFoodFragment_PendingUsers extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_getting_food_pendingusers, container, false);
 		
 		ListView pendingList = root.findViewById(R.id.listPendingUsers);
-		
-		
-		wanters = new ArrayList<Wanter>();
-		wanters.clear();
-		pendingAdapter = new PendingAdapter(getContext(), wanters);
-		
+
 		//Get the arguments from the parent activity
 		Bundle args = getArguments();
 		sessionKey = args.getString(ARG_SESSION_KEY);
 		refPendingUsers = FirebaseDatabase.getInstance().getReference().child("getting").child(sessionKey).child("wanterlist");
+
+		wanters = new ArrayList<Wanter>();
+		wanters.clear();
+		pendingAdapter = new PendingAdapter(getContext(), wanters, sessionKey);
 		
 		if(refPendingUsers != null){
 			refPendingUsers.addValueEventListener(new ValueEventListener() {
@@ -100,8 +99,6 @@ public class GettingFoodFragment_PendingUsers extends Fragment {
 				public void onDataChange(DataSnapshot dataSnapshot) {
 					wanters.clear();
 					if(dataSnapshot.getValue() != null){
-						Log.i("dataSnapshot", dataSnapshot.getValue().toString());
-						Log.i("dataSnapshot class", dataSnapshot.getValue().getClass().toString());
 						if(dataSnapshot.getValue() instanceof ArrayList)
 							updatePendingAdapter((ArrayList<String>) dataSnapshot.getValue());
 						else if(dataSnapshot.getValue() instanceof Map){
@@ -135,7 +132,6 @@ public class GettingFoodFragment_PendingUsers extends Fragment {
 								public void onDataChange(DataSnapshot dataSnapshot) {
 									if (dataSnapshot.getValue() instanceof Map) {
 										Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
-										Log.i("wanterInfo", wanterInfo.toString());
 										Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
 										ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
 										w.setOrderList(foodList);

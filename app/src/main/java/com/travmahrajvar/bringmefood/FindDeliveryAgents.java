@@ -78,7 +78,6 @@ public class FindDeliveryAgents extends AppCompatActivity {
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.i("dbvalues", "data: "+dataSnapshot.getValue());
                 if(dataSnapshot.getValue() != null)
                     collectGetters((Map<String, Object>) dataSnapshot.getValue());
             }
