@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 public class MyAccount extends AppCompatActivity {
     TextView response;
     EditText price;
+    int load;
+    String balancetext="0";
 
     PayPalConfiguration m_configuration;
     String m_paypalClientId = "ATThx2GdqRyhVJb1mMgGfVsSBX3iI_dq0NDThbxkmfLlFwgcVATgWmWcwia1rVZiBmDUyPA60AIg4Dwq";
@@ -35,8 +37,10 @@ public class MyAccount extends AppCompatActivity {
         response = (TextView) findViewById(R.id.txtBalance);
         price = (EditText) findViewById(R.id.addBalance);
 
+        //response.setText(FirebaseHandler.getBalance());
+        //response.setText(FirebaseHandler.getBalance());
 
-        System.out.println("load+"+price);
+        System.out.println("load+"+FirebaseHandler.getBalance());
 
         m_configuration = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -48,7 +52,10 @@ public class MyAccount extends AppCompatActivity {
     }
 
     void pay(View view){
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(Integer.parseInt(price.getText().toString())),"USD","Test_Payment",
+       // balancetext = price.getText().toString();
+        //load = Integer.parseInt(balancetext);
+
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(Integer.parseInt(price.getText().toString())),"USD","Reload Wallet",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent (this,PaymentActivity.class);
@@ -70,8 +77,9 @@ public class MyAccount extends AppCompatActivity {
 
                     if (state.equals("approved")){
                         Toast.makeText(MyAccount.this, "Payment added to your wallet",Toast.LENGTH_SHORT).show();
-                        response.setText(price.getText());
+
                         FirebaseHandler.transaction(Integer.parseInt(price.getText().toString()));
+                        //response.setText(FirebaseHandler.getBalance());
                     }
                     else{
                         Toast.makeText(MyAccount.this, "Transaction unsuccessfull",Toast.LENGTH_SHORT).show();
