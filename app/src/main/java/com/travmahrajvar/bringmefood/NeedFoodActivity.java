@@ -20,6 +20,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 import com.travmahrajvar.bringmefood.utils.NeedData;
 
@@ -243,5 +245,11 @@ public class NeedFoodActivity extends AppCompatActivity {
         });
 
         popupMenu.show();
+    }
+
+    public void getBringerData(View view){
+        System.out.println(FirebaseHandler.getUserDeviceToken());
+        System.out.println(FirebaseHandler.getCurrentUser());
+        System.out.println(FirebaseApp.getInstance());
     }
 }
