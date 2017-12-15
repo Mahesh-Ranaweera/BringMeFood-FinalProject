@@ -119,12 +119,9 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 					.addListenerForSingleValueEvent(new ValueEventListener() {
 						@Override
 						public void onDataChange(DataSnapshot dataSnapshot) {
-							Log.i("dataSnapshot", dataSnapshot.toString());
-							Log.i("dataSnapshotValue", dataSnapshot.getValue().getClass().toString());
 							if(dataSnapshot.getValue() instanceof Map) {
 								try {
 									Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
-									Log.i("wanterInfo", wanterInfo.toString());
 									Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
 									ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
 									w.setOrderList(foodList);
