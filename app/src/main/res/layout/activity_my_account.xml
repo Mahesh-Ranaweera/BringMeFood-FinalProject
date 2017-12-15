@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.travmahrajvar.bringmefood.MyAccount">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="39dp">
+
+        <TextView
+            android:id="@+id/currBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/addBalance"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="63dp"
+            android:layout_marginStart="66dp"
+            android:text="Current Balance"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/currBalance"
+            android:layout_alignBottom="@+id/currBalance"
+            android:layout_marginStart="38dp"
+            android:layout_toEndOf="@+id/currBalance"
+            android:text="0"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/addBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/currBalance"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Enter Amount" />
+
+        <Button
+            android:id="@+id/btnBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/txtBalance"
+            android:layout_below="@+id/currBalance"
+            android:layout_marginTop="87dp"
+            android:text="Load Wallet" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

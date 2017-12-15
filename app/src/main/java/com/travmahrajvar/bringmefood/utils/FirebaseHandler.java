@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -147,8 +148,7 @@ public class FirebaseHandler {
 		DatabaseReference dbr = fbDatabaseReference.child("getting");
 		String key = dbr.push().getKey();
 		removePreviousGettingFoodSessions(key);
-		
-		
+
 		Map<String, Object> newGetFoodSession = new HashMap<>();
 		Map<String, Object> newGetFoodSession_children = new HashMap<>();
 		

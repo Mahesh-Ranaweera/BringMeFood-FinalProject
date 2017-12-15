@@ -46,6 +46,7 @@ public class ChoiceSelect extends AppCompatActivity {
         if(user != null){
             userID = user.getUid();
             txtUserName.setText(getString(R.string.welcome_with_username, user.getDisplayName()));
+
         }
     }
 	
@@ -127,6 +128,12 @@ public class ChoiceSelect extends AppCompatActivity {
 					startActivity(mainPage);
 					//finish();
 				}
+                if(menuItem.getTitle().toString().equals(getString(R.string.menu_balance))){
+                    //close all intents and goto main
+                    Intent accountPage = new Intent(ChoiceSelect.this, MyAccount.class);
+                    accountPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(accountPage);
+                }
 				return true;
 			}
 		});
