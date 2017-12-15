@@ -41,8 +41,8 @@
             android:layout_alignStart="@+id/currBalance"
             android:layout_centerVertical="true"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Enter Amount" />
+            android:inputType="number"
+            />
 
         <Button
             android:id="@+id/btnBalance"
@@ -51,6 +51,8 @@
             android:layout_alignEnd="@+id/txtBalance"
             android:layout_below="@+id/currBalance"
             android:layout_marginTop="87dp"
-            android:text="Load Wallet" />
+            android:text="Load Wallet"
+            android:onClick="pay"
+            />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

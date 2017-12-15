@@ -133,32 +133,31 @@ public class FirebaseHandler {
     }
 
 
-    public static void transaction(final int price) {
-        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
-            String balance;
+    public static void transaction(final int p) {
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+    }
 
+
+    public static int getBalance(){
+        final int[] prices = new int[1];
+
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
+
+            String balance;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 balance = dataSnapshot.getValue().toString();
-                fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(balance + price);
-                System.out.println(balance);
+                prices[0]=Integer.parseInt(balance);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
 
+        return prices[0];
 
-    }
-
-
-    public static String getBalance(){
-	    String balance = "";
-	    balance = fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child ("balance").getKey();
-	    return balance;
     }
 
 	/**
