@@ -19,11 +19,16 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import bolts.Bolts;
 
 /**
  * Created by Travis on 11/12/17.
@@ -182,11 +187,15 @@ public class PendingAdapter extends BaseAdapter {
 							approvedList.add(uid);
 							//Upload updated approved array
 							FirebaseHandler.updateApprovedList(approvedList, currentSession);
+							//Log.i("id", "userid"+uid);
+							FirebaseHandler.approveSpecificUser(uid, currentSession, true);
 						}
 					}else{
 						approvedList.add(uid);
 						//Upload updated approved array
 						FirebaseHandler.updateApprovedList(approvedList, currentSession);
+						//Log.i("id", "userid"+uid);
+						FirebaseHandler.approveSpecificUser(uid, currentSession, true);
 					}
 				}
 

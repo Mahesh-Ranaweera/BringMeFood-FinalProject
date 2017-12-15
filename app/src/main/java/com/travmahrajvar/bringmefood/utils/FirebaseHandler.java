@@ -127,6 +127,14 @@ public class FirebaseHandler {
 	}
 
 	/**
+	 * Set specific user is approved
+	 */
+	public static void approveSpecificUser(String userID, String sessionID, Boolean approved){
+		fbDatabaseReference.child("users").child(userID).child("approved").child("foodsession").setValue(sessionID);
+		fbDatabaseReference.child("users").child(userID).child("approved").child("approved").setValue(approved);
+	}
+
+	/**
 	 * Add food items to user
 	 */
 	public static void updateFriendList(ArrayList<String> friend){
