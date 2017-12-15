@@ -62,7 +62,9 @@ public class CreateOrderList extends AppCompatActivity {
             txtFoodItem.setText(null);
         }
     }
-
+    /*
+     *Updates the list after the food list is added 
+     */
     public void updateList(){
         arrayAdapter.clear();
         arrayAdapter.addAll(foodListArray);
