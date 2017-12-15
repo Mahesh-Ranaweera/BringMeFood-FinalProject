@@ -43,7 +43,9 @@ public class SignUpActivity extends AppCompatActivity {
 	 * @param v The "Sign Up" button view
 	 */
 	public void signUPUser(View v){
-		//First, verify all the given info is OK.s
+		//First, verify all the given info, email, first and last name, and password, are OK
+
+
         if(txtEmail.getText().toString().trim().length() == 0){
             txtEmail.setError("Enter Email");
             txtEmail.requestFocus();

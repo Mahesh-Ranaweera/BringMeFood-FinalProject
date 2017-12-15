@@ -22,6 +22,11 @@ import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 
 import java.util.Map;
 
+/**
+ * The following class deals with the selection of the choices and the apprpriate 
+ * response
+ */
+
 public class ChoiceSelect extends AppCompatActivity {
 
     TextView windowTxt, txtUserName;

@@ -161,13 +161,13 @@ public class GettingFoodActivity extends AppCompatActivity
 			@Override
 			public boolean onMenuItemClick(MenuItem menuItem) {
 
-				//goback to previous page
+				//Go back to previous page
 				if(menuItem.getTitle().toString().equals(getString(R.string.go_back))){
 					//finish page
 					finish();
 				}
 
-				//goback to choice page
+				//Go back to choice page
 				if(menuItem.getTitle().toString().equals(getString(R.string.home))){
 					//close all intents and goto main
 					Intent mainPage = new Intent(GettingFoodActivity.this, ChoiceSelect.class);
@@ -175,12 +175,12 @@ public class GettingFoodActivity extends AppCompatActivity
 					startActivity(mainPage);
 				}
 
-				//page signout
+				//Page signout
 				if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
 					//Sign out user
 					FirebaseHandler.signOutCurrentUser();
 
-					//close all intents and goto main
+					//Close all intents and goto main
 					Intent mainPage = new Intent(GettingFoodActivity.this, WelcomeActivity.class);
 					mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mainPage);
