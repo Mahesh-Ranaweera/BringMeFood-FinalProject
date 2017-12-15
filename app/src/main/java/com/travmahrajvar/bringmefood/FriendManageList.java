@@ -27,7 +27,8 @@ import java.util.Map;
 public class FriendManageList extends AppCompatActivity {
 
     //firebase stuff
-    private DatabaseReference mRef;
+    private DatabaseReference mRefUsers;
+    private DatabaseReference mRefFriends;
 
     //ui import
     ListView listUsers;
@@ -48,7 +49,8 @@ public class FriendManageList extends AppCompatActivity {
         userslist = new ArrayList<Users>();
 
         //access getting table
-        mRef = FirebaseDatabase.getInstance().getReference().child("users");
+        mRefUsers = FirebaseDatabase.getInstance().getReference().child("users");
+        mRefFriends = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseHandler.getCurrentUser().getUid()).child("friendlist");
 
         listUsers = (ListView) findViewById(R.id.userListView);
 
@@ -57,12 +59,26 @@ public class FriendManageList extends AppCompatActivity {
         listUsers.setAdapter(userAdapter);
 
         //listen to db and update list
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.i("dbvalues", "users: "+dataSnapshot.getValue());
                 if(dataSnapshot.getValue() != null)
                     collectUsers((Map<String, Object>) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //listen to the db and get the current friend list
+        mRefFriends.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot data) {
+                if(data.getValue() != null)
+                    Log.i("dbvalues", "friends" + data.getValue());
             }
 
             @Override
