@@ -49,8 +49,6 @@ public class FindDeliveryAgents extends AppCompatActivity {
     ListView listAgents;
     RadioGroup selectionRadio;
     RadioButton choice;
-    ImageButton btnSearchAgents;
-    EditText txtAgentSearch;
 
     //ArrayAdapter
     AgentAdapter agentAdapter;
@@ -71,9 +69,6 @@ public class FindDeliveryAgents extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference().child("getting");
 
         listAgents = (ListView) findViewById(R.id.listAgents);
-        selectionRadio = (RadioGroup) findViewById(R.id.selectionGroup);
-        btnSearchAgents = (ImageButton) findViewById(R.id.btnSearchAgents);
-        txtAgentSearch = (EditText) findViewById(R.id.txtAgentSearch);
 
         //add adapter to listview
         agentAdapter = new AgentAdapter(this, agents);
@@ -102,27 +97,12 @@ public class FindDeliveryAgents extends AppCompatActivity {
             Map row = (Map) entry.getValue();
 
             //create the agent object
-            agent = new Agents(row.get("getter").toString(), row.get("location").toString(), row.get("restaurant").toString(), row.get("deviceTok").toString(), row.get("gettername").toString());
+            agent = new Agents(row.get("getter").toString(), row.get("location").toString(), row.get("restaurant").toString(), row.get("deviceTok").toString(), row.get("gettername").toString(), entry.getKey());
             agentAdapter.add(agent);
         }
 
         //update the agentadapter
         agentAdapter.notifyDataSetChanged();
-    }
-
-    public void searchAgents(View v){
-        int selected = selectionRadio.getCheckedRadioButtonId();
-        choice = (RadioButton) findViewById(selected);
-
-        Log.i("radio", "radioID: "+selected);
-
-        if(selected == 2131296312){
-
-        }else if(selected == 2131296313){
-
-        }else{
-
-        }
     }
 
     /**

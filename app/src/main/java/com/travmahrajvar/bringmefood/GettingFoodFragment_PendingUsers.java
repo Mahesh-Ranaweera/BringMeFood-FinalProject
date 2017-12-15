@@ -68,8 +68,8 @@ public class GettingFoodFragment_PendingUsers extends Fragment {
 		ArrayList<String> w2List = new ArrayList<>();
 		w2List.add("Ccc");
 		
-		wanters.add(new Wanter("Joe", w1List));
-		wanters.add(new Wanter("Jen", w2List));
+		wanters.add(new Wanter("Joe", "", w1List));
+		wanters.add(new Wanter("Jen", "", w2List));
 		
 		approvedList.setAdapter(new PendingAdapter(container.getContext(), wanters));
 		

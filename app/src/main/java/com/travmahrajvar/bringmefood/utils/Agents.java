@@ -7,16 +7,18 @@ package com.travmahrajvar.bringmefood.utils;
 public class Agents {
     String location;
     String userID;
+    String foodRunID;
     String resturant;
     String agentTocken;
     String agentName;
 
-    public Agents(String userID, String location, String resturant, String agentTocken, String agentName){
+    public Agents(String userID, String location, String resturant, String agentTocken, String agentName, String foodRunID){
         this.userID = userID;
         this.location = location;
         this.resturant = resturant;
         this.agentTocken = agentTocken;
         this.agentName = agentName;
+        this.foodRunID = foodRunID;
     }
 
     public String getLocation() {
@@ -48,4 +50,12 @@ public class Agents {
     public String getAgentName() {return agentName;}
 
     public void setAgentName(String agentName) {this.agentName = agentName;}
+
+    public String getFoodRunID() {
+        return foodRunID;
+    }
+
+    public void setFoodRunID(String foodRunID) {
+        this.foodRunID = foodRunID;
+    }
 }

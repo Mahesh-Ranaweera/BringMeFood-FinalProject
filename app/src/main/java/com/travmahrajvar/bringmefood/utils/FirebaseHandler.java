@@ -18,6 +18,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -128,6 +129,7 @@ public class FirebaseHandler {
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
 	}
 
+<<<<<<< HEAD
 	public static void updatePrice(int price){
         fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("foodlist").child("price").setValue(price);
     }
@@ -160,6 +162,16 @@ public class FirebaseHandler {
 
     }
 
+=======
+	/**
+	 *
+	 */
+	public static void updateAgentWantList(ArrayList<String> wanterlist, String sessionID){
+		//goto current agent id to put the wantlist
+		fbDatabaseReference.child("getting").child(sessionID).child("wanterlist").setValue(wanterlist);
+	}
+	
+>>>>>>> 820266d3759aac92cd65428b2301b8658567e07f
 	/**
 	 * Creates a new food-getting session for the currently authenticated user.
 	 *

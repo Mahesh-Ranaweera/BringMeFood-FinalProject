@@ -125,6 +125,8 @@ public class UserAdapter extends ArrayAdapter<Users> {
             });
         }
     }
+
+    //collect friends into an array
     public void collectFriends(ArrayList<String> currData){
         //clear current array
         currFriendID.clear();
