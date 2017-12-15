@@ -22,6 +22,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -32,11 +33,11 @@ public class FirebaseHandler {
 	
 	/** The app's connection to the Firebase authentication methods */
 	private static FirebaseAuth fbAuthenticator;
-	
+
 	/** The app's connection to the Firebase database */
 	private static FirebaseDatabase fbDatabase;
 	private static DatabaseReference fbDatabaseReference;
-	
+    static final ArrayList<String> mGamesPlaying = new ArrayList<String>();
 	/**
 	 * Starts this app's connection to Firebase.
 	 */
@@ -134,22 +135,41 @@ public class FirebaseHandler {
     }
 
 
-    public static void transaction(final int p) {
-        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+    public static void transaction(final int p,final String uid) {
+       // fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+
+	    if (uid.equals("null")){
+            fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((getBalance()+p));
+        }else{
+            fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((getBalance()+p));
+            fbDatabaseReference.child("users").child(uid).child("balance").setValue((getBalance()-p));
+        }
+
     }
 
 
-    public static String getBalance(){
-        final String[] prices = new String[1];
+    public static int getBalance(){
+        final int[] prices = new int[1];
 
-        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addListenerForSingleValueEvent(new ValueEventListener() {
+        //public ArrayList<String> mGamesPlaying(final String uid, final Callable refresh) {
+
+        //}
+
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
 
             String balance;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                balance = dataSnapshot.getValue().toString();
-                System.out.println("parsed"+Integer.parseInt(balance));
-                prices[0]= balance;
+                mGamesPlaying.clear();
+                showbalance(dataSnapshot);
+
+                if (dataSnapshot.exists()) {
+                    balance = dataSnapshot.getValue().toString();
+                    System.out.println("parsed" + Integer.parseInt(balance));
+                   // mGamesPlaying.add(balance);
+                    //orderprice.notifyAll();
+                    prices[0] = Integer.parseInt(balance);
+                }
             }
 
             @Override
@@ -158,12 +178,16 @@ public class FirebaseHandler {
             }
         });
 
-        System.out.println("price"+prices[0]);
+        //System.out.println("price"+mGamesPlaying.get(0).toString());
         return prices[0];
     }
 
+    private static void showbalance(DataSnapshot dataSnapshot) {
 
-	/**
+    }
+
+
+    /**
 	 *
 	 */
 	public static void updateAgentWantList(ArrayList<String> wanterlist, String sessionID){

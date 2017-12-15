@@ -78,7 +78,7 @@ public class MyAccount extends AppCompatActivity {
                     if (state.equals("approved")){
                         Toast.makeText(MyAccount.this, "Payment added to your wallet",Toast.LENGTH_SHORT).show();
 
-                        FirebaseHandler.transaction(Integer.parseInt(price.getText().toString()));
+                        FirebaseHandler.transaction((Integer.parseInt(price.getText().toString())),"null");
                         //response.setText(FirebaseHandler.getBalance());
                     }
                     else{
