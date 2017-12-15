@@ -77,7 +77,8 @@ public class WanterAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
+
+
 	public Wanter removeWanter(int position){
 		Wanter w = wanters.remove(position);
 		notifyDataSetChanged();

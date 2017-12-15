@@ -2,6 +2,7 @@ package com.travmahrajvar.bringmefood.utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -40,7 +44,6 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
     public DatabaseReference mRefAgent;
     private String agentDevice;
-    public ArrayList<String> currWantersList = new ArrayList<String>();
     final String currentUserID = FirebaseHandler.getCurrentUser().getUid();
 
     public AgentAdapter(Context context, ArrayList<Agents> agents){
@@ -103,15 +106,40 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
                         Log.i("getdb", "data"+dataSnapshot.getValue());
-                        ArrayList<String> current = (ArrayList<String>) dataSnapshot.getValue();
 
-                        sendWanterArr.addAll(current);
+                        if(dataSnapshot.getValue() instanceof ArrayList){
+                            ArrayList<String> current = (ArrayList<String>) dataSnapshot.getValue();
 
-                        if(checkID(sendWanterArr, currUserID)){
-                            Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                            if(checkID(current)){
+                                Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getContext(),"Message Sent", Toast.LENGTH_SHORT).show();
+                                current.addAll(sendWanterArr);
+                                updateDB(current, reqAgentID, agentTocken);
+                            }
+                        }else if(dataSnapshot.getValue() instanceof HashMap){
+                            HashMap<String, Object> current = (HashMap) dataSnapshot.getValue();
+
+                            ArrayList<String> curr = new ArrayList<>();
+
+                            //iterate the hashmap
+                            Iterator iterator = current.entrySet().iterator();
+                            while(iterator.hasNext()){
+                                Map.Entry val = (Map.Entry) iterator.next();
+                                curr.add(val.getValue().toString());
+                            }
+
+                            if(checkID(curr)){
+                                Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getContext(),"Message Sent", Toast.LENGTH_SHORT).show();
+                                curr.addAll(sendWanterArr);
+                                updateDB(curr, reqAgentID, agentTocken);
+                            }
                         }else{
-                            updateDB(sendWanterArr, reqAgentID, agentTocken);
+
                         }
+
                     }else{
                         updateDB(sendWanterArr, reqAgentID, agentTocken);
                     }
@@ -126,11 +154,13 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
     }
 
     //check duplicate data exists
-    public boolean checkID(ArrayList<String> listArr, String reqAgentID){
+    public boolean checkID(ArrayList<String> listArr){
 
         List<String> list = listArr;
 
-        if(list.contains(reqAgentID)){
+        Log.i("list", "list"+list.toString()+" curr user "+ currentUserID);
+
+        if(list.contains(currentUserID)){
             return true;
         }
         return  false;
