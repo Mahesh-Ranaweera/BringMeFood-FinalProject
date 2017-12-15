@@ -148,7 +148,40 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+            
+            
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/deliv_layout"
+                >
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:gravity="center_vertical"
+                    android:textSize="16dp"
+                    android:text="Friend/Client Code:"/>
+
+                <EditText
+                    android:id="@+id/txtFriendCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_secondary_app"/>
+
+                <Button
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Set Up Order"
+                    android:onClick="getBringerData"/>
+            </LinearLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
