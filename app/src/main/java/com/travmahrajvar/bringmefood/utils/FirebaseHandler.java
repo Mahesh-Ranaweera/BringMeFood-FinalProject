@@ -189,6 +189,27 @@ public class FirebaseHandler {
 		});
 	}
 	
+	
+	/**
+	 * Removes all previous session codes that the current user has.
+	 * Should be called when the food getting session is complete
+	 *  and everyone is happily eating the food they were brought.
+	 */
+	public static void removeAllGettingFoodSessions(){
+		fbDatabaseReference.child("getting").orderByChild("getter").equalTo(getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+					snapshot.getRef().removeValue();
+				}
+			}
+			
+			@Override
+			public void onCancelled(DatabaseError databaseError) { }
+		});
+	}
+	
+	
 	//endregion
 	
 }

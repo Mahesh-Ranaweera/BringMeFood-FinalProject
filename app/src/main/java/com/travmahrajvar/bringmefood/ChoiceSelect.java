@@ -3,6 +3,7 @@ package com.travmahrajvar.bringmefood;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,8 +11,16 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
+
+import java.util.Map;
 
 public class ChoiceSelect extends AppCompatActivity {
 
@@ -41,17 +50,47 @@ public class ChoiceSelect extends AppCompatActivity {
     }
 	
 	/**
-	 * Action for "Getting food"
+	 * Checks if we have a previous food-getting session,
+	 *  and resumes that session in the "Getting food" activity,
+	 *  or sends them to the "Getting food preparation" activity if not.
 	 * @param v
 	 */
     public void gettingFood(View v){
-        Intent getFoodPage = new Intent(this, GettingFoodPreparationActivity.class);
-        startActivity(getFoodPage);
-
+	    FirebaseDatabase.getInstance().getReference().child("getting").orderByChild("getter")
+			    .equalTo(FirebaseHandler.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+		    @Override
+		    public void onDataChange(DataSnapshot dataSnapshot) {
+			    if(dataSnapshot.getChildrenCount() > 0) { //There's a previous unclosed session
+			    	//Get the response from Firebase
+				    Map<String, Object> prevSessionInfo = ((Map<String, Object>)(dataSnapshot.getValue()));
+				    
+				    //Just in case we crash, we can see what the data we got back was.
+				    Crashlytics.log("dataSnapshot: " + prevSessionInfo.toString());
+				
+				    //Get the session info to put into the intent
+				    Map.Entry<String,Object> sessionKeyEntry = prevSessionInfo.entrySet().iterator().next();
+				    String sessionKey = sessionKeyEntry.getKey();
+				    prevSessionInfo = (Map<String, Object>) sessionKeyEntry.getValue();
+				    
+				    //Set up the intent and go
+				    Intent getFoodPage = new Intent(getApplicationContext(), GettingFoodActivity.class);
+				    getFoodPage.putExtra(getString(R.string.curSessionKey_identifier), sessionKey);
+				    getFoodPage.putExtra(getString(R.string.curSessionRestaurant_identifier), prevSessionInfo.get("restaurant").toString());
+				    getFoodPage.putExtra(getString(R.string.curSessionLocation_identifier), prevSessionInfo.get("location").toString());
+				    startActivity(getFoodPage);
+			    } else { //There are no previous sessions
+				    Intent getFoodPrepPage = new Intent(getApplicationContext(), GettingFoodPreparationActivity.class);
+				    startActivity(getFoodPrepPage);
+			    }
+		    }
+		
+		    @Override
+		    public void onCancelled(DatabaseError databaseError) { }
+	    });
     }
 	
 	/**
-	 * Action for "Wanting food"
+	 * Sends the user to the "Want Food" activity
 	 * @param v
 	 */
 	public void wantFood(View v){
