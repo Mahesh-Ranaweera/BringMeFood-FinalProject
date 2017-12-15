@@ -139,16 +139,17 @@ public class FirebaseHandler {
     }
 
 
-    public static int getBalance(){
-        final int[] prices = new int[1];
+    public static String getBalance(){
+        final String[] prices = new String[1];
 
-        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addListenerForSingleValueEvent(new ValueEventListener() {
 
             String balance;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 balance = dataSnapshot.getValue().toString();
-                prices[0]=Integer.parseInt(balance);
+                System.out.println("parsed"+Integer.parseInt(balance));
+                prices[0]= balance;
             }
 
             @Override
@@ -157,8 +158,8 @@ public class FirebaseHandler {
             }
         });
 
+        System.out.println("price"+prices[0]);
         return prices[0];
-
     }
 
 
