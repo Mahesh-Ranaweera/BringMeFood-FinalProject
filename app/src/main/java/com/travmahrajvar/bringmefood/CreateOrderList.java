@@ -54,7 +54,6 @@ public class CreateOrderList extends AppCompatActivity {
         //makesure the entry is not empty
         if(txtFoodItem.getText().toString().trim().length() != 0){
             foodListArray.add(txtFoodItem.getText().toString());
-            Log.i("item", txtFoodItem.getText().toString());
 
             arrayAdapter.notifyDataSetChanged();
 

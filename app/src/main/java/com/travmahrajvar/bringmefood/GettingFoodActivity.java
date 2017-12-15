@@ -73,7 +73,7 @@ public class GettingFoodActivity extends AppCompatActivity
 	 */
 	public void copyKeyToClipboard(View view) {
 		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-		ClipData clip = ClipData.newPlainText("Session code", curSessionKey);
+		ClipData clip = ClipData.newPlainText(getString(R.string.curSessionKey_identifier), curSessionKey);
 		clipboard.setPrimaryClip(clip);
 		Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
 	}

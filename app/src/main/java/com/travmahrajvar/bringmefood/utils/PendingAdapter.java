@@ -75,7 +75,7 @@ public class PendingAdapter extends BaseAdapter {
 		String wants = "";
 		if(w.getOrderList() != null) {
 			for (String item : w.getOrderList()) {
-				wants += item + ";";
+				wants += item + "; ";
 			}
 		}
 

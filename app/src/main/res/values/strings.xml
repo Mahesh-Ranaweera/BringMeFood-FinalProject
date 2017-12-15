@@ -25,11 +25,14 @@
     <string name="pay">Pay</string>
     <string name="approve">Approve</string>
     <string name="deny">Deny</string>
-
-    <plurals name="wanterAdapter_orderSize">
-        <item quantity="one">Wants %d item.</item>
-        <item quantity="other">Wants %d items.</item>
-    </plurals>
+    
+    <string name="sent_message">Message sent.</string>
+	<string name="message_already_sent">You have already messaged this person.</string>
+	
+	<string name="add_friend">Add friend</string>
+	<string name="remove_friend">Remove friend</string>
+	<string name="friend_added">Friend added</string>
+	<string name="friend_removed">Friend removed</string>
 
     <!-- Strings related to Settings -->
 

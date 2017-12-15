@@ -61,10 +61,10 @@ public class UserAdapter extends ArrayAdapter<Users> {
             exists[0] = true;
 
             //set button text dynamically
-            userAddBtn.setText("Add Friend");
+            userAddBtn.setText(R.string.add_friend);
         }else{
             //set button text dynamically
-            userAddBtn.setText("Remove Friend");
+            userAddBtn.setText(R.string.remove_friend);
         }
 
         final boolean[] finalExists = {exists[0]};
@@ -80,14 +80,14 @@ public class UserAdapter extends ArrayAdapter<Users> {
                     currFriendID.add(user.getUserID());
                     updateDB();
                     finalExists[0] = false;
-                    userAddBtn.setText("Remove Friend");
-                    Toast.makeText(getContext(), "User Added", Toast.LENGTH_SHORT).show();
+                    userAddBtn.setText(R.string.remove_friend);
+                    Toast.makeText(getContext(), R.string.friend_added, Toast.LENGTH_SHORT).show();
                 }else{
                     currFriendID.remove(user.getUserID());
                     updateDB();
                     finalExists[0] = false;
-                    userAddBtn.setText("Add Friend");
-                    Toast.makeText(getContext(), "User Deleted", Toast.LENGTH_SHORT).show();
+                    userAddBtn.setText(R.string.add_friend);
+                    Toast.makeText(getContext(), R.string.friend_removed, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -107,13 +107,10 @@ public class UserAdapter extends ArrayAdapter<Users> {
         ArrayList<String> returnArr = new ArrayList<>();
 
         if (mRefFriends != null) {
-            Log.i("dbvalues", "friends" + mRefFriends);
-
             mRefFriends.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
-                        Log.i("getdb", "data"+dataSnapshot.getValue());
                         collectFriends((ArrayList<String>) dataSnapshot.getValue());
                     }
                 }

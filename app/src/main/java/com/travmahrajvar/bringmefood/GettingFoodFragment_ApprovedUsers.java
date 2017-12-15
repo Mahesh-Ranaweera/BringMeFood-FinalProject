@@ -99,8 +99,6 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 				public void onDataChange(DataSnapshot dataSnapshot) {
 					wanters.clear();
 					if(dataSnapshot.getValue() != null){
-						Log.i("dataSnapshot", dataSnapshot.getValue().toString());
-						Log.i("dataSnapshot class", dataSnapshot.getValue().getClass().toString());
 						if(dataSnapshot.getValue() instanceof ArrayList)
 							updateWanterAdapter((ArrayList<String>) dataSnapshot.getValue());
 						else if(dataSnapshot.getValue() instanceof Map){
@@ -134,7 +132,6 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 								public void onDataChange(DataSnapshot dataSnapshot) {
 									if (dataSnapshot.getValue() instanceof Map) {
 										Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
-										Log.i("wanterInfo", wanterInfo.toString());
 										Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
 										ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
 										w.setOrderList(foodList);
