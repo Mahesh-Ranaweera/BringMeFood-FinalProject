@@ -121,7 +121,7 @@ public class FirebaseHandler {
 	/**
 	 * Add food items to user
 	 */
-	public static void updateFriendList(String friend){
+	public static void updateFriendList(ArrayList<String> friend){
 
 		//goto current user id to put the foodList
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
