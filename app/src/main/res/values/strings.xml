@@ -134,6 +134,7 @@
     <string name="gettingFood_sessionInfo_label2">%1$s at %2$s</string>
     <string name="gettingFood_sessionInfo_label3">Shareable code:</string>
     <string name="gettingFood_sessionInfo_label_code_placeholder">{code}</string>
+    <string name="gettingFood_sessionInfo_closeSession">Close session</string>
     <string name="gettingFood_tab1">Information</string>
     <string name="gettingFood_tab2">Approved users</string>
     <string name="gettingFood_tab3">Pending users</string>

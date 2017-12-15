@@ -69,7 +69,7 @@ public class GettingFoodActivity extends AppCompatActivity
 	
 	/**
 	 * Copies the current session code to the clipboard.
-	 * @param view Should be the copy button from the SessionInfo fragment.
+	 * @param view Should be the copy button from the SessionInfo fragment. Unused.
 	 */
 	public void copyKeyToClipboard(View view) {
 		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -78,10 +78,12 @@ public class GettingFoodActivity extends AppCompatActivity
 		Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
 	}
 	/**
-	 *
-	 *
 	 * Sends the current session key as a plain text message to all available sharing providers.
-	 * @param view Should be the share button from the SessionInfo fragment.
+	 *
+	 * Referenced from:
+	 * https://developer.android.com/training/sharing/send.html
+	 *
+	 * @param view Should be the share button from the SessionInfo fragment. Unused.
 	 */
 	public void shareKey(View view) {
 		Intent shareIntent = new Intent();
@@ -89,6 +91,16 @@ public class GettingFoodActivity extends AppCompatActivity
 		shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sendTo_message, curSessionRestaurant, curSessionKey));
 		shareIntent.setType("text/plain");
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.sendTo_title)));
+	}
+	
+	
+	/**
+	 * Closes the current food-getting session.
+	 * @param view
+	 */
+	public void closeCurrentSession(View view) {
+		FirebaseHandler.removeAllGettingFoodSessions();
+		finish();
 	}
 	
 	/**
@@ -108,9 +120,9 @@ public class GettingFoodActivity extends AppCompatActivity
 			//Set each tab as appropriate
 			switch(position){
 				case 1: // Approved users
-					return GettingFoodFragment_ApprovedUsers.newInstance("", "");
+					return GettingFoodFragment_ApprovedUsers.newInstance();
 				case 2: // Pending users
-					return GettingFoodFragment_PendingUsers.newInstance("", "");
+					return GettingFoodFragment_PendingUsers.newInstance();
 				case 0: // Session info
 				default:
 					return GettingFoodFragment_SessionInfo.newInstance(curSessionKey, curSessionRestaurant, curSessionLocation);

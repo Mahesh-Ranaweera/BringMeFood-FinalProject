@@ -20,44 +20,43 @@ import java.util.ArrayList;
 
 public class GettingFoodPreparationActivity extends AppCompatActivity {
 
-    Spinner restList;
-    ArrayAdapter<String> adapter;
-    private String userName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_food_preparation);
-
-        //restList = (Spinner) findViewById(R.id.spinner);
-
-        ArrayList<String> list = new ArrayList<>();
-
-        list.add("Starbucks");
-        list.add("Tim Horton's");
-        list.add("McDonald's");
-
-        //get the getter username
-		FirebaseUser user = FirebaseHandler.getCurrentUser();
-		userName = user.getDisplayName();
-
-		//if name is null
-		if(userName == null){
-			userName = "Agent";
-		}
-
-//        adapter = new ArrayAdapter<String>(this, R.layout.spinner_list_style, list);
-//        restList.setAdapter(adapter);
     }
-    
-    public void generateSessionKey(View view) {
+	
+	/**
+	 * Generates a new session key for the user and puts it in the
+	 *  EditText box, or sends out errors if the required fields are empty.
+	 *
+	 * @param view Should be the "Generate key" button. Unused.
+	 */
+	public void generateSessionKey(View view) {
+		//Get the session information
 	    EditText keybox = findViewById(R.id.txtKeyBox);
 	    String restaurant = ((EditText)findViewById(R.id.txtGettingRestaurant)).getText().toString();
 	    String location = ((EditText)findViewById(R.id.txtGettingLocation)).getText().toString();
-	    
-	    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location, userName));
+		
+	    //Generate the code if everything's good, or send errors otherwise
+		if(restaurant.trim().length() > 0 && location.trim().length() > 0){
+		    keybox.setText(FirebaseHandler.createGettingFoodSession(restaurant, location,
+				    FirebaseHandler.getCurrentUser().getDisplayName()));
+	    } else if(restaurant.trim().length() > 0){
+		    ((EditText)findViewById(R.id.txtGettingRestaurant)).setError(getString(R.string.error_gettingFood_restaurantEmpty));
+	    } else if(location.trim().length() > 0){
+		    ((EditText)findViewById(R.id.txtGettingLocation)).setError(getString(R.string.error_gettingFood_locationEmpty));
+	    }
     }
 	
+	/**
+	 * Copies the session key to the clipboard, for sharing purposes.
+	 *
+	 * Referenced from:
+	 * https://stackoverflow.com/questions/19253786/how-to-copy-text-to-clip-board-in-android
+	 *
+	 * @param view Should be the Copy button. Unused.
+	 */
 	public void copyKeyToClipboard(View view) {
     	EditText keybox = findViewById(R.id.txtKeyBox);
     	if(keybox.getText().toString().trim().length() != 0) {
@@ -69,7 +68,12 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 	    }
 	}
 	
+	/**
+	 * Prepares and executes an intent to start the food run itself.
+	 * @param view Should be the "Start Food Run" button. Unused.
+	 */
 	public void startFoodRun(View view) {
+		//Get the session information
 		String restaurant = ((EditText)findViewById(R.id.txtGettingRestaurant)).getText().toString();
 		String location = ((EditText)findViewById(R.id.txtGettingLocation)).getText().toString();
 		String key = ((EditText)findViewById(R.id.txtKeyBox)).getText().toString();
@@ -80,15 +84,18 @@ public class GettingFoodPreparationActivity extends AppCompatActivity {
 			
 			//If we don't have a session key yet, create a new one, otherwise use the current one.
 			if(key.trim().isEmpty())
-				intent.putExtra(getString(R.string.curSessionKey_identifier), FirebaseHandler.createGettingFoodSession(restaurant, location, userName));
+				intent.putExtra(getString(R.string.curSessionKey_identifier),
+						FirebaseHandler.createGettingFoodSession(restaurant, location,
+								FirebaseHandler.getCurrentUser().getDisplayName()));
 			else intent.putExtra(getString(R.string.curSessionKey_identifier), key);
 			
+			//Now put the rest of the intent extras, and start the activity
 			intent.putExtra(getString(R.string.curSessionRestaurant_identifier), restaurant);
 			intent.putExtra(getString(R.string.curSessionLocation_identifier), location);
 			startActivity(intent);
-		} else if(restaurant.trim().length() > 0){
+		} else if(restaurant.trim().length() > 0){ //Restaurant field is empty
 			((EditText)findViewById(R.id.txtGettingRestaurant)).setError(getString(R.string.error_gettingFood_restaurantEmpty));
-		} else if(location.trim().length() > 0){
+		} else if(location.trim().length() > 0){ //Location field is empty
 			((EditText)findViewById(R.id.txtGettingLocation)).setError(getString(R.string.error_gettingFood_locationEmpty));
 		}
 	}
