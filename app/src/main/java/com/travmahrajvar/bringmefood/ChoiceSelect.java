@@ -46,7 +46,6 @@ public class ChoiceSelect extends AppCompatActivity {
         if(user != null){
             userID = user.getUid();
             txtUserName.setText(getString(R.string.welcome_with_username, user.getDisplayName()));
-
         }
     }
 	

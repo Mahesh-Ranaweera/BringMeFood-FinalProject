@@ -129,6 +129,39 @@ public class FirebaseHandler {
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
 	}
 
+	public static void updatePrice(int price){
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("foodlist").child("price").setValue(price);
+    }
+
+
+    public static void transaction(final int p) {
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+    }
+
+
+    public static int getBalance(){
+        final int[] prices = new int[1];
+
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
+
+            String balance;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                balance = dataSnapshot.getValue().toString();
+                prices[0]=Integer.parseInt(balance);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return prices[0];
+
+    }
+
+
 	/**
 	 *
 	 */
@@ -137,6 +170,7 @@ public class FirebaseHandler {
 		fbDatabaseReference.child("getting").child(sessionID).child("wanterlist").setValue(wanterlist);
 	}
 	
+
 	/**
 	 * Creates a new food-getting session for the currently authenticated user.
 	 *

@@ -107,6 +107,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
                         if(checkID(current)){
                             Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
                         }else{
+                            Toast.makeText(getContext(),"Message Sent", Toast.LENGTH_SHORT).show();
                             current.addAll(sendWanterArr);
                             updateDB(current, reqAgentID, agentTocken);
                         }
