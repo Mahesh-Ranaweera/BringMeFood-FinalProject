@@ -45,7 +45,7 @@
         android:layout_marginStart="8dp"
         android:padding="10dp"
         android:background="@drawable/btn_secondary_app"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="Enter Amount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,9 +62,10 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/primary_button"
         android:text="Load Wallet"
+        android:onClick="pay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -76,6 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/credit_card" />
+        app:srcCompat="@drawable/credit_card"/>
 
 </android.support.constraint.ConstraintLayout>

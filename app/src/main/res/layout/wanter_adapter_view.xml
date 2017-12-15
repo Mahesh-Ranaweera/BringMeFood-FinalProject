@@ -45,8 +45,9 @@
 			android:layout_width="250dp"
 			android:layout_height="40dp"
 			android:layout_gravity="center"
-			android:text="@string/pay"
-			android:layout_weight="1"/>
+			android:text="@string/charge"
+			android:layout_weight="1"
+			android:onClick="requestpayment"/>
 	</LinearLayout>
 
 </LinearLayout>
