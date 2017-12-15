@@ -60,7 +60,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-    
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_launcher_foreground" />
@@ -103,7 +103,8 @@
             android:label="@string/title_activity_getting_food"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".FindDeliveryAgents" />
-        <activity android:name=".FriendManageList"></activity>
+        <activity android:name=".FriendManageList" />
+        <activity android:name=".MyAccount"></activity>
     </application>
 
 </manifest>
