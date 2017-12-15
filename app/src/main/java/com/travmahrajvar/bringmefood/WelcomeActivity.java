@@ -1,6 +1,7 @@
 package com.travmahrajvar.bringmefood;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -240,6 +241,10 @@ public class WelcomeActivity extends AppCompatActivity {
 	public void verifyUser(FirebaseUser account){
 		if(account != null){
 			Toast.makeText(this, "Logged in as " + account.getEmail(), Toast.LENGTH_LONG).show();
+			
+			//Play the welcome sound
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.tada);
+			mp.start();
 			
 			//Redirect to the choice page
 			Intent userChoice = new Intent(WelcomeActivity.this, ChoiceSelect.class);

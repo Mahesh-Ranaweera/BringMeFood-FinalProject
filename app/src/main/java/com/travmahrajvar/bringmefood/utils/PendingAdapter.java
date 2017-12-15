@@ -68,7 +68,16 @@ public class PendingAdapter extends BaseAdapter {
 		ImageButton denyButton = convertView.findViewById(R.id.pendingUsers_deny);
 		
 		nameBox.setText(w.getName());
-		orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
+		
+		String wants = "";
+		if(w.getOrderList() != null) {
+			for (String item : w.getOrderList()) {
+				wants += item + ";";
+			}
+		}
+		
+		//orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
+		orderListBox.setText(wants);
 		
 		final int pos = position;
 		acceptButton.setOnClickListener(new View.OnClickListener() {
