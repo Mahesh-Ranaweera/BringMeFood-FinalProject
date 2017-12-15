@@ -143,38 +143,42 @@ public class FirebaseHandler {
 
     public static void transaction(final int p,final String uid) {
        // fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+int data =0;
+        //getBalance(new CallbackInterface() {
+       //     @Override
+        //    public void callback(int data) {
+                if (uid == null){
+                    System.out.println("yyyy");
+                    fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((data+p));
+                }else{
+                    System.out.println("00000");
+                    fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((data+p));
+                    fbDatabaseReference.child("users").child(uid).child("balance").setValue((data-p));
+                }
+           // }
+        //});
 
-	    if (uid.equals("null")){
-            fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((getBalance()+p));
-        }else{
-            fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue((getBalance()+p));
-            fbDatabaseReference.child("users").child(uid).child("balance").setValue((getBalance()-p));
-        }
 
     }
+    interface CallbackInterface {
+	    void callback(int data);
+    }
 
-
-    public static int getBalance(){
+    public static int getBalance(final CallbackInterface callback){
         final int[] prices = new int[1];
-
-        //public ArrayList<String> mGamesPlaying(final String uid, final Callable refresh) {
-
-        //}
 
         fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
 
             String balance;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mGamesPlaying.clear();
                 showbalance(dataSnapshot);
 
                 if (dataSnapshot.exists()) {
                     balance = dataSnapshot.getValue().toString();
                     System.out.println("parsed" + Integer.parseInt(balance));
-                   // mGamesPlaying.add(balance);
-                    //orderprice.notifyAll();
                     prices[0] = Integer.parseInt(balance);
+                    callback.callback(Integer.parseInt(balance));
                 }
             }
 
@@ -184,7 +188,6 @@ public class FirebaseHandler {
             }
         });
 
-        //System.out.println("price"+mGamesPlaying.get(0).toString());
         return prices[0];
     }
 

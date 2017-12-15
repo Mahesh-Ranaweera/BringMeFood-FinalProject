@@ -40,7 +40,7 @@ public class MyAccount extends AppCompatActivity {
         //response.setText(FirebaseHandler.getBalance());
         //response.setText(FirebaseHandler.getBalance());
 
-        System.out.println("load+"+FirebaseHandler.getBalance());
+        //System.out.println("load+"+FirebaseHandler.getBalance());
 
         m_configuration = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -79,7 +79,7 @@ public class MyAccount extends AppCompatActivity {
                         Toast.makeText(MyAccount.this, "Payment added to your wallet",Toast.LENGTH_SHORT).show();
 
                         FirebaseHandler.transaction((Integer.parseInt(price.getText().toString())),"null");
-                        //response.setText(FirebaseHandler.getBalance());
+                        response.setText(price.getText().toString());
                     }
                     else{
                         Toast.makeText(MyAccount.this, "Transaction unsuccessfull",Toast.LENGTH_SHORT).show();

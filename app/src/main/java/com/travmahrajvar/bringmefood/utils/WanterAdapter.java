@@ -1,6 +1,7 @@
 package com.travmahrajvar.bringmefood.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.travmahrajvar.bringmefood.ChoiceSelect;
+import com.travmahrajvar.bringmefood.MyAccount;
+import com.travmahrajvar.bringmefood.PayActivity;
 import com.travmahrajvar.bringmefood.R;
 
 import java.util.ArrayList;
@@ -67,12 +71,15 @@ public class WanterAdapter extends BaseAdapter {
 		orderListBox.setText(wants);
 		final String uid = w.getUid();
 		final int pos = position;
-		final int price = -12;
+        System.out.println("main"+uid);
+
 		removeBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				FirebaseHandler.transaction(price,uid);
-				//TODO Move user to the pending list? Or just remove them entirely?
+                Intent paypage = new Intent(view.getContext(), PayActivity.class);
+                paypage.putExtra("uid",uid);
+                paypage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                view.getContext().startActivity(paypage);
 			}
 		});
 		
