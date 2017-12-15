@@ -129,7 +129,6 @@ public class FirebaseHandler {
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
 	}
 
-<<<<<<< HEAD
 	public static void updatePrice(int price){
         fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("foodlist").child("price").setValue(price);
     }
@@ -162,7 +161,7 @@ public class FirebaseHandler {
 
     }
 
-=======
+
 	/**
 	 *
 	 */
@@ -171,7 +170,7 @@ public class FirebaseHandler {
 		fbDatabaseReference.child("getting").child(sessionID).child("wanterlist").setValue(wanterlist);
 	}
 	
->>>>>>> 820266d3759aac92cd65428b2301b8658567e07f
+
 	/**
 	 * Creates a new food-getting session for the currently authenticated user.
 	 *
