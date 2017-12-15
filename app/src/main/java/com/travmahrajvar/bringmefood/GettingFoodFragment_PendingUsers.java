@@ -82,16 +82,15 @@ public class GettingFoodFragment_PendingUsers extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_getting_food_pendingusers, container, false);
 		
 		ListView pendingList = root.findViewById(R.id.listPendingUsers);
-		
-		
-		wanters = new ArrayList<Wanter>();
-		wanters.clear();
-		pendingAdapter = new PendingAdapter(getContext(), wanters);
-		
+
 		//Get the arguments from the parent activity
 		Bundle args = getArguments();
 		sessionKey = args.getString(ARG_SESSION_KEY);
 		refPendingUsers = FirebaseDatabase.getInstance().getReference().child("getting").child(sessionKey).child("wanterlist");
+
+		wanters = new ArrayList<Wanter>();
+		wanters.clear();
+		pendingAdapter = new PendingAdapter(getContext(), wanters, sessionKey);
 		
 		if(refPendingUsers != null){
 			refPendingUsers.addValueEventListener(new ValueEventListener() {
