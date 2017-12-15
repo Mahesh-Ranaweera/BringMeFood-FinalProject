@@ -4,15 +4,25 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.utils.Wanter;
 import com.travmahrajvar.bringmefood.utils.WanterAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -26,9 +36,17 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class GettingFoodFragment_ApprovedUsers extends Fragment {
+	//Argument names for the incoming intents
+	private static final String ARG_SESSION_KEY = "key";
+	
+	//The arguments themselves
+	private String sessionKey;
+	
+	WanterAdapter wanterAdapter;
+	ArrayList<Wanter> wanters;
+	private DatabaseReference refApprovedUsers;
 	
 	public GettingFoodFragment_ApprovedUsers() {
-		// Required empty public constructor
 	}
 	
 	/**
@@ -38,14 +56,24 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 	 * @return A new instance of fragment GettingFoodFragment_ApprovedUsers.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static GettingFoodFragment_ApprovedUsers newInstance() {
+	public static GettingFoodFragment_ApprovedUsers newInstance(String sessionKey) {
 		GettingFoodFragment_ApprovedUsers fragment = new GettingFoodFragment_ApprovedUsers();
+		
+		
+		//Get the intent extras and put them into arguments
+		Bundle args = new Bundle();
+		args.putString(ARG_SESSION_KEY, sessionKey);
+		fragment.setArguments(args);
+		
 		return fragment;
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (getArguments() != null) { //Get and set the arguments
+			sessionKey = getArguments().getString(ARG_SESSION_KEY);
+		}
 	}
 	
 	@Override
@@ -55,22 +83,67 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_getting_food_approvedusers, container, false);
 		ListView approvedList = root.findViewById(R.id.listApprovedUsers);
 		
-		//TODO get make an actual list of users from Firebase
-		ArrayList<Wanter> wanters = new ArrayList<Wanter>();
+		wanters = new ArrayList<Wanter>();
+		wanters.clear();
+		wanterAdapter = new WanterAdapter(getContext(), wanters);
 		
-		ArrayList<String> w1List = new ArrayList<>();
-		w1List.add("Aaa");
-		w1List.add("Bbb");
 		
-		ArrayList<String> w2List = new ArrayList<>();
-		w2List.add("Ccc");
+		//Get the arguments from the parent activity
+		Bundle args = getArguments();
+		sessionKey = args.getString(ARG_SESSION_KEY);
+		refApprovedUsers = FirebaseDatabase.getInstance().getReference().child("getting").child(sessionKey).child("approved");
 		
-		wanters.add(new Wanter("Joe", w1List));
-		wanters.add(new Wanter("Jen", w2List));
+		if(refApprovedUsers != null){
+			refApprovedUsers.addValueEventListener(new ValueEventListener() {
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					wanters.clear();
+					if(dataSnapshot.getValue() != null)
+						updateWanterAdapter((ArrayList<String>) dataSnapshot.getValue());
+				}
+				
+				@Override
+				public void onCancelled(DatabaseError databaseError) { }
+			});
+		}
 		
-		approvedList.setAdapter(new WanterAdapter(container.getContext(), wanters));
+		approvedList.setAdapter(wanterAdapter);
 		
 		return root;
+	}
+	
+	private void updateWanterAdapter(ArrayList<String> newWantersList){
+		wanters.clear();
+		for(String entry : newWantersList){
+			FirebaseDatabase.getInstance().getReference().child("users").child(entry)
+					.addListenerForSingleValueEvent(new ValueEventListener() {
+						@Override
+						public void onDataChange(DataSnapshot dataSnapshot) {
+							Log.i("dataSnapshot", dataSnapshot.toString());
+							Log.i("dataSnapshotValue", dataSnapshot.getValue().getClass().toString());
+							if(dataSnapshot.getValue() instanceof Map) {
+								try {
+									Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
+									Log.i("wanterInfo", wanterInfo.toString());
+									Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
+									ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
+									w.setOrderList(foodList);
+									
+									
+									wanterAdapter.addWanter(w);
+									wanterAdapter.notifyDataSetChanged();
+								} catch (Exception e){
+									Crashlytics.logException(e);
+								}
+							}
+						}
+						
+						@Override
+						public void onCancelled(DatabaseError databaseError) { }
+					});
+		}
+		
+		//wanterAdapter.notifyDataSetChanged();
 	}
 	
 	@Override
