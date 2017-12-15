@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,6 +105,7 @@ public class FirebaseHandler {
 	public static void putPublicUserInfoInDatabase(FirebaseUser fbUser){
 		UserInfo user = UserInfo.createFromFirebaseUser(fbUser);
 		fbDatabaseReference.child("users").child(fbUser.getUid()).setValue(user);
+		updateUserDeviceToken(getUserDeviceToken());
 	}
 
 	/**
@@ -122,10 +124,10 @@ public class FirebaseHandler {
 	 * @param location The location of the restaurant the user is going to
 	 * @return The UID of the new food-getting session
 	 */
-	public static String createGettingFoodSession(String restaurant, String location, String deviceTocken, String getterName){
+	public static String createGettingFoodSession(String restaurant, String location, String getterName){
 		DatabaseReference dbr = fbDatabaseReference.child("getting");
 		String key = dbr.push().getKey();
-		removePreviousGettingFoodSessions(dbr, key);
+		removePreviousGettingFoodSessions(key);
 		
 		
 		Map<String, Object> newGetFoodSession = new HashMap<>();
@@ -134,9 +136,8 @@ public class FirebaseHandler {
 		newGetFoodSession_children.put("getter", getCurrentUser().getUid());
 		newGetFoodSession_children.put("restaurant", restaurant);
 		newGetFoodSession_children.put("location", location);
-		newGetFoodSession_children.put("deviceTok", deviceTocken);
+		newGetFoodSession_children.put("deviceTok", getUserDeviceToken());
 		newGetFoodSession_children.put("gettername", getterName);
-		
 		
 		newGetFoodSession.put("/" + key + "/", newGetFoodSession_children);
 		
@@ -145,14 +146,25 @@ public class FirebaseHandler {
 		return key;
 	}
 	
+	public static String getUserDeviceToken(){
+		return FirebaseInstanceId.getInstance().getToken();
+	}
+	
+	public static void updateUserDeviceToken(String updatedToken){
+		if(FirebaseHandler.getCurrentUser() != null) {
+			DatabaseReference dbr = fbDatabaseReference.child("users").child(FirebaseHandler.getCurrentUser().getUid());
+			Map<String, Object> map = new HashMap<>();
+			map.put("/deviceToken", updatedToken);
+			dbr.updateChildren(map);
+		}
+	}
+	
 	/**
 	 * Removes any possible previous session codes the current user may have,
 	 *  so that when friends query if this user is getting food,
 	 *  no leftover sessions come up instead of the current one.
-	 *
-	 * @param dbr The current reference to the "getting" section of the database
 	 */
-	private static void removePreviousGettingFoodSessions(DatabaseReference dbr, final String generatedKey){
+	private static void removePreviousGettingFoodSessions(final String generatedKey){
 		fbDatabaseReference.child("getting").orderByChild("getter").equalTo(getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
