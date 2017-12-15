@@ -154,6 +154,10 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
+
+	void requestPayment(View view){
+		System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+	}
 	
 	@Override
 	public void onDetach() {

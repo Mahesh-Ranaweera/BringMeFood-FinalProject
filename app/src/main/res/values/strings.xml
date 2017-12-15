@@ -143,4 +143,5 @@
     <string name="fcm_api_key">key=AAAAS9tU0OY:APA91bH-nw7v_90JNMMNdpuM-kxky95uZ6jipw2xwam9NAgvybuWoX3qQGTzLrNUdGosJtWu6rxRRMGh1YVdvd77ZC2G7rwWW8jGQ948deNSd494kgZ_QQqFQ4zZ1FyT7LQogQD6BAc2</string>
     <string name="order_list_info">You have %1$d items in your order</string>
     <string name="menu_balance">Balance</string>
+    <string name="charge">Charge</string>
 </resources>

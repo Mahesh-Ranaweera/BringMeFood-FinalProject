@@ -46,6 +46,7 @@ public class MyAccount extends AppCompatActivity {
         m_service.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,m_configuration);
         startService(m_service);
     }
+
     void pay(View view){
         PayPalPayment payment = new PayPalPayment(new BigDecimal(Integer.parseInt(price.getText().toString())),"USD","Test_Payment",
                 PayPalPayment.PAYMENT_INTENT_SALE);
