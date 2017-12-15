@@ -40,7 +40,6 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
     public DatabaseReference mRefAgent;
     private String agentDevice;
-    public ArrayList<String> currWantersList = new ArrayList<String>();
     final String currentUserID = FirebaseHandler.getCurrentUser().getUid();
 
     public AgentAdapter(Context context, ArrayList<Agents> agents){
@@ -105,12 +104,11 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
                         Log.i("getdb", "data"+dataSnapshot.getValue());
                         ArrayList<String> current = (ArrayList<String>) dataSnapshot.getValue();
 
-                        sendWanterArr.addAll(current);
-
-                        if(checkID(sendWanterArr, currUserID)){
+                        if(checkID(current)){
                             Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
                         }else{
-                            updateDB(sendWanterArr, reqAgentID, agentTocken);
+                            current.addAll(sendWanterArr);
+                            updateDB(current, reqAgentID, agentTocken);
                         }
                     }else{
                         updateDB(sendWanterArr, reqAgentID, agentTocken);
@@ -126,11 +124,13 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
     }
 
     //check duplicate data exists
-    public boolean checkID(ArrayList<String> listArr, String reqAgentID){
+    public boolean checkID(ArrayList<String> listArr){
 
         List<String> list = listArr;
 
-        if(list.contains(reqAgentID)){
+        Log.i("list", "list"+list.toString()+" curr user "+ currentUserID);
+
+        if(list.contains(currentUserID)){
             return true;
         }
         return  false;
