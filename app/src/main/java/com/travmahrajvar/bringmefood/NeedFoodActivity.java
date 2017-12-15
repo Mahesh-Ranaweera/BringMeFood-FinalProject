@@ -20,6 +20,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
 import com.travmahrajvar.bringmefood.utils.NeedData;
 
@@ -140,7 +143,7 @@ public class NeedFoodActivity extends AppCompatActivity {
                 USERFOODARR = (ArrayList<String>) bundle.getSerializable("USERFOODLIST");
                 Log.i("arr", "size"+USERFOODARR.size());
 
-                //update the foodlist info
+                // Update the foodlist info
                 updateFoodInfo();
             }
         }
@@ -156,6 +159,7 @@ public class NeedFoodActivity extends AppCompatActivity {
         }
     }
 
+    // Get the current location of the user requiring the food
     private void getCurrLocation() {
         btnGetCurrLoc.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -243,5 +247,22 @@ public class NeedFoodActivity extends AppCompatActivity {
         });
 
         popupMenu.show();
+    }
+
+    /**
+     * Gets the bringer/wanter code and related data 
+     **/ 
+    public void getBringerData(View view){
+        System.out.println(FirebaseHandler.getUserDeviceToken());
+        System.out.println(FirebaseHandler.getCurrentUser());
+        System.out.println(FirebaseApp.getInstance());
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
+        String w = databaseReference.child("getting").getDatabase().toString();
+
+        System.out.println("----->>>>> w Ref: "+w);
+
+
     }
 }

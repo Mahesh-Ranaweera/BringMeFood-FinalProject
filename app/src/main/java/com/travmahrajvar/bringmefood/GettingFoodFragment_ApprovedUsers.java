@@ -119,7 +119,7 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 		}
 		
 		approvedList.setAdapter(wanterAdapter);
-		
+
 		return root;
 	}
 	
