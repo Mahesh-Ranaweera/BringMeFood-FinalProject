@@ -15,12 +15,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +35,7 @@ public class PendingAdapter extends BaseAdapter {
 	ArrayList<Wanter> wanters;
 	final String currentSession;
 	public DatabaseReference mRefWanters;
+	public DatabaseReference mRefApproves;
 	
 	public PendingAdapter(@NonNull Context context, @NonNull ArrayList<Wanter> objects, String currentSession) {
 		this.context = context;
@@ -57,7 +60,7 @@ public class PendingAdapter extends BaseAdapter {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
-		Wanter w = wanters.get(position);
+		final Wanter w = wanters.get(position);
 		
 		if(convertView == null)
 			convertView = LayoutInflater.from(context).inflate(R.layout.pending_adapter_view, parent, false);
@@ -75,19 +78,19 @@ public class PendingAdapter extends BaseAdapter {
 				wants += item + ";";
 			}
 		}
-		
-		//orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
+
 		orderListBox.setText(wants);
 		
 		final int pos = position;
+		final String uid = w.getUid();
 		acceptButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				removeWanter(pos);
 				//TODO add to approved list
 
-				getDBData();
-				getCurrentPending();
+				getDBData(uid);
+				getCurrentPending(uid);
 
 			}
 		});
@@ -115,17 +118,16 @@ public class PendingAdapter extends BaseAdapter {
 	}
 
 
-	public void getDBData() {
+	public void getDBData(String uid) {
 		mRefWanters = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("wanterlist");
 
 		if (mRefWanters != null) {
 
-			mRefWanters.addListenerForSingleValueEvent(new ValueEventListener() {
+			mRefWanters.orderByValue().equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 				@Override
 				public void onDataChange(DataSnapshot dataSnapshot) {
-					if (dataSnapshot.getValue() != null) {
-						Log.i("getdb", "data"+dataSnapshot.getValue());
-					}else{
+					for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+						snapshot.getRef().setValue(null);
 					}
 				}
 
@@ -137,18 +139,22 @@ public class PendingAdapter extends BaseAdapter {
 		}
 	}
 
-	public void getCurrentPending() {
-		mRefWanters = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("approved");
+	public void getCurrentPending(String uid) {
+		mRefApproves = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("approved");
 
-		if (mRefWanters != null) {
+		if (mRefApproves != null) {
 
-			mRefWanters.addListenerForSingleValueEvent(new ValueEventListener() {
+			mRefApproves.addListenerForSingleValueEvent(new ValueEventListener() {
 				@Override
 				public void onDataChange(DataSnapshot dataSnapshot) {
-					if (dataSnapshot.getValue() != null) {
-						Log.i("getdbapproved", "data"+dataSnapshot.getValue());
-					}else{
+					ArrayList<String> approvedList = new ArrayList<>();
+					for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+						Log.i("values", "val"+snapshot);
+						approvedList.add(snapshot.getValue().toString());
 					}
+
+					//Upload updated approved array
+					FirebaseHandler.updateApprovedList(approvedList, currentSession);
 				}
 
 				@Override
