@@ -78,8 +78,6 @@ public class GettingFoodActivity extends AppCompatActivity
 		Toast.makeText(this, getString(R.string.clipboard_copied), Toast.LENGTH_SHORT).show();
 	}
 	/**
-	 *
-	 *
 	 * Sends the current session key as a plain text message to all available sharing providers.
 	 * @param view Should be the share button from the SessionInfo fragment.
 	 */
@@ -89,6 +87,16 @@ public class GettingFoodActivity extends AppCompatActivity
 		shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sendTo_message, curSessionRestaurant, curSessionKey));
 		shareIntent.setType("text/plain");
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.sendTo_title)));
+	}
+	
+	
+	/**
+	 * Closes the current food-getting session.
+	 * @param view
+	 */
+	public void closeCurrentSession(View view) {
+		FirebaseHandler.removeAllGettingFoodSessions();
+		finish();
 	}
 	
 	/**
