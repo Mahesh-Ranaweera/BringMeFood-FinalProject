@@ -139,7 +139,7 @@ public class PendingAdapter extends BaseAdapter {
 		}
 	}
 
-	public void getCurrentPending(String uid) {
+	public void getCurrentPending(final String uid) {
 		mRefApproves = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("approved");
 
 		if (mRefApproves != null) {
@@ -148,13 +148,23 @@ public class PendingAdapter extends BaseAdapter {
 				@Override
 				public void onDataChange(DataSnapshot dataSnapshot) {
 					ArrayList<String> approvedList = new ArrayList<>();
-					for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-						Log.i("values", "val"+snapshot);
-						approvedList.add(snapshot.getValue().toString());
-					}
+					if (dataSnapshot.getValue() != null) {
 
-					//Upload updated approved array
-					FirebaseHandler.updateApprovedList(approvedList, currentSession);
+						for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+							Log.i("values", "val" + snapshot);
+							approvedList.add(snapshot.getValue().toString());
+						}
+
+						if(!checkID(approvedList, uid)){
+							approvedList.add(uid);
+							//Upload updated approved array
+							FirebaseHandler.updateApprovedList(approvedList, currentSession);
+						}
+					}else{
+						approvedList.add(uid);
+						//Upload updated approved array
+						FirebaseHandler.updateApprovedList(approvedList, currentSession);
+					}
 				}
 
 				@Override
@@ -163,5 +173,15 @@ public class PendingAdapter extends BaseAdapter {
 				}
 			});
 		}
+	}
+
+	public boolean checkID(ArrayList<String> listArr, String uid){
+
+		List<String> list = listArr;
+
+		if(list.contains(uid)){
+			return true;
+		}
+		return  false;
 	}
 }
