@@ -8,15 +8,18 @@ import java.util.ArrayList;
 
 public class Wanter {
 	private String name;
+	private String uid;
 	private ArrayList<String> orderList;
 	
-	public Wanter(String name){
+	public Wanter(String name, String uid){
 		this.name = name;
+		this.uid = uid;
 		this.orderList = new ArrayList<String>();
 	}
 	
-	public Wanter(String name, ArrayList<String> orderList){
+	public Wanter(String name, String uid, ArrayList<String> orderList){
 		this.name = name;
+		this.uid = uid;
 		this.orderList = orderList;
 	}
 	
@@ -26,6 +29,14 @@ public class Wanter {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getUid() {
+		return uid;
+	}
+	
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	
 	public ArrayList<String> getOrderList() {

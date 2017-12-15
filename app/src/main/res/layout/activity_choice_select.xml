@@ -87,7 +87,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/need_food_bg_gradient"/>
+                    android:background="@drawable/needfood_logo"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginStart="100dp"
@@ -117,7 +117,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/need_food_bg_gradient"/>
+                    android:background="@drawable/getfood_logo"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginStart="100dp"
@@ -147,7 +147,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/need_food_bg_gradient"/>
+                    android:background="@drawable/frnd_logo"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginStart="100dp"

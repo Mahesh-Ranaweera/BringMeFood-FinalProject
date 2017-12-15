@@ -120,9 +120,9 @@ public class GettingFoodActivity extends AppCompatActivity
 			//Set each tab as appropriate
 			switch(position){
 				case 1: // Approved users
-					return GettingFoodFragment_ApprovedUsers.newInstance();
+					return GettingFoodFragment_ApprovedUsers.newInstance(curSessionKey);
 				case 2: // Pending users
-					return GettingFoodFragment_PendingUsers.newInstance();
+					return GettingFoodFragment_PendingUsers.newInstance(curSessionKey);
 				case 0: // Session info
 				default:
 					return GettingFoodFragment_SessionInfo.newInstance(curSessionKey, curSessionRestaurant, curSessionLocation);

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,8 +28,7 @@ import java.util.Map;
 public class FriendManageList extends AppCompatActivity {
 
     //firebase stuff
-    private DatabaseReference mRefUsers;
-    private DatabaseReference mRefFriends;
+    private DatabaseReference mRefUsers, mRefUsers2;
 
     //ui import
     ListView listUsers;
@@ -38,6 +38,7 @@ public class FriendManageList extends AppCompatActivity {
 
     //Agent arraylist
     ArrayList<Users> userslist;
+
     Users user;
 
     @Override
@@ -50,7 +51,6 @@ public class FriendManageList extends AppCompatActivity {
 
         //access getting table
         mRefUsers = FirebaseDatabase.getInstance().getReference().child("users");
-        mRefFriends = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseHandler.getCurrentUser().getUid()).child("friendlist");
 
         listUsers = (ListView) findViewById(R.id.userListView);
 
@@ -58,34 +58,29 @@ public class FriendManageList extends AppCompatActivity {
         userAdapter = new UserAdapter(this, userslist);
         listUsers.setAdapter(userAdapter);
 
-        //listen to db and update list
-        mRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.i("dbvalues", "users: "+dataSnapshot.getValue());
-                if(dataSnapshot.getValue() != null)
-                    collectUsers((Map<String, Object>) dataSnapshot.getValue());
-            }
+        //get the user list and update the adpater
+        getDBuserList();
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+    /**
+     * Get the user list for the user and update adapter
+     */
+    public void getDBuserList(){
+        if(mRefUsers != null) {
+            mRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //Log.i("dbvalues", "users: "+dataSnapshot.getValue());
+                    if (dataSnapshot.getValue() != null)
+                        collectUsers((Map<String, Object>) dataSnapshot.getValue());
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-        //listen to the db and get the current friend list
-        mRefFriends.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot data) {
-                if(data.getValue() != null)
-                    Log.i("dbvalues", "friends" + data.getValue());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     /**
@@ -94,12 +89,15 @@ public class FriendManageList extends AppCompatActivity {
      */
     private void collectUsers(Map<String, Object> usersInfo){
 
+        userAdapter.clear();
+
         //iterate through the recieved objects
         for(Map.Entry<String, Object> entry : usersInfo.entrySet()){
 
             //makesure current user is excluded from the list
             if(!FirebaseHandler.getCurrentUser().getUid().equals(entry.getKey())){
                 Map row = (Map) entry.getValue();
+
                 //create the agent object
                 user = new Users(entry.getKey(), row.get("name").toString(), "");
                 userAdapter.add(user);

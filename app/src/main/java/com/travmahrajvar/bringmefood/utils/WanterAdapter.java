@@ -55,7 +55,16 @@ public class WanterAdapter extends BaseAdapter {
 		Button removeBtn = convertView.findViewById(R.id.approvedUsers_remove);
 		
 		nameBox.setText(w.getName());
-		orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
+		
+		String wants = "";
+		if(w.getOrderList() != null) {
+			for (String item : w.getOrderList()) {
+				wants += item + ";";
+			}
+		}
+		
+		//orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
+		orderListBox.setText(wants);
 		
 		final int pos = position;
 		removeBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +77,8 @@ public class WanterAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
+
+
 	public Wanter removeWanter(int position){
 		Wanter w = wanters.remove(position);
 		notifyDataSetChanged();

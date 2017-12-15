@@ -33,6 +33,16 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!--<ToggleButton
+            android:id="@+id/userAddBtn"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="@string/placeholder"
+            android:layout_weight="1"
+            android:textOn="ADD Friend"
+            android:textOff="REMOVE"/>-->
+
         <Button
             android:id="@+id/userAddBtn"
             android:layout_width="250dp"

@@ -70,7 +70,7 @@
             <RelativeLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -85,68 +85,6 @@
                         android:gravity="center_vertical"
                         android:textSize="16dp"
                         android:text="Find Agents By:"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal">
-
-                        <RadioGroup
-                            android:id="@+id/selectionGroup"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <RadioButton
-                                android:id="@+id/checkLocation"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/location_radio"
-                                android:onClick="searchAgents"
-                                android:layout_weight="1"/>
-
-                            <RadioButton
-                                android:id="@+id/checkRestaurant"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/restaurant_radio"
-                                android:onClick="searchAgents"
-                                android:layout_weight="1"/>
-                        </RadioGroup>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:gravity="right"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp">
-
-                            <ImageButton
-                                android:id="@+id/btnSearchAgents"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                app:srcCompat="@drawable/ic_search_black_24dp"
-                                android:background="@drawable/btn_secondary_app"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:gravity="left"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingLeft="6dp">
-
-                            <EditText
-                                android:id="@+id/txtAgentSearch"
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:padding="10dp"
-                                android:background="@drawable/btn_secondary_app"/>
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

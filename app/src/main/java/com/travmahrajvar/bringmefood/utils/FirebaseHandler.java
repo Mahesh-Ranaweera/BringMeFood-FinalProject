@@ -14,9 +14,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,12 +123,54 @@ public class FirebaseHandler {
 	/**
 	 * Add food items to user
 	 */
-	public static void updateFriendList(String friend){
+	public static void updateFriendList(ArrayList<String> friend){
 
 		//goto current user id to put the foodList
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
 	}
+
+	public static void updatePrice(int price){
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("foodlist").child("price").setValue(price);
+    }
+
+
+    public static void transaction(final int p) {
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").setValue(getBalance()+p);
+    }
+
+
+    public static int getBalance(){
+        final int[] prices = new int[1];
+
+        fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("balance").addValueEventListener(new ValueEventListener() {
+
+            String balance;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                balance = dataSnapshot.getValue().toString();
+                prices[0]=Integer.parseInt(balance);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return prices[0];
+
+    }
+
+
+	/**
+	 *
+	 */
+	public static void updateAgentWantList(ArrayList<String> wanterlist, String sessionID){
+		//goto current agent id to put the wantlist
+		fbDatabaseReference.child("getting").child(sessionID).child("wanterlist").setValue(wanterlist);
+	}
 	
+
 	/**
 	 * Creates a new food-getting session for the currently authenticated user.
 	 *
@@ -138,8 +182,7 @@ public class FirebaseHandler {
 		DatabaseReference dbr = fbDatabaseReference.child("getting");
 		String key = dbr.push().getKey();
 		removePreviousGettingFoodSessions(key);
-		
-		
+
 		Map<String, Object> newGetFoodSession = new HashMap<>();
 		Map<String, Object> newGetFoodSession_children = new HashMap<>();
 		
