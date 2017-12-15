@@ -65,12 +65,13 @@ public class WanterAdapter extends BaseAdapter {
 		
 		//orderListBox.setText(convertView.getResources().getQuantityString(R.plurals.wanterAdapter_orderSize, w.getOrderList().size(), w.getOrderList().size()));
 		orderListBox.setText(wants);
-		
+		final String uid = w.getUid();
 		final int pos = position;
+		final int price = -12;
 		removeBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				removeWanter(pos);
+				FirebaseHandler.transaction(price,uid);
 				//TODO Move user to the pending list? Or just remove them entirely?
 			}
 		});
