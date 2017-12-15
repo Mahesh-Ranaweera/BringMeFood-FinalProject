@@ -190,7 +190,7 @@ public class WelcomeActivity extends AppCompatActivity {
 							verifyUser(user);
 						} else {
 							// If sign in fails, display a message to the user.
-							Toast.makeText(WelcomeActivity.this, "Authentication failed.",
+							Toast.makeText(WelcomeActivity.this, R.string.error_login_fail,
 									Toast.LENGTH_SHORT).show();
 							verifyUser(null);
 						}
@@ -222,7 +222,7 @@ public class WelcomeActivity extends AppCompatActivity {
 							verifyUser(user);
 						} else {
 							// If sign in fails, display a message to the user.
-							Toast.makeText(WelcomeActivity.this, "Authentication failed.",
+							Toast.makeText(WelcomeActivity.this, R.string.error_login_fail,
 									Toast.LENGTH_SHORT).show();
 							verifyUser(null);
 						}
@@ -240,7 +240,7 @@ public class WelcomeActivity extends AppCompatActivity {
 	 */
 	public void verifyUser(FirebaseUser account){
 		if(account != null){
-			Toast.makeText(this, "Logged in as " + account.getEmail(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.login_message, account.getEmail()), Toast.LENGTH_LONG).show();
 			
 			//Play the welcome sound
 			MediaPlayer mp = MediaPlayer.create(this, R.raw.tada);
@@ -284,12 +284,12 @@ public class WelcomeActivity extends AppCompatActivity {
 	public void signINUser(View v) {
 		//First, make sure there's not nothing in the boxes
 		if (getEmail.getText().toString().trim().length() == 0) {
-			getEmail.setError("Enter Email");
+			getEmail.setError(getString(R.string.error_emailMissing));
 			getEmail.requestFocus();
 		}
 
 		if (getPassw.getText().toString().trim().length() == 0) {
-			getPassw.setError("Enter Password");
+			getPassw.setError(getString(R.string.error_passwordMissing));
 			getPassw.requestFocus();
 		} else {
 			//Now, authenticate the user, and sign in if the process was successful
@@ -301,7 +301,7 @@ public class WelcomeActivity extends AppCompatActivity {
 								verifyUser(FirebaseHandler.getCurrentUser());
 							} else {
 								// If sign in fails, display a message to the user.
-								Toast.makeText(WelcomeActivity.this, "Authentication failed.",
+								Toast.makeText(WelcomeActivity.this, R.string.error_login_fail,
 										Toast.LENGTH_SHORT).show();
 								verifyUser(null);
 							}
