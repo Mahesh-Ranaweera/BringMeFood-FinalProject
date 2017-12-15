@@ -47,40 +47,40 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         if(txtEmail.getText().toString().trim().length() == 0){
-            txtEmail.setError("Enter Email");
+            txtEmail.setError(getString(R.string.error_emailMissing));
             txtEmail.requestFocus();
         }
 
         else if(txtFName.getText().toString().trim().length() == 0){
-            txtFName.setError("Enter First Name");
+            txtFName.setError(getString(R.string.error_fnameMissing));
             txtFName.requestFocus();
         }
 
         else if(txtLName.getText().toString().trim().length() == 0){
-            txtLName.setError("Enter Last Name");
+            txtLName.setError(getString(R.string.error_lnameMissing));
             txtLName.requestFocus();
         }
 
         else if(txtPassw1.getText().toString().trim().length() == 0){
-            txtPassw1.setError("Enter Password");
+            txtPassw1.setError(getString(R.string.error_passwordMissing));
             txtPassw1.requestFocus();
         }
 
         else if(txtPassw2.getText().toString().trim().length() == 0){
-            txtPassw2.setError("Re-enter Password");
+            txtPassw2.setError(getString(R.string.error_repasswordMissing));
             txtPassw2.requestFocus();
         }
 
         else if(!txtPassw1.getText().toString().equals(txtPassw2.getText().toString())){
-            txtPassw1.setError("Password should be matched");
-            txtPassw2.setError("Password should be matched");
+            txtPassw1.setError(getString(R.string.error_passwordsDontMatch));
+            txtPassw2.setError(getString(R.string.error_passwordsDontMatch));
             txtPassw1.requestFocus();
             txtPassw2.requestFocus();
         }
         
         else if(txtPassw1.getText().toString().trim().length() < 6){
-        	txtPassw1.setError("Password should be at least 6 characters.");
-        	txtPassw1.setError("Password should be at least 6 characters.");
+        	txtPassw1.setError(getString(R.string.error_passwordTooShort));
+        	txtPassw1.setError(getString(R.string.error_passwordTooShort));
         	txtPassw1.requestFocus();
         	txtPassw2.requestFocus();
         }
@@ -107,7 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
 											public void onComplete(@NonNull Task<Void> task) {
 												if(!task.isSuccessful()) {
 													Log.w("onUpdateProfile", task.getException());
-													Toast.makeText(SignUpActivity.this, "User information could not be updated.", Toast.LENGTH_SHORT).show();
+													Toast.makeText(SignUpActivity.this, R.string.error_login_fail_user_info, Toast.LENGTH_SHORT).show();
 												} else {
 													// Update the public database info with user name and email and send back to welcome activity
 													FirebaseHandler.putPublicUserInfoInDatabase(FirebaseHandler.getCurrentUser());
@@ -118,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
 							} else {
 								//Something went wrong. Print the error to the console.
 								Log.w("signInWithEmail:failure", task.getException());
-								Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+								Toast.makeText(SignUpActivity.this, R.string.error_login_fail, Toast.LENGTH_SHORT).show();
 							}
 			            }
 		            });
