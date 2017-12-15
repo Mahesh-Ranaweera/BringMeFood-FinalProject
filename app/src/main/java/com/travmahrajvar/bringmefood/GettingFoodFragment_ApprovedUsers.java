@@ -98,8 +98,19 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 				@Override
 				public void onDataChange(DataSnapshot dataSnapshot) {
 					wanters.clear();
-					if(dataSnapshot.getValue() != null)
-						updateWanterAdapter((ArrayList<String>) dataSnapshot.getValue());
+					if(dataSnapshot.getValue() != null){
+						Log.i("dataSnapshot", dataSnapshot.getValue().toString());
+						Log.i("dataSnapshot class", dataSnapshot.getValue().getClass().toString());
+						if(dataSnapshot.getValue() instanceof ArrayList)
+							updateWanterAdapter((ArrayList<String>) dataSnapshot.getValue());
+						else if(dataSnapshot.getValue() instanceof Map){
+							ArrayList<String> users = new ArrayList<>();
+							Map<String, Object> m = (Map<String, Object>)dataSnapshot.getValue();
+							for(Object o : m.values())
+								users.add(o.toString());
+							updateWanterAdapter(users);
+						}
+					}
 				}
 				
 				@Override
@@ -108,36 +119,39 @@ public class GettingFoodFragment_ApprovedUsers extends Fragment {
 		}
 		
 		approvedList.setAdapter(wanterAdapter);
-		
+
 		return root;
 	}
 	
 	private void updateWanterAdapter(ArrayList<String> newWantersList){
 		wanters.clear();
 		for(String entry : newWantersList){
-			FirebaseDatabase.getInstance().getReference().child("users").child(entry)
-					.addListenerForSingleValueEvent(new ValueEventListener() {
-						@Override
-						public void onDataChange(DataSnapshot dataSnapshot) {
-							if(dataSnapshot.getValue() instanceof Map) {
-								try {
-									Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
-									Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
-									ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
-									w.setOrderList(foodList);
-									
-									
-									wanterAdapter.addWanter(w);
-									wanterAdapter.notifyDataSetChanged();
-								} catch (Exception e){
-									Crashlytics.logException(e);
+			try {
+				if(entry != null) {
+					FirebaseDatabase.getInstance().getReference().child("users").child(entry)
+							.addListenerForSingleValueEvent(new ValueEventListener() {
+								@Override
+								public void onDataChange(DataSnapshot dataSnapshot) {
+									if (dataSnapshot.getValue() instanceof Map) {
+										Map<String, Object> wanterInfo = (Map<String, Object>) dataSnapshot.getValue();
+										Log.i("wanterInfo", wanterInfo.toString());
+										Wanter w = new Wanter(wanterInfo.get("name").toString(), wanterInfo.get("uid").toString());
+										ArrayList<String> foodList = (ArrayList<String>) wanterInfo.get("foodlist");
+										w.setOrderList(foodList);
+										
+										wanterAdapter.addWanter(w);
+										wanterAdapter.notifyDataSetChanged();
+									}
 								}
-							}
-						}
-						
-						@Override
-						public void onCancelled(DatabaseError databaseError) { }
-					});
+								
+								@Override
+								public void onCancelled(DatabaseError databaseError) {
+								}
+							});
+				}
+			} catch(Exception e){
+				Crashlytics.logException(e);
+			}
 		}
 		
 		//wanterAdapter.notifyDataSetChanged();
