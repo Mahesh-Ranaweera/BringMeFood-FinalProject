@@ -196,7 +196,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
             String getResponse = "";
 
-            String postLink = "https://fcm.googleapis.com/fcm/send";
+            String postLink = getContext().getResources().getString(R.string.firebase_fcm_link);
 
             String FCMKEY = getContext().getResources().getString(R.string.fcm_api_key);
 
@@ -214,8 +214,8 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
                 //nested message section
                 JSONObject notificationBody = new JSONObject();
-                notificationBody.put("body", "Firebase");
-                notificationBody.put("message", "TestMessage");
+                notificationBody.put("body", "Could You Bring Me Food");
+                notificationBody.put("message", "");
                 notificationBody.put("priority", "10");
                 jsonOut.put("notification", notificationBody);
 

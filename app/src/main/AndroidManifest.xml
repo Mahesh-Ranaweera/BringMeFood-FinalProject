@@ -104,7 +104,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".FindDeliveryAgents" />
         <activity android:name=".FriendManageList" />
-        <activity android:name=".MyAccount"></activity>
+        <activity android:name=".MyAccount" />
+        <activity android:name=".PayActivity"></activity>
     </application>
 
 </manifest>

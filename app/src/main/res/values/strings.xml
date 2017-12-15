@@ -147,4 +147,7 @@
     <string name="order_list_info">You have %1$d items in your order</string>
     <string name="menu_balance">Balance</string>
     <string name="charge">Charge</string>
+    <string name="firebase_fcm_link">https://fcm.googleapis.com/fcm/send</string>
+    <string name="pay_user">Pay User</string>
+    <string name="pay_amount">Amount:</string>
 </resources>
