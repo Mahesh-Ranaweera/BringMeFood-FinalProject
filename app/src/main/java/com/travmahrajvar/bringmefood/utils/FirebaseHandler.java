@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,6 +126,14 @@ public class FirebaseHandler {
 
 		//goto current user id to put the foodList
 		fbDatabaseReference.child("users").child(getCurrentUser().getUid()).child("friendlist").setValue(friend);
+	}
+
+	/**
+	 *
+	 */
+	public static void updateAgentWantList(ArrayList<String> wanterlist, String sessionID){
+		//goto current agent id to put the wantlist
+		fbDatabaseReference.child("getting").child(sessionID).child("wanterlist").setValue(wanterlist);
 	}
 	
 	/**

@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.FindDeliveryAgents;
 import com.travmahrajvar.bringmefood.R;
 import com.travmahrajvar.bringmefood.WelcomeActivity;
@@ -24,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -32,7 +38,10 @@ import java.util.concurrent.ExecutionException;
 
 public class AgentAdapter extends ArrayAdapter<Agents> {
 
+    public DatabaseReference mRefAgent;
     private String agentDevice;
+    public ArrayList<String> currWantersList = new ArrayList<String>();
+    final String currentUserID = FirebaseHandler.getCurrentUser().getUid();
 
     public AgentAdapter(Context context, ArrayList<Agents> agents){
         super(context, 0, agents);
@@ -55,14 +64,18 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
         Button agentReqBtn = (Button) convertView.findViewById(R.id.agentReqBtn);
 
         //set button text dynamically
-        agentReqBtn.setText("Message");
+        agentReqBtn.setText("REQUEST");
 
         agentReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postRequest(agent.getAgentTocken());
+
+                //add request into the db
+                setDBRequest(agent.foodRunID, currentUserID, agent.getAgentTocken());
+
+                //postRequest(agent.getAgentTocken());
                 //Log.i("clicked", "adapter click"+agent.getUserID());
-                Toast.makeText(getContext(),"Messaged: "+agent.getAgentName() , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"Messaged: "+agent.getAgentName() , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,6 +86,65 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
 
         //return the view
         return convertView;
+    }
+
+
+    public void setDBRequest(final String reqAgentID, final String currUserID, final String agentTocken) {
+        mRefAgent = FirebaseDatabase.getInstance().getReference().child("getting").child(reqAgentID).child("wanterlist");
+        //Log.i("firebase", "datanull"+mRefAgent);
+
+        final ArrayList<String> sendWanterArr = new ArrayList<>();
+        sendWanterArr.add(currUserID);
+
+        if (mRefAgent != null) {
+
+            mRefAgent.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        Log.i("getdb", "data"+dataSnapshot.getValue());
+                        ArrayList<String> current = (ArrayList<String>) dataSnapshot.getValue();
+
+                        sendWanterArr.addAll(current);
+
+                        if(checkID(sendWanterArr, currUserID)){
+                            Toast.makeText(getContext(),"Already Messaged", Toast.LENGTH_SHORT).show();
+                        }else{
+                            updateDB(sendWanterArr, reqAgentID, agentTocken);
+                        }
+                    }else{
+                        updateDB(sendWanterArr, reqAgentID, agentTocken);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    //check duplicate data exists
+    public boolean checkID(ArrayList<String> listArr, String reqAgentID){
+
+        List<String> list = listArr;
+
+        if(list.contains(reqAgentID)){
+            return true;
+        }
+        return  false;
+    }
+
+    //update the db
+    public void updateDB(ArrayList<String> sendWanterArr, String reqAgentID, String agentTocken){
+        Log.i("agentdata", "wanters"+ sendWanterArr.toString() + " current user " + reqAgentID);
+
+        //send the notification
+        postRequest(agentTocken);
+
+        //update the database
+        FirebaseHandler.updateAgentWantList(sendWanterArr, reqAgentID);
     }
 
 
@@ -91,6 +163,7 @@ public class AgentAdapter extends ArrayAdapter<Agents> {
             e.printStackTrace();
         }
     }
+
 
     //do the async task for notification
     class pushNotification extends AsyncTask<String, Void, String> {

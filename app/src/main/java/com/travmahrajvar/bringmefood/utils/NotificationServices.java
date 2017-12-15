@@ -30,14 +30,9 @@ public class NotificationServices extends FirebaseMessagingService {
 	public void onMessageReceived(RemoteMessage message){
 		Log.d("Messaging", message.getFrom());
 
-		//remove please
-		//String value = message.getData().get("payload");
-		//Log.d("payload", "NotiPayload" + value);
-
-
-//		if(message.getNotification() != null){
-//			notifyUser(message.getNotification().getBody());
-//		}
+		if(message.getData().size() >0 ){
+			Log.d("MSG", "FROM"+ message.getFrom());
+		}
 
 		if(message.getData().get("payload") != null){
 			notifyUser(message.getNotification().getBody());
