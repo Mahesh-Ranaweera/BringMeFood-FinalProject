@@ -100,6 +100,8 @@ public class PendingAdapter extends BaseAdapter {
 			public void onClick(View view) {
 				removeWanter(pos);
 				//TODO send notification to wanter: Denied
+
+				deleteData(uid);
 			}
 		});
 		
@@ -119,6 +121,27 @@ public class PendingAdapter extends BaseAdapter {
 
 
 	public void getDBData(String uid) {
+		mRefWanters = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("wanterlist");
+
+		if (mRefWanters != null) {
+
+			mRefWanters.orderByValue().equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+						snapshot.getRef().setValue(null);
+					}
+				}
+
+				@Override
+				public void onCancelled(DatabaseError databaseError) {
+
+				}
+			});
+		}
+	}
+
+	public void deleteData(String uid) {
 		mRefWanters = FirebaseDatabase.getInstance().getReference().child("getting").child(currentSession).child("wanterlist");
 
 		if (mRefWanters != null) {
