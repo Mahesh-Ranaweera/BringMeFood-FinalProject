@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class FriendManageList extends AppCompatActivity {
 
     //firebase stuff
-    private DatabaseReference mRefUsers;
+    private DatabaseReference mRefUsers, mRefUsers2;
 
     //ui import
     ListView listUsers;
@@ -56,7 +57,6 @@ public class FriendManageList extends AppCompatActivity {
         //add adapter to listview
         userAdapter = new UserAdapter(this, userslist);
         listUsers.setAdapter(userAdapter);
-
 
         //get the user list and update the adpater
         getDBuserList();
@@ -88,6 +88,8 @@ public class FriendManageList extends AppCompatActivity {
      * @param usersInfo
      */
     private void collectUsers(Map<String, Object> usersInfo){
+
+        userAdapter.clear();
 
         //iterate through the recieved objects
         for(Map.Entry<String, Object> entry : usersInfo.entrySet()){

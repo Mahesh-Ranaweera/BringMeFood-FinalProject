@@ -68,7 +68,6 @@ public class UserAdapter extends ArrayAdapter<Users> {
         }
 
         final boolean[] finalExists = {exists[0]};
-
         userAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,14 +79,12 @@ public class UserAdapter extends ArrayAdapter<Users> {
                     //put the current friend id to array
                     currFriendID.add(user.getUserID());
                     updateDB();
-                    //reset the boolean
                     finalExists[0] = false;
                     userAddBtn.setText("Remove Friend");
                     Toast.makeText(getContext(), "User Added", Toast.LENGTH_SHORT).show();
                 }else{
                     currFriendID.remove(user.getUserID());
                     updateDB();
-                    //reset the boolean
                     finalExists[0] = false;
                     userAddBtn.setText("Add Friend");
                     Toast.makeText(getContext(), "User Deleted", Toast.LENGTH_SHORT).show();
