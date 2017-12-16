@@ -20,10 +20,10 @@ To get started, do the following steps:
 3. Clean and build the project
 4. Run it.
 
-##Login Info
-Paypal Sandbox
+## Paypal Sandbox Testing 
 email: tester1@bringmefood.com
 password: bringmefood
 
 email: tester2@bringmefood.com
 password: bringmefood
+
