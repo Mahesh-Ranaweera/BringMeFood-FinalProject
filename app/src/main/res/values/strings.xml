@@ -165,4 +165,15 @@
 	<string name="error_repasswordMissing">Re-enter password</string>
 	<string name="error_passwordsDontMatch">Password should match</string>
 	<string name="error_passwordTooShort">Password should be at least 6 characters</string>
+    <string name="load_wallet">Load Wallet</string>
+    <string name="current_balance">Current Balance : </string>
+    <string name="charge_user">Charge User</string>
+    <string name="charge_success">Charge Successful</string>
+    <string name="uid">uid</string>
+    <string name="reload">Reload Wallet</string>
+    <string name="currency">USD</string>
+    <string name="paymentAdded">Payment added to your wallet</string>
+    <string name="transac_unsuccessful">Transaction unsuccessful</string>
+    <string name="confirmFail">Confirmation Failed from Paypal</string>
+    <string name="approved">approved</string>
 </resources>

@@ -18,13 +18,13 @@ int price;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
         payment = (EditText) findViewById(R.id.addBalance);
-        uid = getIntent().getStringExtra("uid");
+        uid = getIntent().getStringExtra(getString(R.string.uid));
     }
 
+    //Charges the wanter the price of the requested items as set by getter
     public void chargeme(View view) {
         price = Integer.parseInt(payment.getText().toString());
-        System.out.println(uid);
-        Toast.makeText(PayActivity.this, "Charge Successful",Toast.LENGTH_SHORT).show();
+        Toast.makeText(PayActivity.this, R.string.charge_success,Toast.LENGTH_SHORT).show();
         FirebaseHandler.transaction(price,uid);
     }
 }
