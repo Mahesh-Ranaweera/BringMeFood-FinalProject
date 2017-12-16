@@ -96,10 +96,11 @@ public class FriendManageList extends AppCompatActivity {
             //makesure current user is excluded from the list
             if(!FirebaseHandler.getCurrentUser().getUid().equals(entry.getKey())){
                 Map row = (Map) entry.getValue();
+                    Log.i("data", "data" + row);
 
-                //create the agent object
-                user = new Users(entry.getKey(), row.get("name").toString(), "");
-                userAdapter.add(user);
+                    //create the agent object
+                    user = new Users(entry.getKey(), row.get("name").toString(), row.get("deviceToken").toString());
+                    userAdapter.add(user);
             }
         }
 
@@ -131,6 +132,14 @@ public class FriendManageList extends AppCompatActivity {
                     Intent mainPage = new Intent(FriendManageList.this, ChoiceSelect.class);
                     mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainPage);
+                }
+
+                //Getting Balance
+                if(menuItem.getTitle().toString().equals(getString(R.string.menu_balance))){
+                    //close all intents and goto main
+                    Intent accountPage = new Intent(FriendManageList.this, MyAccount.class);
+                    accountPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(accountPage);
                 }
 
                 //page signout

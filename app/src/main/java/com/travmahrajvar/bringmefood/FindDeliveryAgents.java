@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -44,11 +45,10 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
     //firebase stuff
     private DatabaseReference mRef;
+    private DatabaseReference mApproved;
 
     //ui import
     ListView listAgents;
-    RadioGroup selectionRadio;
-    RadioButton choice;
 
     //ArrayAdapter
     AgentAdapter agentAdapter;
@@ -67,6 +67,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
         //access getting table
         mRef = FirebaseDatabase.getInstance().getReference().child("getting");
+        mApproved = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseHandler.getCurrentUser().getUid()).child("approved").child("approved");
 
         listAgents = (ListView) findViewById(R.id.listAgents);
 
@@ -87,6 +88,38 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
             }
         });
+
+        if(mApproved != null){
+            mApproved.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    if(dataSnapshot.getValue() != null){
+                        Log.i("gotdata", dataSnapshot.getValue().toString());
+                        Toast.makeText(getBaseContext(), "You are Accepted!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
 
