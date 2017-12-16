@@ -80,7 +80,7 @@ public class NeedFoodActivity extends AppCompatActivity {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-                    if(addresses.get(0).getAddressLine(0) != null){
+                    if(addresses.size() > 0 && addresses != null){
                         txtDeliveryLocation.setText(addresses.get(0).getAddressLine(0));
                     }else{
                         Toast toast = Toast.makeText(NeedFoodActivity.this, R.string.location_find_fail, Toast.LENGTH_SHORT);

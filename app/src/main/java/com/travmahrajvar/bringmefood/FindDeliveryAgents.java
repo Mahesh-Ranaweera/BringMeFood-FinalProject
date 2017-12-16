@@ -1,9 +1,14 @@
 package com.travmahrajvar.bringmefood;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.travmahrajvar.bringmefood.utils.AgentAdapter;
 import com.travmahrajvar.bringmefood.utils.Agents;
 import com.travmahrajvar.bringmefood.utils.FirebaseHandler;
+import com.travmahrajvar.bringmefood.utils.PendingAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +73,8 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
         //access getting table
         mRef = FirebaseDatabase.getInstance().getReference().child("getting");
-        mApproved = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseHandler.getCurrentUser().getUid()).child("approved").child("approved");
+        mApproved = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseHandler.getCurrentUser().getUid()).child("approved");
+        Log.i("gotdata", "link" + mApproved.toString());
 
         listAgents = (ListView) findViewById(R.id.listAgents);
 
@@ -79,7 +86,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null)
+                if (dataSnapshot.getValue() != null)
                     collectGetters((Map<String, Object>) dataSnapshot.getValue());
             }
 
@@ -89,49 +96,69 @@ public class FindDeliveryAgents extends AppCompatActivity {
             }
         });
 
-        if(mApproved != null){
-            mApproved.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
+        /**
+         * Listen to any children changes
+         */
+        mApproved.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if(dataSnapshot.getValue() != null) {
+                    Log.i("gotdata", dataSnapshot.getValue().toString());
+                    String notificationMsg = getString(R.string.order_accepted_notify);
+                    showAcceptNotification(notificationMsg);
+
+                    //delete the entry after notifcation is showed
+                    dataSnapshot.getRef().removeValue();
                 }
+            }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    if(dataSnapshot.getValue() != null){
-                        Log.i("gotdata", dataSnapshot.getValue().toString());
-                        Toast.makeText(getBaseContext(), "You are Accepted!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
 
-                }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
+            }
+        });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
     }
 
+    /**
+     * Show notification the order is accepted
+     * @param orderID
+     */
+    private void showAcceptNotification(String orderID) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.frnd_logo)
+                .setContentTitle(getString(R.string.food_accepted_notify))
+                .setContentText(orderID);
+
+        Uri notifySound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(notifySound);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(getBaseContext().NOTIFICATION_SERVICE);
+        notificationManager.notify(0, builder.build());
+    }
 
 
     /**
      * Get the getters
+     *
      * @param getters
      */
-    private void collectGetters(Map<String, Object> getters){
+    private void collectGetters(Map<String, Object> getters) {
 
         //iterate through the recieved objects
-        for(Map.Entry<String, Object> entry : getters.entrySet()){
+        for (Map.Entry<String, Object> entry : getters.entrySet()) {
             Map row = (Map) entry.getValue();
 
             //create the agent object
@@ -145,6 +172,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
 
     /**
      * Sets up and displays the sidebar menu
+     *
      * @param view
      */
     public void displayMenu(View view) {
@@ -156,13 +184,13 @@ public class FindDeliveryAgents extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
 
                 //goback to previous page
-                if(menuItem.getTitle().toString().equals(getString(R.string.go_back))){
+                if (menuItem.getTitle().toString().equals(getString(R.string.go_back))) {
                     //finish page
                     finish();
                 }
 
                 //goback to choice page
-                if(menuItem.getTitle().toString().equals(getString(R.string.home))){
+                if (menuItem.getTitle().toString().equals(getString(R.string.home))) {
                     //close all intents and goto main
                     Intent mainPage = new Intent(FindDeliveryAgents.this, ChoiceSelect.class);
                     mainPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -170,7 +198,7 @@ public class FindDeliveryAgents extends AppCompatActivity {
                 }
 
                 //page signout
-                if(menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))){
+                if (menuItem.getTitle().toString().equals(getString(R.string.menu_signOut))) {
                     //Sign out user
                     FirebaseHandler.signOutCurrentUser();
 

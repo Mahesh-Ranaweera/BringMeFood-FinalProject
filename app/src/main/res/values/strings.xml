@@ -165,4 +165,6 @@
 	<string name="error_repasswordMissing">Re-enter password</string>
 	<string name="error_passwordsDontMatch">Password should match</string>
 	<string name="error_passwordTooShort">Password should be at least 6 characters</string>
+    <string name="order_accepted_notify">Your order is accepted</string>
+    <string name="food_accepted_notify">Food Order Accepted</string>
 </resources>
