@@ -35,6 +35,9 @@ Thank you for downloading the BringMeFood App. Once you open the app, you have t
 
 Once you are logged in you can add money to your wallet using the navigation tab on the top left. After you add money to the wallet, you can either request others using the app to bring you food or be a getter yourself and get food for others.
 
-![alt tag](https://imgur.com/r9WQyA3)
+<img src="/screencaps/Screenshot_1513453116.png" width="400">
+<img src="/screencaps/Screenshot_1513453155.png" width="400">
+<img src="/screencaps/Screenshot_1513453161.png" width="400">
+<img src="/screencaps/Screenshot_1513453167.png" width="400">
 
 
