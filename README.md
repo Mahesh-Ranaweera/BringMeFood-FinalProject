@@ -21,9 +21,20 @@ To get started, do the following steps:
 4. Run it.
 
 ## Paypal Sandbox Testing 
-email: tester1@bringmefood.com
-password: bringmefood
+> email: tester1@bringmefood.com<br/>password: bringmefood
+> email: tester2@bringmefood.com<br/>	password: bringmefood
 
-email: tester2@bringmefood.com
-password: bringmefood
+## Test User
+>login Email: rob@bob.com <br/> Password: 123456
+
+## Usage Instructions
+Thank you for downloading the BringMeFood App. Once you open the app, you have te ability to sign up using 3 methods.
+1. Sign up Form
+2. Gmail Account
+3. Facebook
+
+Once you are logged in you can add money to your wallet using the navigation tab on the top left. After you add money to the wallet, you can either request others using the app to bring you food or be a getter yourself and get food for others.
+
+! [alt tag](https://imgur.com/r9WQyA3)
+
 
