@@ -21,7 +21,7 @@ To get started, do the following steps:
 4. Run it.
 
 ## Paypal Sandbox Testing 
-> email: tester1@bringmefood.com<br/>password: bringmefood
+> email: tester1@bringmefood.com<br/>password: bringmefood<br/><br/>
 > email: tester2@bringmefood.com<br/>	password: bringmefood
 
 ## Test User
