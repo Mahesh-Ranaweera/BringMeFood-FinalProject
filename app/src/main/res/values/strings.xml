@@ -165,6 +165,20 @@
 	<string name="error_repasswordMissing">Re-enter password</string>
 	<string name="error_passwordsDontMatch">Password should match</string>
 	<string name="error_passwordTooShort">Password should be at least 6 characters</string>
+<<<<<<< HEAD
     <string name="order_accepted_notify">Your order is accepted</string>
     <string name="food_accepted_notify">Food Order Accepted</string>
+=======
+    <string name="load_wallet">Load Wallet</string>
+    <string name="current_balance">Current Balance : </string>
+    <string name="charge_user">Charge User</string>
+    <string name="charge_success">Charge Successful</string>
+    <string name="uid">uid</string>
+    <string name="reload">Reload Wallet</string>
+    <string name="currency">USD</string>
+    <string name="paymentAdded">Payment added to your wallet</string>
+    <string name="transac_unsuccessful">Transaction unsuccessful</string>
+    <string name="confirmFail">Confirmation Failed from Paypal</string>
+    <string name="approved">approved</string>
+>>>>>>> b56bafbd90f63a487a448edb1e7ee2596cc4963d
 </resources>

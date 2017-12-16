@@ -179,17 +179,21 @@ public class NeedFoodActivity extends AppCompatActivity {
     public void deliveryAgentPage(View v){
         //add the food list to firebase database:: check whether user have a food list
         boolean foodEmpty = USERFOODARR.isEmpty();
-        if(foodEmpty == true){
-            Toast.makeText(NeedFoodActivity.this, R.string.error_no_food_list,Toast.LENGTH_SHORT).show();
-        }else if (txtDeliveryLocation.getText().toString().trim().length() == 0){
-            Toast.makeText(NeedFoodActivity.this, R.string.error_no_location_specified,Toast.LENGTH_SHORT).show();
-        }else{
-            //TODO Need to remove the food list after order is recieved
-            //add foodlist to firebase and goto find agents page
-            FirebaseHandler.addRequiredFoodList(USERFOODARR, txtDeliveryLocation.getText().toString());
+        if (FirebaseHandler.getBalance(FirebaseHandler.getCurrentUser().getUid())<5){
+            Toast.makeText(NeedFoodActivity.this, "Low Balance\n Cannot Process Order. Please Reload",Toast.LENGTH_SHORT).show();
+        }else {
+            if (foodEmpty == true) {
+                Toast.makeText(NeedFoodActivity.this, R.string.error_no_food_list, Toast.LENGTH_SHORT).show();
+            } else if (txtDeliveryLocation.getText().toString().trim().length() == 0) {
+                Toast.makeText(NeedFoodActivity.this, R.string.error_no_location_specified, Toast.LENGTH_SHORT).show();
+            } else {
+                //TODO Need to remove the food list after order is recieved
+                //add foodlist to firebase and goto find agents page
+                FirebaseHandler.addRequiredFoodList(USERFOODARR, txtDeliveryLocation.getText().toString());
 
-            Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
-            startActivity(deliveryAgent);
+                Intent deliveryAgent = new Intent(this, FindDeliveryAgents.class);
+                startActivity(deliveryAgent);
+            }
         }
     }
 

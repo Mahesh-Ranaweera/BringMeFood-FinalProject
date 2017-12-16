@@ -21,27 +21,25 @@ import java.math.BigDecimal;
 public class MyAccount extends AppCompatActivity {
     TextView response;
     EditText price;
-    int load;
-    String balancetext="0";
 
+    //Paypal payment gateway configuration information
     PayPalConfiguration m_configuration;
     String m_paypalClientId = "ATThx2GdqRyhVJb1mMgGfVsSBX3iI_dq0NDThbxkmfLlFwgcVATgWmWcwia1rVZiBmDUyPA60AIg4Dwq";
     Intent m_service;
     int m_paypalRequestCode = 999;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
 
+        //Displays the user's current balance
         response = (TextView) findViewById(R.id.txtBalance);
         price = (EditText) findViewById(R.id.addBalance);
+        response.setText("$ "+FirebaseHandler.getBalance(FirebaseHandler.getCurrentUser().getUid()));
 
-        //response.setText(FirebaseHandler.getBalance());
-        //response.setText(FirebaseHandler.getBalance());
-
-        System.out.println("load+"+FirebaseHandler.getBalance());
-
+        //setup the paypal environment
         m_configuration = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
                 .clientId((m_paypalClientId));
@@ -51,11 +49,9 @@ public class MyAccount extends AppCompatActivity {
         startService(m_service);
     }
 
+    //Redirect to the paypal's payment platform once user agrees to refill wallet
     void pay(View view){
-       // balancetext = price.getText().toString();
-        //load = Integer.parseInt(balancetext);
-
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(Integer.parseInt(price.getText().toString())),"USD","Reload Wallet",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(Integer.parseInt(price.getText().toString())),getString(R.string.currency),getString(R.string.reload),
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent (this,PaymentActivity.class);
@@ -64,6 +60,7 @@ public class MyAccount extends AppCompatActivity {
         startActivityForResult(intent,m_paypalRequestCode);
 
     }
+
 
     protected void onActivityResult (int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -75,19 +72,18 @@ public class MyAccount extends AppCompatActivity {
                 if (confirmation !=null){
                     String state = confirmation.getProofOfPayment().getState();
 
-                    if (state.equals("approved")){
-                        Toast.makeText(MyAccount.this, "Payment added to your wallet",Toast.LENGTH_SHORT).show();
-
-                        FirebaseHandler.transaction((Integer.parseInt(price.getText().toString())),"null");
-                        //response.setText(FirebaseHandler.getBalance());
+                    //Once the payment is successfull, creates a transaction to the firebase database
+                    if (state.equals(getString(R.string.approved))){
+                        Toast.makeText(MyAccount.this, R.string.paymentAdded,Toast.LENGTH_SHORT).show();
+                        FirebaseHandler.transaction((Integer.parseInt(price.getText().toString())),null);
                     }
                     else{
-                        Toast.makeText(MyAccount.this, "Transaction unsuccessfull",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyAccount.this, R.string.transac_unsuccessful,Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else{
-                    Toast.makeText(MyAccount.this, "Confirmation Failed from Paypal",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyAccount.this, R.string.confirmFail,Toast.LENGTH_SHORT).show();
                 }
             }
         }
