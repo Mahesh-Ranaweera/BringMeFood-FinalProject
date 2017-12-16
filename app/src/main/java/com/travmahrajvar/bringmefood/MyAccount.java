@@ -76,6 +76,7 @@ public class MyAccount extends AppCompatActivity {
                     if (state.equals(getString(R.string.approved))){
                         Toast.makeText(MyAccount.this, R.string.paymentAdded,Toast.LENGTH_SHORT).show();
                         FirebaseHandler.transaction((Integer.parseInt(price.getText().toString())),null);
+                        response.setText("$ "+FirebaseHandler.getBalance(FirebaseHandler.getCurrentUser().getUid()));
                     }
                     else{
                         Toast.makeText(MyAccount.this, R.string.transac_unsuccessful,Toast.LENGTH_SHORT).show();

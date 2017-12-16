@@ -110,6 +110,7 @@ public class FirebaseHandler {
     public static void putPublicUserInfoInDatabase(FirebaseUser fbUser){
         UserInfo user = UserInfo.createFromFirebaseUser(fbUser);
         fbDatabaseReference.child("users").child(fbUser.getUid()).setValue(user);
+        fbDatabaseReference.child("users").child(fbUser.getUid()).child("balance").setValue(0);
         updateUserDeviceToken(getUserDeviceToken());
     }
 
@@ -296,8 +297,10 @@ public class FirebaseHandler {
                 while((line = input.readLine()) != null){
                     getBal = Integer.parseInt(line);
                 }
+
                 input.close();
                 conn.disconnect();
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
